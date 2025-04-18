@@ -1,5 +1,7 @@
 package net.dankito.kotlin.datetime
 
+import net.dankito.kotlin.datetime.format.DateTimeFormatter
+
 data class LocalDate(
     val year: Int,
     val month: Month,
@@ -15,6 +17,8 @@ data class LocalDate(
 
     val monthNumber: Int by lazy { month.number }
 
+    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
-    override fun toString() = "$year-$monthNumber-$day"
+
+    override fun toString() = isoString
 }

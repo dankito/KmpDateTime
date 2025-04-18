@@ -1,5 +1,7 @@
 package net.dankito.kotlin.datetime
 
+import net.dankito.kotlin.datetime.format.DateTimeFormatter
+
 data class LocalTime(
     val hour: Int,
     val minute: Int,
@@ -18,17 +20,9 @@ data class LocalTime(
     }
 
 
-    override fun toString(): String {
-        var string = "${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}"
+    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
-        if (second > 0 || nanosecondOfSecond > 0) {
-            string += ":${second.toString().padStart(2, '0')}"
-        }
-        if (nanosecondOfSecond > 0) {
-            string += ".${nanosecondOfSecond.toString().padStart(3, '0')}"
-        }
 
-        return string
-    }
+    override fun toString() = isoString
 
 }

@@ -1,5 +1,7 @@
 package net.dankito.kotlin.datetime
 
+import net.dankito.kotlin.datetime.format.DateTimeFormatter
+
 data class LocalDateTime(
     val year: Int,
     val month: Month,
@@ -23,5 +25,10 @@ data class LocalDateTime(
     val date: LocalDate by lazy { LocalDate(year, month, day) }
 
     val time: LocalTime by lazy { LocalTime(hour, minute, second, nanosecondOfSecond) }
+
+    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+
+
+    override fun toString() = isoString
 
 }
