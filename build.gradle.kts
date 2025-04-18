@@ -1,21 +1,15 @@
-plugins {
-    kotlin("jvm") version "2.1.10"
-}
 
-group = "net.dankito.kotlin"
-version = "1.0.0-SNAPSHOT"
+allprojects {
+    group = "net.dankito.kotlin"
+    version = "1.0.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-}
 
-dependencies {
-    testImplementation(kotlin("test"))
-}
+    ext["sourceCodeRepositoryBaseUrl"] = "github.com/dankito/KmpDateTime"
 
-tasks.test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(11)
+    ext["projectDescription"] = "Date and time data classes for Kotlin Multiplatform"
+
+
+    repositories {
+        mavenCentral()
+    }
 }
