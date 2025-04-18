@@ -15,6 +15,11 @@ data class LocalDateTime(
     constructor(year: Int, monthNumber: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0)
             : this(year, Month.forNumber(monthNumber), day, hour, minute, second, nanosecondOfSecond)
 
+    constructor(date: LocalDate, hour: Int = 0, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0) :
+            this(date.year, date.month, date.day, hour, minute, second, nanosecondOfSecond)
+
+    constructor(date: LocalDate, time: LocalTime) : this(date.year, date.month, date.day, time.hour, time.minute, time.second, time.nanosecondOfSecond)
+
     init {
         require(day in 1..31) { "Invalid day, value must be in bounds [1-31]: $day" }
     }
