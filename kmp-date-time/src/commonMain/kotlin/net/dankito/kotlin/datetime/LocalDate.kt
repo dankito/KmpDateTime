@@ -2,19 +2,18 @@ package net.dankito.kotlin.datetime
 
 data class LocalDate(
     val year: Int,
-    val monthNumber: Int,
+    val month: Month,
     val dayOfMonth: Int
 ) {
 
-    constructor(year: Int, month: Month, dayOfMonth: Int) : this(year, month.number, dayOfMonth)
+    constructor(year: Int, monthNumber: Int, dayOfMonth: Int) : this(year, Month.forNumber(monthNumber), dayOfMonth)
 
     init {
-        require(monthNumber in 1..12) { "Invalid month, value must be in bounds [1-12]: $monthNumber" }
         require(dayOfMonth in 1..31) { "Invalid day, value must be in bounds [1-31]: $dayOfMonth" }
     }
 
 
-    val month: Month by lazy { Month.forNumber(monthNumber) }
+    val monthNumber: Int by lazy { month.number }
 
 
     override fun toString() = "$year-$monthNumber-$dayOfMonth"
