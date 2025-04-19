@@ -13,7 +13,10 @@ data class LocalDateTime(
 ) : Comparable<LocalDateTime> {
 
     constructor(year: Int, monthNumber: Int = 1, day: Int = 1, hour: Int = 0, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0)
-            : this(year, Month.forNumber(monthNumber), day, hour, minute, second, nanosecondOfSecond)
+            : this(year, Month.forNumber(monthNumber), day, hour, minute, second, nanosecondOfSecond) {
+        require(monthNumber in 1..12) { "Invalid monthNumber, value must be in bounds [1-12]: $monthNumber" }
+        require(day in 1..31) { "Invalid day, value must be in bounds [1-31]: $day" }
+    }
 
     constructor(date: LocalDate, hour: Int = 0, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0) :
             this(date.year, date.month, date.day, hour, minute, second, nanosecondOfSecond)
