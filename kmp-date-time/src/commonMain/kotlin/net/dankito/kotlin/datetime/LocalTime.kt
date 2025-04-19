@@ -1,6 +1,7 @@
 package net.dankito.kotlin.datetime
 
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
+import net.dankito.kotlin.datetime.format.DateTimeParser
 
 data class LocalTime(
     val hour: Int,
@@ -17,6 +18,11 @@ data class LocalTime(
 
         val EndOfDay = LocalTime(23, 59, 59, 999_999_999)
         val Max = EndOfDay
+
+
+        fun parse(isoTime: String): LocalTime = DateTimeParser.parseIsoTimeString(isoTime)
+
+        fun parseOrNull(isoTime: String): LocalTime? = DateTimeParser.parseIsoTimeStringOrNull(isoTime)
     }
 
 
