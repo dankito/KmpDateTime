@@ -1,5 +1,6 @@
 package net.dankito.kotlin.datetime.format
 
+import net.dankito.kotlin.datetime.Instant
 import net.dankito.kotlin.datetime.LocalDate
 import net.dankito.kotlin.datetime.LocalDateTime
 import net.dankito.kotlin.datetime.LocalTime
@@ -11,6 +12,8 @@ object DateTimeParser {
     val LocalTimePattern = "HH:mm:ss(.SSSSSSSSS)"
 
     val LocalDateTimePattern = "${LocalDatePattern}'T'$LocalTimePattern"
+
+    val InstantPattern = "${LocalDateTimePattern}Z"
 
 
     fun parseIsoDateStringOrNull(isoDate: String): LocalDate? = parseIsoDateStringOrError(isoDate).second
@@ -145,18 +148,49 @@ object DateTimeParser {
         }
 
         val datePart = isoDateTimeTrimmed.substring(0, indicesOfT[0])
-        val date = parseIsoDateStringOrError(datePart, parsedString, typeName, isoTypeName, LocalDateTimePattern)
+        val date = parseIsoDateStringOrError(datePart, parsedString, typeName, isoTypeName, pattern)
         if (date.second == null) {
             return Pair(date.first, null)
         }
 
         val timePart = isoDateTimeTrimmed.substring(indicesOfT[0] + 1)
-        val time = parseIsoTimeStringOrError(timePart, parsedString, typeName, isoTypeName, LocalDateTimePattern)
+        val time = parseIsoTimeStringOrError(timePart, parsedString, typeName, isoTypeName, pattern)
         if (time.second == null) {
             return Pair(time.first, null)
         }
 
         return Pair(null, LocalDateTime(date.second!!, time.second!!))
+    }
+
+
+    fun parseIsoInstantStringOrNull(isoInstant: String): Instant? = parseIsoInstantStringOrError(isoInstant).second
+
+    fun parseIsoInstantString(isoInstant: String): Instant = parseIsoInstantStringOrError(isoInstant).let { (errorString, instant) ->
+        instant ?: throw IllegalArgumentException(errorString)
+    }
+
+    /**
+     * The parameters [parsedString], [typeName], [isoTypeName] and [pattern] are only there to provide correct error
+     * messages if this method is used for parsing the date time part of a larger string.
+     */
+    private fun parseIsoInstantStringOrError(isoInstant: String, parsedString: String = isoInstant, typeName: String = "Instant",
+                                             isoTypeName: String = "instant", pattern: String = InstantPattern): Pair<String?, Instant?> {
+        val isoInstantTrimmed = isoInstant.trim()
+        if (isoInstantTrimmed.endsWith('Z', ignoreCase = true) == false) {
+            return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but did not end with 'Z'.", null)
+        }
+        val indicesOfZ = isoInstantTrimmed.indicesOf('Z', ignoreCase = true)
+        if (indicesOfZ.size != 1) {
+            return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but contained ${indicesOfZ.size} 'Z' instead of 1.", null)
+        }
+
+        val dateTimePart = isoInstantTrimmed.substring(0, isoInstantTrimmed.length - 1)
+        val date = parseIsoDateTimeStringOrError(dateTimePart, parsedString, typeName, isoTypeName, pattern)
+        if (date.second == null) {
+            return Pair(date.first, null)
+        }
+
+        return Pair(null, null) // TODO: convert LocalDateTime to Instant at UTC
     }
 
 

@@ -4,6 +4,7 @@ import assertk.all
 import assertk.assertFailure
 import assertk.assertions.hasClass
 import assertk.assertions.messageContains
+import net.dankito.kotlin.datetime.format.DateTimeParser.InstantPattern
 import net.dankito.kotlin.datetime.format.DateTimeParser.LocalDatePattern
 import net.dankito.kotlin.datetime.format.DateTimeParser.LocalDateTimePattern
 import net.dankito.kotlin.datetime.format.DateTimeParser.LocalTimePattern
@@ -220,6 +221,42 @@ class DateTimeParserTest {
     fun parseDateTime_InvalidTime() {
         assertIllegalArgumentException(" representation '$LocalDateTimePattern' but the second part '479' had 3 instead of 2 digits.") {
             DateTimeParser.parseIsoDateTimeString("2015-10-15T10:15:479.123456789")
+        }
+    }
+
+
+    @Test
+    fun parseInstant_DoesNotEndWithZ() {
+        assertIllegalArgumentException(" representation '$InstantPattern' but did not end with 'Z'.") {
+            DateTimeParser.parseIsoInstantString("2015-10-15T10:15:47.123456789")
+        }
+    }
+
+    @Test
+    fun parseInstant_TooManyZs() {
+        assertIllegalArgumentException(" representation '$InstantPattern' but contained 2 'Z' instead of 1.") {
+            DateTimeParser.parseIsoInstantString("2015-10-15T10:15:47.123456789ZZ")
+        }
+    }
+
+    @Test
+    fun parseInstant_TooManyZs_CaseInsensitive() {
+        assertIllegalArgumentException(" representation '$InstantPattern' but contained 2 'Z' instead of 1.") {
+            DateTimeParser.parseIsoInstantString("2015-10-15T10:15:47.123456789zz")
+        }
+    }
+
+    @Test
+    fun parseInstant_InvalidDate() {
+        assertIllegalArgumentException(" representation '$InstantPattern' but the day part '1' had 1 instead of 2 digits.") {
+            DateTimeParser.parseIsoInstantString("2015-10-1T10:15:47.123456789Z")
+        }
+    }
+
+    @Test
+    fun parseInstant_InvalidTime() {
+        assertIllegalArgumentException(" representation '$InstantPattern' but the second part '479' had 3 instead of 2 digits.") {
+            DateTimeParser.parseIsoInstantString("2015-10-15T10:15:479.123456789Z")
         }
     }
 
