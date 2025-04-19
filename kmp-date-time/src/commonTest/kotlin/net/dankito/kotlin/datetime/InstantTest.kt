@@ -2,9 +2,18 @@ package net.dankito.kotlin.datetime
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isGreaterThan
 import kotlin.test.Test
 
 class InstantTest {
+
+    @Test
+    fun now() {
+        val now = Instant.now()
+
+        assertThat(now.epochSeconds).isGreaterThan(1_745_000_000)
+    }
+
 
     @Test
     fun compareTo_EpochSecondsIsGreater() {

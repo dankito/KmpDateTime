@@ -1,6 +1,7 @@
 package net.dankito.kotlin.datetime
 
 import net.dankito.kotlin.datetime.format.DateTimeParser
+import net.dankito.kotlin.datetime.platform.Platform
 
 data class Instant(
     val epochSeconds: Long,
@@ -8,6 +9,8 @@ data class Instant(
 ) : Comparable<Instant> {
 
     companion object {
+        fun now(): Instant = Platform.getInstantNow()
+
         val Epoch = Instant(0)
 
         fun ofEpochMilli(epochMilli: Long): Instant = Instant(

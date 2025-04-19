@@ -108,6 +108,12 @@ kotlin {
         }
 
 
+        val linuxAndMingwMain by creating {
+            dependsOn(nativeMain.get())
+            linuxMain.get().dependsOn(this)
+            mingwMain.get().dependsOn(this)
+        }
+
         appleMain.dependencies {
 
         }
