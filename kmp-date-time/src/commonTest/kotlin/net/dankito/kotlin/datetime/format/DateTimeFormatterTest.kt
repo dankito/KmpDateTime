@@ -16,6 +16,13 @@ class DateTimeFormatterTest {
         assertThat(result).isEqualTo("2015-10-21")
     }
 
+    @Test
+    fun date_PadStart() {
+        val result = DateTimeFormatter.toIsoString(LocalDate(15, 1, 2))
+
+        assertThat(result).isEqualTo("0015-01-02")
+    }
+
 
     @Test
     fun time_WithoutFractionalSeconds() {

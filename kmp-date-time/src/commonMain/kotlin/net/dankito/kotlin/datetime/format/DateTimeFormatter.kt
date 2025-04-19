@@ -6,14 +6,15 @@ import net.dankito.kotlin.datetime.LocalTime
 
 object DateTimeFormatter {
 
-    fun toIsoString(date: LocalDate): String = with(date) { "$year-$monthNumber-$day" }
+    fun toIsoString(date: LocalDate): String = with(date) {
+        "${ofLength(year, 4)}-${ofLength(monthNumber, 2)}-${ofLength(day, 2)}"
+    }
 
     fun toIsoString(time: LocalTime): String = with(time) {
-        hour.toString().padStart(2, '0') +
-            ":${minute.toString().padStart(2, '0')}" +
-            ":${second.toString().padStart(2, '0')}" +
+            "${ofLength(hour, 2)}:${ofLength(minute, 2)}:${ofLength(second, 2)}" +
+            "" +
             if (nanosecondOfSecond > 0) {
-                ".${nanosecondOfSecond.toString().padStart(9, '0').trimEnd('0')}"
+                ".${ofLength(nanosecondOfSecond, 9).trimEnd('0')}"
             } else {
                 ""
             }
@@ -22,5 +23,8 @@ object DateTimeFormatter {
     fun toIsoString(dateTime: LocalDateTime) = with(dateTime) {
         date.isoString + "T" + time.isoString
     }
+
+
+    private fun ofLength(value: Int, length: Int): String = value.toString().padStart(length, '0')
 
 }
