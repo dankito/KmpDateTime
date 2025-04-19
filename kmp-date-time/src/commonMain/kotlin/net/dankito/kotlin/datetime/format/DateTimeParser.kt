@@ -19,8 +19,12 @@ object DateTimeParser {
         date ?: throw IllegalArgumentException(errorString)
     }
 
+    /**
+     * The parameters [parsedString], [typeName], [isoTypeName] and [pattern] are only there to provide correct error
+     * messages if this method is used for parsing the date part of a larger string like for [parseIsoDateTimeStringOrError].
+     */
     private fun parseIsoDateStringOrError(isoDate: String, parsedString: String = isoDate, typeName: String = "LocalDate",
-                                          isoTypeName: String = "date", pattern: String = LocalTimePattern): Pair<String?, LocalDate?> {
+                                          isoTypeName: String = "date", pattern: String = LocalDatePattern): Pair<String?, LocalDate?> {
         val isoDateTrimmed = isoDate.trim()
         val dashIndices = isoDateTrimmed.indicesOf('-')
         if (dashIndices.size != 2) {
@@ -66,6 +70,10 @@ object DateTimeParser {
         time ?: throw IllegalArgumentException(errorString)
     }
 
+    /**
+     * The parameters [parsedString], [typeName], [isoTypeName] and [pattern] are only there to provide correct error
+     * messages if this method is used for parsing the time part of a larger string like for [parseIsoDateTimeStringOrError].
+     */
     private fun parseIsoTimeStringOrError(isoTime: String, parsedString: String = isoTime, typeName: String = "LocalTime", isoTypeName: String = "time", pattern: String = LocalTimePattern): Pair<String?, LocalTime?> {
         val isoTimeTrimmed = isoTime.trim()
         val colonIndices = isoTimeTrimmed.indicesOf(':')
@@ -124,6 +132,10 @@ object DateTimeParser {
         dateTime ?: throw IllegalArgumentException(errorString)
     }
 
+    /**
+     * The parameters [parsedString], [typeName], [isoTypeName] and [pattern] are only there to provide correct error
+     * messages if this method is used for parsing the date time part of a larger string.
+     */
     private fun parseIsoDateTimeStringOrError(isoDateTime: String, parsedString: String = isoDateTime, typeName: String = "LocalDateTime",
                                               isoTypeName: String = "date time", pattern: String = LocalDateTimePattern): Pair<String?, LocalDateTime?> {
         val isoDateTimeTrimmed = isoDateTime.trim()
