@@ -78,6 +78,7 @@ kotlin {
 
 
     val kotlinCoroutinesVersion: String by project
+    val kotlinxSerializationVersion: String by project
 
     val webClientVersion: String by project
     val klfVersion: String by project
@@ -87,11 +88,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$kotlinxSerializationVersion")
+
             implementation("net.codinux.log:klf:$klfVersion")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
             implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
         }

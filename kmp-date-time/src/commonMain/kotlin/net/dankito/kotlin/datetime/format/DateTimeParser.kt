@@ -117,7 +117,7 @@ object DateTimeParser {
             if (nanosecondOfSecondPart.length < 1 || nanosecondOfSecondPart.length > 9) {
                 return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but the nanosecond of second part '$nanosecondOfSecondPart' had ${nanosecondOfSecondPart.length} instead of 1-9 digits.", null)
             }
-            val nanosecondOfSecond = nanosecondOfSecondPart.toIntOrNull()
+            val nanosecondOfSecond = nanosecondOfSecondPart.padEnd(9, '0').toIntOrNull()
             if (nanosecondOfSecond == null) {
                 return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but the nanosecond of second part '$nanosecondOfSecondPart' could not be converted to an Int.", null)
             }

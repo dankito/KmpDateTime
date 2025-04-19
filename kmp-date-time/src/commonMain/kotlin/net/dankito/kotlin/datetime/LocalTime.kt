@@ -1,8 +1,11 @@
 package net.dankito.kotlin.datetime
 
+import kotlinx.serialization.Serializable
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
 import net.dankito.kotlin.datetime.format.DateTimeParser
+import net.dankito.kotlin.datetime.serialization.LocalTimeIso8601Serializer
 
+@Serializable(with = LocalTimeIso8601Serializer::class)
 data class LocalTime(
     val hour: Int,
     val minute: Int = 0,

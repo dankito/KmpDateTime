@@ -1,8 +1,11 @@
 package net.dankito.kotlin.datetime
 
+import kotlinx.serialization.Serializable
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
 import net.dankito.kotlin.datetime.format.DateTimeParser
+import net.dankito.kotlin.datetime.serialization.LocalDateTimeIso8601Serializer
 
+@Serializable(with = LocalDateTimeIso8601Serializer::class)
 data class LocalDateTime(
     val year: Int,
     val month: Month = Month.January,
