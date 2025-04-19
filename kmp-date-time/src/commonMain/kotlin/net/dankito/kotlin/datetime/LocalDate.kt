@@ -1,6 +1,7 @@
 package net.dankito.kotlin.datetime
 
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
+import net.dankito.kotlin.datetime.format.DateTimeParser
 
 data class LocalDate(
     val year: Int,
@@ -8,7 +9,16 @@ data class LocalDate(
     val day: Int = 1
 ) : Comparable<LocalDate> {
 
-    constructor(year: Int, monthNumber: Int = 1, day: Int = 1) : this(year, Month.forNumber(monthNumber), day)
+    companion object {
+        fun parse(isoDate: String): LocalDate = DateTimeParser.parseIsoDateString(isoDate)
+
+        fun parseOrNull(isoDate: String): LocalDate? = DateTimeParser.parseIsoDateStringOrNull(isoDate)
+    }
+
+
+    constructor(year: Int, monthNumber: Int = 1, day: Int = 1) : this(year, Month.forNumber(monthNumber), day) {
+        require(monthNumber in 1..12) { "Invalid monthNumber, value must be in bounds [1-12]: $monthNumber" }
+    }
 
     init {
         require(day in 1..31) { "Invalid day, value must be in bounds [1-31]: $day" }
