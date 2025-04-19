@@ -10,6 +10,10 @@ object DateTimeFormatter {
         "${ofLength(year, 4)}-${ofLength(monthNumber, 2)}-${ofLength(day, 2)}"
     }
 
+    fun toDotSeparatedIsoString(date: LocalDate): String = with(date) {
+        "${ofLength(year, 4)}.${ofLength(monthNumber, 2)}.${ofLength(day, 2)}"
+    }
+
     fun toIsoString(time: LocalTime): String = with(time) {
             "${ofLength(hour, 2)}:${ofLength(minute, 2)}:${ofLength(second, 2)}" +
             "" +

@@ -23,6 +23,13 @@ class DateTimeFormatterTest {
         assertThat(result).isEqualTo("0015-01-02")
     }
 
+    @Test
+    fun date_toDotSeparatedIsoString() {
+        val result = DateTimeFormatter.toDotSeparatedIsoString(LocalDate(2015, 10, 21))
+
+        assertThat(result).isEqualTo("2015.10.21")
+    }
+
 
     @Test
     fun time_WithoutFractionalSeconds() {

@@ -32,6 +32,8 @@ data class LocalDate(
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
+    val dotSeparatedIsoString: String by lazy { DateTimeFormatter.toDotSeparatedIsoString(this) }
+
 
     override fun compareTo(other: LocalDate): Int {
         val yearCompare = year.compareTo(other.year)
