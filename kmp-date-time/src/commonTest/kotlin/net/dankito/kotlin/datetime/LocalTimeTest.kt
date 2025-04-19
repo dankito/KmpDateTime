@@ -2,9 +2,18 @@ package net.dankito.kotlin.datetime
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isNotEqualTo
 import kotlin.test.Test
 
 class LocalTimeTest {
+
+    @Test
+    fun now() {
+        val result = LocalTime.now()
+
+        assertThat(result).isNotEqualTo(LocalTime(0, 0, 0))
+    }
+
 
     @Test
     fun compareTo_HourIsGreater() {
