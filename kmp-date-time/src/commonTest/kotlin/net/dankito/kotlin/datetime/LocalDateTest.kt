@@ -16,6 +16,28 @@ class LocalDateTest {
 
 
     @Test
+    fun dayOfWeek_Monday() {
+        val result = LocalDate(2025, 4, 21).dayOfWeek
+
+        assertThat(result).isEqualTo(DayOfWeek.Monday)
+    }
+
+    @Test
+    fun dayOfWeek_Wednesday() {
+        val result = LocalDate(2015, 10, 21).dayOfWeek
+
+        assertThat(result).isEqualTo(DayOfWeek.Wednesday)
+    }
+
+    @Test
+    fun dayOfWeek_Sunday() {
+        val result = LocalDate(2025, 4, 20).dayOfWeek
+
+        assertThat(result).isEqualTo(DayOfWeek.Sunday)
+    }
+
+
+    @Test
     fun compareTo_YearIsGreater() {
         val first = LocalDate(2025, 1, 1)
         val second = LocalDate(2024, 1, 1)

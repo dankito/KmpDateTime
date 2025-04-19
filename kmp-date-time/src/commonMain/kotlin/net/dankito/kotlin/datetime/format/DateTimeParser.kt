@@ -185,12 +185,12 @@ object DateTimeParser {
         }
 
         val dateTimePart = isoInstantTrimmed.substring(0, isoInstantTrimmed.length - 1)
-        val date = parseIsoDateTimeStringOrError(dateTimePart, parsedString, typeName, isoTypeName, pattern)
-        if (date.second == null) {
-            return Pair(date.first, null)
+        val dateTime = parseIsoDateTimeStringOrError(dateTimePart, parsedString, typeName, isoTypeName, pattern)
+        if (dateTime.second == null) {
+            return Pair(dateTime.first, null)
         }
 
-        return Pair(null, null) // TODO: convert LocalDateTime to Instant at UTC
+        return Pair(null, dateTime.second!!.toInstantAtUtc())
     }
 
 

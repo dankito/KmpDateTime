@@ -50,6 +50,8 @@ data class LocalDateTime(
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
+    fun toInstantAtUtc(): Instant = Platform.toInstantAtUtc(this)
+
 
     override fun compareTo(other: LocalDateTime): Int {
         val dateCompare = date.compareTo(other.date)

@@ -1,6 +1,7 @@
 package net.dankito.kotlin.datetime.platform
 
 import net.dankito.kotlin.datetime.*
+import java.time.ZoneOffset
 
 internal actual object Platform {
 
@@ -27,5 +28,12 @@ internal actual object Platform {
 
         return javaLocalDateTime.toKotlinLocalDateTime()
     }
+
+    actual fun getDayOfWeekDayNumber(date: LocalDate): Int? =
+        date.toJavaLocalDate().dayOfWeek.value
+
+
+    actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
+        dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKotlinInstant()
 
 }

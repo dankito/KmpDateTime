@@ -33,6 +33,10 @@ data class LocalDate(
 
     val monthNumber: Int by lazy { month.number }
 
+    val dayOfWeek: DayOfWeek? by lazy {
+        Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) }
+    }
+
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
     val dotSeparatedIsoString: String by lazy { DateTimeFormatter.toDotSeparatedIsoString(this) }

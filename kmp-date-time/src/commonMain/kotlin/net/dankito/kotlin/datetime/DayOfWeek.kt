@@ -16,4 +16,11 @@ enum class DayOfWeek {
      */
     val isoDayNumber: Int = ordinal + 1
 
+
+    companion object {
+        val byDayNumber = entries.associateBy { it.isoDayNumber }
+
+        fun forDayNumber(dayNumber: Int): DayOfWeek? = byDayNumber[dayNumber]
+    }
+
 }

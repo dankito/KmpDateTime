@@ -15,4 +15,12 @@ internal expect object Platform {
 
     fun getLocalDateTimeNow(): LocalDateTime
 
+    /**
+     * If day of week can be determined returns a value from 1 = Monday to 7 = Sunday.
+     */
+    fun getDayOfWeekDayNumber(date: LocalDate): Int?
+
+
+    fun toInstantAtUtc(dateTime: LocalDateTime): Instant
+
 }

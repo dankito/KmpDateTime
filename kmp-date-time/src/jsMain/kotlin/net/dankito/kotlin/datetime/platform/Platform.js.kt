@@ -39,4 +39,24 @@ internal actual object Platform {
     private fun toLocalTime(now: Date) =
         LocalTime(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds() * 1_000_000)
 
+
+    actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
+        val jsDate = Date(date.year, date.monthNumber - 1, date.day)
+
+        // 0 = Sunday
+        return jsDate.getDay().let {
+            if (it == 0) 7
+            else it
+        }
+    }
+
+
+    actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
+        // do not use Date(), it interprets the values in system's timezone rather than in UTC
+        val millisSinceEpoch = Date.UTC(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
+            dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
+
+        return Instant.ofEpochMilli(millisSinceEpoch.toLong())
+    }
+
 }
