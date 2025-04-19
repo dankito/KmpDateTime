@@ -1,6 +1,7 @@
 package net.dankito.kotlin.datetime
 
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
+import net.dankito.kotlin.datetime.format.DateTimeParser
 
 data class LocalDateTime(
     val year: Int,
@@ -11,6 +12,13 @@ data class LocalDateTime(
     val second: Int = 0,
     val nanosecondOfSecond: Int = 0
 ) : Comparable<LocalDateTime> {
+
+    companion object {
+        fun parse(isoDateTime: String): LocalDateTime = DateTimeParser.parseIsoDateTimeString(isoDateTime)
+
+        fun parseOrNull(isoDateTime: String): LocalDateTime? = DateTimeParser.parseIsoDateTimeStringOrNull(isoDateTime)
+    }
+
 
     constructor(year: Int, monthNumber: Int = 1, day: Int = 1, hour: Int = 0, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0)
             : this(year, Month.forNumber(monthNumber), day, hour, minute, second, nanosecondOfSecond) {

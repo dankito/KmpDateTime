@@ -4,6 +4,7 @@ import assertk.all
 import assertk.assertFailure
 import assertk.assertions.hasClass
 import assertk.assertions.messageContains
+import net.dankito.kotlin.datetime.format.DateTimeParser.LocalDateTimePattern
 import kotlin.test.Test
 
 class DateTimeParserTest {
@@ -181,6 +182,42 @@ class DateTimeParserTest {
     fun parseTime_NanosecondOfSecondNotAnInt() {
         assertIllegalArgumentException("but the nanosecond of second part 'true' could not be converted to an Int.") {
             DateTimeParser.parseIsoTimeString("10:15:47.true")
+        }
+    }
+
+
+    @Test
+    fun parseDateTime_TooFewTs() {
+        assertIllegalArgumentException(" representation '$LocalDateTimePattern' but contained 0 'T' instead of 1.") {
+            DateTimeParser.parseIsoDateTimeString("2015-10-15S10:15:47.123456789")
+        }
+    }
+
+    @Test
+    fun parseDateTime_TooManyTs() {
+        assertIllegalArgumentException(" representation '$LocalDateTimePattern' but contained 2 'T' instead of 1.") {
+            DateTimeParser.parseIsoDateTimeString("2015-10-15TT10:15:47.123456789")
+        }
+    }
+
+    @Test
+    fun parseDateTime_TooManyTs_CaseInsensitive() {
+        assertIllegalArgumentException(" representation '$LocalDateTimePattern' but contained 2 'T' instead of 1.") {
+            DateTimeParser.parseIsoDateTimeString("2015-10-15tt10:15:47.123456789")
+        }
+    }
+
+    @Test
+    fun parseDateTime_InvalidDate() {
+        assertIllegalArgumentException(" representation '$LocalDateTimePattern' but the day part '1' had 1 instead of 2 digits.") {
+            DateTimeParser.parseIsoDateTimeString("2015-10-1T10:15:47.123456789")
+        }
+    }
+
+    @Test
+    fun parseDateTime_InvalidTime() {
+        assertIllegalArgumentException(" representation '$LocalDateTimePattern' but the second part '479' had 3 instead of 2 digits.") {
+            DateTimeParser.parseIsoDateTimeString("2015-10-15T10:15:479.123456789")
         }
     }
 
