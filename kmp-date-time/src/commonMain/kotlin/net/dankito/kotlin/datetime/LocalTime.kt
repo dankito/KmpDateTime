@@ -7,7 +7,7 @@ data class LocalTime(
     val minute: Int,
     val second: Int = 0,
     val nanosecondOfSecond: Int = 0
-) {
+) : Comparable<LocalTime> {
     companion object {
         val StartOfDay = LocalTime(0, 0)
         val Midnight = StartOfDay
@@ -21,6 +21,20 @@ data class LocalTime(
 
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+
+
+    override fun compareTo(other: LocalTime): Int {
+        val hourCompare = hour.compareTo(other.hour)
+        if (hourCompare != 0) return hourCompare
+
+        val minuteCompare = minute.compareTo(other.minute)
+        if (minuteCompare != 0) return minuteCompare
+
+        val secondCompare = second.compareTo(other.second)
+        if (secondCompare != 0) return secondCompare
+
+        return nanosecondOfSecond.compareTo(other.nanosecondOfSecond)
+    }
 
 
     override fun toString() = isoString

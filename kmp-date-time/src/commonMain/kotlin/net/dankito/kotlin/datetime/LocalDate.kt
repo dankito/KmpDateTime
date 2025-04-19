@@ -6,7 +6,7 @@ data class LocalDate(
     val year: Int,
     val month: Month,
     val day: Int
-) {
+) : Comparable<LocalDate> {
 
     constructor(year: Int, monthNumber: Int, day: Int) : this(year, Month.forNumber(monthNumber), day)
 
@@ -18,6 +18,17 @@ data class LocalDate(
     val monthNumber: Int by lazy { month.number }
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+
+
+    override fun compareTo(other: LocalDate): Int {
+        val yearCompare = year.compareTo(other.year)
+        if (yearCompare != 0) return yearCompare
+
+        val monthCompare = month.compareTo(other.month)
+        if (monthCompare != 0) return monthCompare
+
+        return day.compareTo(other.day)
+    }
 
 
     override fun toString() = isoString

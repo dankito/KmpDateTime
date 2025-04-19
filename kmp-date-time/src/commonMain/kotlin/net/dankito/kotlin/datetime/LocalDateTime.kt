@@ -10,7 +10,7 @@ data class LocalDateTime(
     val minute: Int = 0,
     val second: Int = 0,
     val nanosecondOfSecond: Int = 0
-) {
+) : Comparable<LocalDateTime> {
 
     constructor(year: Int, monthNumber: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0)
             : this(year, Month.forNumber(monthNumber), day, hour, minute, second, nanosecondOfSecond)
@@ -32,6 +32,14 @@ data class LocalDateTime(
     val time: LocalTime by lazy { LocalTime(hour, minute, second, nanosecondOfSecond) }
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+
+
+    override fun compareTo(other: LocalDateTime): Int {
+        val dateCompare = date.compareTo(other.date)
+        if (dateCompare != 0) return dateCompare
+
+        return time.compareTo(other.time)
+    }
 
 
     override fun toString() = isoString
