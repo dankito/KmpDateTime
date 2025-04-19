@@ -4,7 +4,7 @@ import net.dankito.kotlin.datetime.format.DateTimeFormatter
 
 data class LocalTime(
     val hour: Int,
-    val minute: Int,
+    val minute: Int = 0,
     val second: Int = 0,
     val nanosecondOfSecond: Int = 0
 ) : Comparable<LocalTime> {

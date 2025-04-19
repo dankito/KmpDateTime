@@ -4,11 +4,11 @@ import net.dankito.kotlin.datetime.format.DateTimeFormatter
 
 data class LocalDate(
     val year: Int,
-    val month: Month,
-    val day: Int
+    val month: Month = Month.January,
+    val day: Int = 1
 ) : Comparable<LocalDate> {
 
-    constructor(year: Int, monthNumber: Int, day: Int) : this(year, Month.forNumber(monthNumber), day)
+    constructor(year: Int, monthNumber: Int = 1, day: Int = 1) : this(year, Month.forNumber(monthNumber), day)
 
     init {
         require(day in 1..31) { "Invalid day, value must be in bounds [1-31]: $day" }
