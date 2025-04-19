@@ -3,6 +3,7 @@ package net.dankito.kotlin.datetime
 import kotlinx.serialization.Serializable
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
 import net.dankito.kotlin.datetime.format.DateTimeParser
+import net.dankito.kotlin.datetime.platform.Platform
 import net.dankito.kotlin.datetime.serialization.LocalDateIso8601Serializer
 
 @Serializable(with = LocalDateIso8601Serializer::class)
@@ -13,6 +14,8 @@ data class LocalDate(
 ) : Comparable<LocalDate> {
 
     companion object {
+        fun today(): LocalDate = Platform.getLocalDateNow()
+
         fun parse(isoDate: String): LocalDate = DateTimeParser.parseIsoDateString(isoDate)
 
         fun parseOrNull(isoDate: String): LocalDate? = DateTimeParser.parseIsoDateStringOrNull(isoDate)

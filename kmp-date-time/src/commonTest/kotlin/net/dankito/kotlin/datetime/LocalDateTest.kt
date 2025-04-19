@@ -2,9 +2,18 @@ package net.dankito.kotlin.datetime
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isGreaterThanOrEqualTo
 import kotlin.test.Test
 
 class LocalDateTest {
+
+    @Test
+    fun today() {
+        val result = LocalDate.today()
+
+        assertThat(result.year).isGreaterThanOrEqualTo(2025)
+    }
+
 
     @Test
     fun compareTo_YearIsGreater() {
