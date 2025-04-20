@@ -24,34 +24,17 @@ internal actual object Platform {
     actual fun getInstantNow(): Instant {
         val millisSinceEpoch = getMillisSinceEpoch()
 
-        return Instant.ofEpochMilli(millisSinceEpoch.toLong())
+        return instantOfEpochMilli(millisSinceEpoch)
     }
 
-    actual fun getLocalDateNow(): LocalDate {
-        val now = getDateNow()
+    actual fun getLocalDateNow(): LocalDate =
+        getDateNow().toLocalDate()
 
-        // getMonth() = month as number (0 - 11) -> + 1; getDate() = day as number (1 - 31), getDay() = weekday (0 - 6)
-        return LocalDate(now.getFullYear(), now.getMonth() + 1, now.getDate())
-    }
+    actual fun getLocalTimeNow(): LocalTime =
+        getDateNow().toLocalTime()
 
-    actual fun getLocalTimeNow(): LocalTime {
-        val now = getDateNow()
-
-        return toLocalTime(now)
-    }
-
-    actual fun getLocalDateTimeNow(): LocalDateTime {
-        val now = getDateNow()
-
-        return LocalDateTime(toLocalDate(now), toLocalTime(now))
-    }
-
-    private fun toLocalDate(now: JsDate) =
-        // getMonth() = month as number (0 - 11) -> + 1; getDate() = day as number (1 - 31), getDay() = weekday (0 - 6)
-        LocalDate(now.getFullYear(), now.getMonth() + 1, now.getDate())
-
-    private fun toLocalTime(now: JsDate) =
-        LocalTime(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds() * 1_000_000)
+    actual fun getLocalDateTimeNow(): LocalDateTime =
+        getDateNow().toLocalDateTime()
 
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
@@ -70,7 +53,11 @@ internal actual object Platform {
         val millisSinceEpoch = createDateInUTC(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
 
-        return Instant.ofEpochMilli(millisSinceEpoch.toLong())
+        return instantOfEpochMilli(millisSinceEpoch)
     }
+
+
+    private fun instantOfEpochMilli(millisSinceEpoch: Double): Instant =
+        Instant.ofEpochMilli(millisSinceEpoch.toLong())
 
 }

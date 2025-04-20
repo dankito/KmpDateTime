@@ -24,34 +24,17 @@ internal actual object Platform {
 
 
     actual fun getLocalDateNow(): LocalDate =
-        toLocalDate(getLocalTime())
+        getLocalTime()?.toLocalDate()
+            ?: LocalDate(0) // TODO: what to do in case of error?
 
-    private fun toLocalDate(localTime: tm?): LocalDate = localTime?.let {
-        // Extract components
-        val year = localTime.tm_year + 1900  // tm_year is years since 1900
-        val month = localTime.tm_mon + 1   // tm_mon is 0-based
-        val day = localTime.tm_mday
-
-        LocalDate(year, month, day)
-    } ?: LocalDate(0)
 
     actual fun getLocalTimeNow(): LocalTime =
-        toLocalTime(getLocalTime())
+        getLocalTime()?.toLocalTime()
+            ?: LocalTime.StartOfDay // TODO: what to do in case of error?
 
-    private fun toLocalTime(localTime: tm?): LocalTime = localTime?.let {
-        // Extract components
-        val hour = localTime.tm_hour
-        val minute = localTime.tm_min
-        val second = localTime.tm_sec
-
-        LocalTime(hour, minute, second)
-    } ?: LocalTime(0)
-
-    actual fun getLocalDateTimeNow(): LocalDateTime {
-        val localTime = getLocalTime()
-
-        return LocalDateTime(toLocalDate(localTime), toLocalTime(localTime))
-    }
+    actual fun getLocalDateTimeNow(): LocalDateTime =
+        getLocalTime()?.toLocalDateTime()
+            ?: LocalDateTime(0) // TODO: what to do in case of error?
 
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {

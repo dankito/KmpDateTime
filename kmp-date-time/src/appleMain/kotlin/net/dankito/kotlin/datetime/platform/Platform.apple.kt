@@ -11,43 +11,20 @@ internal actual object Platform {
 
 
     actual fun getInstantNow(): Instant {
-        val secondsSinceEpoch = NSDate().timeIntervalSince1970
+        val secondsSinceEpoch = getNSDateNow().timeIntervalSince1970
 
         return epochSecondsToInstant(secondsSinceEpoch)
     }
 
 
     actual fun getLocalDateNow(): LocalDate =
-        toLocalDate(NSDate())
-
-    private fun toLocalDate(date: NSDate): LocalDate {
-        val calendar = NSCalendar.currentCalendar
-        val components = calendar.components(
-            NSCalendarUnitYear or NSCalendarUnitMonth or NSCalendarUnitDay,
-            fromDate = date
-        )
-
-        return LocalDate(components.year.toInt(), components.month.toInt(), components.day.toInt())
-    }
+        getNSDateNow().toLocalDate()
 
     actual fun getLocalTimeNow(): LocalTime =
-        toLocalTime(NSDate())
+        getNSDateNow().toLocalTime()
 
-    private fun toLocalTime(date: NSDate): LocalTime {
-        val calendar = NSCalendar.currentCalendar
-        val components = calendar.components(
-            NSCalendarUnitHour or NSCalendarUnitMinute or NSCalendarUnitSecond or NSCalendarUnitNanosecond, // TODO: there doesn't seem to be a nanosecond component
-            fromDate = date
-        )
-
-        return LocalTime(components.hour.toInt(), components.minute.toInt(), components.second.toInt(), components.nanosecond.toInt())
-    }
-
-    actual fun getLocalDateTimeNow(): LocalDateTime {
-        val now = NSDate()
-
-        return LocalDateTime(toLocalDate(now), toLocalTime(now))
-    }
+    actual fun getLocalDateTimeNow(): LocalDateTime =
+        getNSDateNow().toLocalDateTime()
 
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
@@ -98,5 +75,8 @@ internal actual object Platform {
 
         return Instant(secondsSinceEpoch.toLong(), nanosString.toInt())
     }
+
+
+    private fun getNSDateNow() = NSDate()
 
 }
