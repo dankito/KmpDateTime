@@ -97,7 +97,7 @@ kotlin {
 
 
         jvmMain.dependencies {
-
+            compileOnly("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
         }
 
         jvmTest.dependencies {
