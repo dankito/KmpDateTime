@@ -1,14 +1,14 @@
 package net.dankito.kotlin.datetime.platform
 
 import kotlinx.cinterop.*
-import net.dankito.kotlin.datetime.Instant
-import net.dankito.kotlin.datetime.LocalDate
-import net.dankito.kotlin.datetime.LocalDateTime
-import net.dankito.kotlin.datetime.LocalTime
+import net.dankito.kotlin.datetime.*
 import platform.posix.*
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual object Platform {
+
+    actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Seconds
+
 
     @OptIn(UnsafeNumber::class)
     actual fun getInstantNow(): Instant {

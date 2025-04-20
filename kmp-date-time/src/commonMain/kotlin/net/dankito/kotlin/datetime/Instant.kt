@@ -9,6 +9,8 @@ data class Instant(
 ) : Comparable<Instant> {
 
     companion object {
+        val timeSinceEpochPrecision: TimeSinceEpochPrecision = Platform.timeSinceEpochPrecision
+
         fun now(): Instant = Platform.getInstantNow()
 
         val Epoch = Instant(0)

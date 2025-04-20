@@ -1,9 +1,6 @@
 package net.dankito.kotlin.datetime.platform
 
-import net.dankito.kotlin.datetime.Instant
-import net.dankito.kotlin.datetime.LocalDate
-import net.dankito.kotlin.datetime.LocalDateTime
-import net.dankito.kotlin.datetime.LocalTime
+import net.dankito.kotlin.datetime.*
 
 
 internal fun getMillisSinceEpoch(): Double =
@@ -20,6 +17,9 @@ internal fun createDateInUTC(year: Int, month: Int, day: Int, hour: Int, minute:
 
 
 internal actual object Platform {
+
+    actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Milliseconds
+
 
     actual fun getInstantNow(): Instant {
         val millisSinceEpoch = getMillisSinceEpoch()

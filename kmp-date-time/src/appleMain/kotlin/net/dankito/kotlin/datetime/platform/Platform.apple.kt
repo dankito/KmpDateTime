@@ -1,14 +1,14 @@
 package net.dankito.kotlin.datetime.platform
 
 import kotlinx.cinterop.UnsafeNumber
-import net.dankito.kotlin.datetime.Instant
-import net.dankito.kotlin.datetime.LocalDate
-import net.dankito.kotlin.datetime.LocalDateTime
-import net.dankito.kotlin.datetime.LocalTime
+import net.dankito.kotlin.datetime.*
 import platform.Foundation.*
 
 @OptIn(UnsafeNumber::class)
 internal actual object Platform {
+
+    actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Seconds
+
 
     actual fun getInstantNow(): Instant {
         val secondsSinceEpoch = NSDate().timeIntervalSince1970

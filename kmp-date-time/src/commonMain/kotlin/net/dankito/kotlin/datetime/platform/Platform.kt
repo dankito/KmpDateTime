@@ -1,11 +1,11 @@
 package net.dankito.kotlin.datetime.platform
 
-import net.dankito.kotlin.datetime.Instant
-import net.dankito.kotlin.datetime.LocalDate
-import net.dankito.kotlin.datetime.LocalDateTime
-import net.dankito.kotlin.datetime.LocalTime
+import net.dankito.kotlin.datetime.*
 
 internal expect object Platform {
+
+    val timeSinceEpochPrecision: TimeSinceEpochPrecision
+
 
     fun getInstantNow(): Instant
 

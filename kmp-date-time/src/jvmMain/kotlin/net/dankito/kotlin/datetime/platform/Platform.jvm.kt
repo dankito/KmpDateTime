@@ -5,6 +5,9 @@ import java.time.ZoneOffset
 
 internal actual object Platform {
 
+    actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Milliseconds
+
+
     actual fun getInstantNow(): Instant {
         val javaInstance = java.time.Instant.now()
 
