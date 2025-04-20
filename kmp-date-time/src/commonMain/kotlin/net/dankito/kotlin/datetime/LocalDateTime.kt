@@ -9,7 +9,7 @@ import net.dankito.kotlin.datetime.serialization.LocalDateTimeIso8601Serializer
 @Serializable(with = LocalDateTimeIso8601Serializer::class)
 data class LocalDateTime(
     val year: Int,
-    val month: Month = Month.January,
+    val month: Month,
     val day: Int = 1,
     val hour: Int = 0,
     val minute: Int = 0,

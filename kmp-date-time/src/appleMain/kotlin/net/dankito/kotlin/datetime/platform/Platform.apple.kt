@@ -76,6 +76,31 @@ internal actual object Platform {
         return Instant(secondsSinceEpoch.toLong(), nanosString.toInt())
     }
 
+    actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime {
+        val nsDate = NSDate(timeIntervalSince1970 = instant.epochSeconds)
+
+        return nsDate.toLocalDateTime()
+    }
+
+    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime {
+        val nsDate = NSDate(timeIntervalSince1970 = instant.epochSeconds)
+
+        val utcOffset = getOffsetToUtc(nsDate)
+
+        // TODO: adjust nsDate to utcOffset
+
+        return nsDate.toLocalDateTime()
+    }
+
+    private fun getOffsetToUtc(date: NSDate): NSInterval {
+        val currentTimezone = NSTimeZone.localTimeZone
+        val utc = NSTimeZone(timeZoneWithAbbreviation = "UTC")
+
+        val currentGMTOffset = currentTimezone.secondsFromGMTForDate(date)
+        val gmtOffset = utc.secondsFromGMTForDate(date)
+        return currentGMTOffset - gmtOffset
+    }
+
 
     private fun getNSDateNow() = NSDate()
 

@@ -108,6 +108,22 @@ internal actual object Platform {
         mktime(unixDate.ptr)
     }
 
+    actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime = memScoped {
+        val time = alloc<time_tVar>()
+        time.value = instant.epochSeconds
+
+        gmtime(time.ptr)
+    }?.pointed?.toLocalDateTime()
+        ?: LocalDateTime(0) // TODO: what to do in case of error?
+
+    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime = memScoped {
+        val time = alloc<time_tVar>()
+        time.value = instant.epochSeconds
+
+        localtime(time.ptr)
+    }?.pointed?.toLocalDateTime()
+        ?: LocalDateTime(0) // TODO: what to do in case of error?
+
 
     fun getSystemTimezoneShortname(): String? {
         tzset() // sets tzname variable

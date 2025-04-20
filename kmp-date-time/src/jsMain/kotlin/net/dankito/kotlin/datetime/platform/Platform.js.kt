@@ -43,6 +43,12 @@ internal actual object Platform {
         return instantOfEpochMilli(millisSinceEpoch)
     }
 
+    actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
+        instant.toJsDate().toLocalDateTimeAtUtc()
+
+    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
+        instant.toJsDate().toLocalDateTime()
+
 
     private fun getDateNow() = Date(Date.now())
 

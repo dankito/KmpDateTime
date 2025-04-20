@@ -16,6 +16,33 @@ class InstantTest {
 
 
     @Test
+    fun toLocalDateTimeAtUtc_WithoutDaylightSavingTime() {
+        val instant = Instant(1_739_783_287, 654_000_000)
+
+        val result = instant.toLocalDateTimeAtUtc()
+
+        if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
+            assertThat(result).isEqualTo(LocalDateTime(2025, 2, 17, 9, 8, 7, 654_000_000))
+        } else {
+            assertThat(result).isEqualTo(LocalDateTime(2025, 2, 17, 9, 8, 7))
+        }
+    }
+
+    @Test
+    fun toLocalDateTimeAtUtc_WithDaylightSavingTime() {
+        val instant = Instant(1_445_418_487, 654_000_000)
+
+        val result = instant.toLocalDateTimeAtUtc()
+
+        if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
+            assertThat(result).isEqualTo(LocalDateTime(2015, 10, 21, 9, 8, 7, 654_000_000))
+        } else {
+            assertThat(result).isEqualTo(LocalDateTime(2015, 10, 21, 9, 8, 7))
+        }
+    }
+
+
+    @Test
     fun compareTo_EpochSecondsIsGreater() {
         val first = Instant(1, 0)
         val second = Instant(0, 0)

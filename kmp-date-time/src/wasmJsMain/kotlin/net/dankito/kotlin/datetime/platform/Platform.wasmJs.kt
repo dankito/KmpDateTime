@@ -9,6 +9,9 @@ internal fun getMillisSinceEpoch(): Double =
 internal fun getDateNow(): JsDate =
     js("new Date(Date.now())")
 
+internal fun createDateFromMillisSinceEpoch(millisSinceEpoch: Double): JsDate =
+    js("new Date(millisSinceEpoch)")
+
 internal fun createDateInSystemTimezone(year: Int, month: Int, day: Int): JsDate =
     js("new Date(year, month, day)")
 
@@ -55,6 +58,12 @@ internal actual object Platform {
 
         return instantOfEpochMilli(millisSinceEpoch)
     }
+
+    actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
+        instant.toJsDate().toLocalDateTimeAtUtc()
+
+    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
+        instant.toJsDate().toLocalDateTime()
 
 
     private fun instantOfEpochMilli(millisSinceEpoch: Double): Instant =

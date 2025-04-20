@@ -11,3 +11,16 @@ fun Date.toLocalTime() =
 
 fun Date.toLocalDateTime() =
     LocalDateTime(this.toLocalDate(), this.toLocalTime())
+
+fun Date.toLocalDateAtUtc() =
+    // getMonth() = month as number (0 - 11) -> + 1; getDate() = day as number (1 - 31), getDay() = weekday (0 - 6)
+    LocalDate(this.getUTCFullYear(), this.getUTCMonth() + 1, this.getUTCDate())
+
+fun Date.toLocalTimeAtUtc() =
+    LocalTime(this.getUTCHours(), this.getUTCMinutes(), this.getUTCSeconds(), this.getUTCMilliseconds() * 1_000_000)
+
+fun Date.toLocalDateTimeAtUtc() =
+    LocalDateTime(this.toLocalDateAtUtc(), this.toLocalTimeAtUtc())
+
+
+fun Instant.toJsDate(): Date = Date(this.toEpochMilli())

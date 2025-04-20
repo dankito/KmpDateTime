@@ -26,6 +26,11 @@ data class Instant(
     }
 
 
+    fun toLocalDateTimeAtUtc(): LocalDateTime = Platform.toLocalDateTimeAtUtc(this)
+
+    fun toLocalDateTimeAtSystemTimeZone(): LocalDateTime = Platform.toLocalDateTimeAtSystemTimeZone(this)
+
+
     // TODO: implement isoString and toString()
 
 

@@ -23,7 +23,7 @@ class LocalDateTimeTest {
 
         val result = dateTime.toInstantAtUtc()
 
-        assertThat(result.epochSeconds).isEqualTo(1739783287)
+        assertThat(result.epochSeconds).isEqualTo(1_739_783_287)
         if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
             assertThat(result.nanosecondsOfSecond).isEqualTo(654_000_000)
         }

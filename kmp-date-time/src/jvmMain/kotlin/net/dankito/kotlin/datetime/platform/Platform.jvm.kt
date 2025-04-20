@@ -39,4 +39,10 @@ internal actual object Platform {
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
         dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKotlinInstant()
 
+    actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
+        instant.toJavaInstant().atOffset(ZoneOffset.UTC).toLocalDateTime().toKotlinLocalDateTime()
+
+    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
+        instant.toJavaInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime().toKotlinLocalDateTime()
+
 }

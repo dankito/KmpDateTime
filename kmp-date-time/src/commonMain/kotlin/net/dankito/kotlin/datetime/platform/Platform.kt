@@ -23,4 +23,8 @@ internal expect object Platform {
 
     fun toInstantAtUtc(dateTime: LocalDateTime): Instant
 
+    fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime
+
+    fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime
+
 }
