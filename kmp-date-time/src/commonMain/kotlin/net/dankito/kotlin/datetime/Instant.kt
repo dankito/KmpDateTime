@@ -1,5 +1,6 @@
 package net.dankito.kotlin.datetime
 
+import net.dankito.kotlin.datetime.format.DateTimeFormatter
 import net.dankito.kotlin.datetime.format.DateTimeParser
 import net.dankito.kotlin.datetime.platform.Platform
 import net.dankito.kotlin.datetime.util.DateTimeCalculator
@@ -33,8 +34,9 @@ data class Instant(
 
     fun toLocalDateTimeAtSystemTimeZone(): LocalDateTime = Platform.toLocalDateTimeAtSystemTimeZone(this)
 
+    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
-    // TODO: implement isoString and toString()
+    val isoStringAtSystemTimeZone: String by lazy { DateTimeFormatter.toIsoStringAtSystemTimeZone(this) }
 
 
     override fun compareTo(other: Instant): Int {
@@ -45,5 +47,7 @@ data class Instant(
 
         return nanosecondsOfSecond.compareTo(other.nanosecondsOfSecond)
     }
+
+    override fun toString() = isoString
 
 }

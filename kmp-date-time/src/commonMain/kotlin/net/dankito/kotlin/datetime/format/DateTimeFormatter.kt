@@ -1,5 +1,6 @@
 package net.dankito.kotlin.datetime.format
 
+import net.dankito.kotlin.datetime.Instant
 import net.dankito.kotlin.datetime.LocalDate
 import net.dankito.kotlin.datetime.LocalDateTime
 import net.dankito.kotlin.datetime.LocalTime
@@ -27,6 +28,12 @@ object DateTimeFormatter {
     fun toIsoString(dateTime: LocalDateTime) = with(dateTime) {
         date.isoString + "T" + time.isoString
     }
+
+    fun toIsoString(instant: Instant): String =
+        toIsoString(instant.toLocalDateTimeAtUtc()) + "Z"
+
+    fun toIsoStringAtSystemTimeZone(instant: Instant): String =
+        toIsoString(instant.toLocalDateTimeAtSystemTimeZone()) + "Z"
 
 
     private fun ofLength(value: Int, length: Int): String = value.toString().padStart(length, '0')
