@@ -11,25 +11,25 @@ internal actual object Platform {
     actual fun getInstantNow(): Instant {
         val javaInstance = java.time.Instant.now()
 
-        return javaInstance.toKotlinInstant()
+        return javaInstance.toKmpInstant()
     }
 
     actual fun getLocalDateNow(): LocalDate {
         val javaLocalDate = java.time.LocalDate.now()
 
-        return javaLocalDate.toKotlinLocalDate()
+        return javaLocalDate.toKmpLocalDate()
     }
 
     actual fun getLocalTimeNow(): LocalTime {
         val javaLocalTime = java.time.LocalTime.now()
 
-        return javaLocalTime.toKotlinLocalTime()
+        return javaLocalTime.toKmpLocalTime()
     }
 
     actual fun getLocalDateTimeNow(): LocalDateTime {
         val javaLocalDateTime = java.time.LocalDateTime.now()
 
-        return javaLocalDateTime.toKotlinLocalDateTime()
+        return javaLocalDateTime.toKmpLocalDateTime()
     }
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? =
@@ -37,12 +37,12 @@ internal actual object Platform {
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
-        dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKotlinInstant()
+        dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKmpInstant()
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
-        instant.toJavaInstant().atOffset(ZoneOffset.UTC).toLocalDateTime().toKotlinLocalDateTime()
+        instant.toJavaInstant().atOffset(ZoneOffset.UTC).toLocalDateTime().toKmpLocalDateTime()
 
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
-        instant.toJavaInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime().toKotlinLocalDateTime()
+        instant.toJavaInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime().toKmpLocalDateTime()
 
 }
