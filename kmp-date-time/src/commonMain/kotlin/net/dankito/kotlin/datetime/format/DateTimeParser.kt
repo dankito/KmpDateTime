@@ -103,7 +103,8 @@ object DateTimeParser {
         }
 
         val secondAndMayNanosecondOfSecond = isoTimeTrimmed.substring(colonIndices[1] + 1)
-        val (secondPart, nanosecondOfSecondPart) = secondAndMayNanosecondOfSecond.split('.', limit = 2)
+        val secondAndMayNanosecondOfSecondParts = secondAndMayNanosecondOfSecond.split('.', limit = 2)
+        val secondPart = secondAndMayNanosecondOfSecondParts.first()
         if (secondPart.length != 2) {
             return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but the second part '$secondPart' had ${secondPart.length} instead of 2 digits.", null)
         }
@@ -112,8 +113,8 @@ object DateTimeParser {
             return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but the second part '$secondPart' could not be converted to an Int.", null)
         }
 
-        val countPeriodsInSecondAndMayNanosecondOfSecond = secondAndMayNanosecondOfSecond.count { it == '.' }
-        val nanosecondOfSecond = if (countPeriodsInSecondAndMayNanosecondOfSecond == 0) 0 else {
+        val nanosecondOfSecond = if (secondAndMayNanosecondOfSecondParts.size == 1) 0 else {
+            val nanosecondOfSecondPart = secondAndMayNanosecondOfSecondParts[1]
             if (nanosecondOfSecondPart.length < 1 || nanosecondOfSecondPart.length > 9) {
                 return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but the nanosecond of second part '$nanosecondOfSecondPart' had ${nanosecondOfSecondPart.length} instead of 1-9 digits.", null)
             }
