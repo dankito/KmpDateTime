@@ -2,6 +2,7 @@ package net.dankito.kotlin.datetime
 
 import net.dankito.kotlin.datetime.format.DateTimeParser
 import net.dankito.kotlin.datetime.platform.Platform
+import net.dankito.kotlin.datetime.util.DateTimeCalculator
 
 data class Instant(
     val epochSeconds: Long,
@@ -25,6 +26,8 @@ data class Instant(
         fun parseOrNull(isoInstant: String): Instant? = DateTimeParser.parseIsoInstantStringOrNull(isoInstant)
     }
 
+
+    fun toEpochMilliseconds(): Long = DateTimeCalculator.toEpochMilliseconds(this)
 
     fun toLocalDateTimeAtUtc(): LocalDateTime = Platform.toLocalDateTimeAtUtc(this)
 

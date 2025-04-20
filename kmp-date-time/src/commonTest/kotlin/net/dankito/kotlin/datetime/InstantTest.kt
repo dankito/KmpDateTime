@@ -16,6 +16,16 @@ class InstantTest {
 
 
     @Test
+    fun toEpochMilliseconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.toEpochMilliseconds()
+
+        assertThat(result).isEqualTo(1_739_783_287_654)
+    }
+
+
+    @Test
     fun toLocalDateTimeAtUtc_WithoutDaylightSavingTime() {
         val instant = Instant(1_739_783_287, 654_000_000)
 

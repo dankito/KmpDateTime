@@ -23,4 +23,4 @@ fun Date.toLocalDateTimeAtUtc() =
     LocalDateTime(this.toLocalDateAtUtc(), this.toLocalTimeAtUtc())
 
 
-fun Instant.toJsDate(): Date = Date(this.toEpochMilli())
+fun Instant.toJsDate(): Date = Date(this.toEpochMilliseconds())

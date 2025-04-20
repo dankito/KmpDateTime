@@ -26,4 +26,4 @@ fun JsDate.toLocalDateTimeAtUtc() =
 
 fun Instant.toJsDate(): JsDate =
     // don't know why but for WASM epochMillis have to be converted to Double (in JS it works with Long)
-    createDateFromMillisSinceEpoch(this.toEpochMilli().toDouble())
+    createDateFromMillisSinceEpoch(this.toEpochMilliseconds().toDouble())
