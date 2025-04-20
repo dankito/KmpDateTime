@@ -66,7 +66,7 @@ internal actual object Platform {
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
-        val secondsSinceEpochInSystemTimezone = getSecondsSinceEpochInSystemTimezone(dateTime)
+        val secondsSinceEpochInSystemTimeZone = getSecondsSinceEpochInSystemTimeZone(dateTime)
 
         // the problem is: the returned timestamp is in system's timezone, not in UTC. E.g. if system's timezone is
         // CEST, then two hours are missing to correct UTC value.
@@ -74,7 +74,7 @@ internal actual object Platform {
         // and UTC. By adding this difference to timestamp in system's timezone, we finally get the timestamp in UTC.
         val secondsSinceEpochUtc = memScoped {
             val time = alloc<time_tVar>()
-            time.value = secondsSinceEpochInSystemTimezone
+            time.value = secondsSinceEpochInSystemTimeZone
 
             val tmUtc = gmtime(time.ptr)
 
@@ -83,18 +83,18 @@ internal actual object Platform {
             mktime(tmUtc)
         }
 
-        val differenceToUtc = secondsSinceEpochInSystemTimezone - secondsSinceEpochUtc
+        val differenceToUtc = secondsSinceEpochInSystemTimeZone - secondsSinceEpochUtc
 
-        return Instant(secondsSinceEpochInSystemTimezone + differenceToUtc)
+        return Instant(secondsSinceEpochInSystemTimeZone + differenceToUtc)
     }
 
-    fun toInstantAtSystemTimezone(dateTime: LocalDateTime): Instant {
-        val secondsSinceEpoch = getSecondsSinceEpochInSystemTimezone(dateTime)
+    fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
+        val secondsSinceEpoch = getSecondsSinceEpochInSystemTimeZone(dateTime)
 
         return Instant(secondsSinceEpoch)
     }
 
-    private fun getSecondsSinceEpochInSystemTimezone(dateTime: LocalDateTime): Long = memScoped {
+    private fun getSecondsSinceEpochInSystemTimeZone(dateTime: LocalDateTime): Long = memScoped {
         val unixDate = alloc<tm>().apply {
             tm_year = dateTime.year - 1900
             tm_mon = dateTime.monthNumber - 1
@@ -125,7 +125,7 @@ internal actual object Platform {
         ?: LocalDateTime(0) // TODO: what to do in case of error?
 
 
-    fun getSystemTimezoneShortname(): String? {
+    fun getSystemTimeZoneShortname(): String? {
         tzset() // sets tzname variable
 
         return tzname[0]?.toKString()

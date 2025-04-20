@@ -12,7 +12,7 @@ internal fun getDateNow(): JsDate =
 internal fun createDateFromMillisSinceEpoch(millisSinceEpoch: Double): JsDate =
     js("new Date(millisSinceEpoch)")
 
-internal fun createDateInSystemTimezone(year: Int, month: Int, day: Int): JsDate =
+internal fun createDateInSystemTimeZone(year: Int, month: Int, day: Int): JsDate =
     js("new Date(year, month, day)")
 
 internal fun createDateInUTC(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, millisecond: Int = 0): Double =
@@ -41,7 +41,7 @@ internal actual object Platform {
 
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
-        val jsDate = createDateInSystemTimezone(date.year, date.monthNumber - 1, date.day)
+        val jsDate = createDateInSystemTimeZone(date.year, date.monthNumber - 1, date.day)
 
         // 0 = Sunday
         return jsDate.getDay().let {

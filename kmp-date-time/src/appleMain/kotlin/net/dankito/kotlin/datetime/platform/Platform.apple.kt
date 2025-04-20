@@ -93,10 +93,10 @@ internal actual object Platform {
     }
 
     private fun getOffsetToUtc(date: NSDate): NSInterval {
-        val currentTimezone = NSTimeZone.localTimeZone
+        val currentTimeZone = NSTimeZone.localTimeZone
         val utc = NSTimeZone(timeZoneWithAbbreviation = "UTC")
 
-        val currentGMTOffset = currentTimezone.secondsFromGMTForDate(date)
+        val currentGMTOffset = currentTimeZone.secondsFromGMTForDate(date)
         val gmtOffset = utc.secondsFromGMTForDate(date)
         return currentGMTOffset - gmtOffset
     }
