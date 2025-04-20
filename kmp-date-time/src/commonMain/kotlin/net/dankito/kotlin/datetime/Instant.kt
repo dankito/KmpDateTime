@@ -1,10 +1,13 @@
 package net.dankito.kotlin.datetime
 
+import kotlinx.serialization.Serializable
 import net.dankito.kotlin.datetime.format.DateTimeFormatter
 import net.dankito.kotlin.datetime.format.DateTimeParser
 import net.dankito.kotlin.datetime.platform.Platform
+import net.dankito.kotlin.datetime.serialization.InstantIso8601Serializer
 import net.dankito.kotlin.datetime.util.DateTimeCalculator
 
+@Serializable(with = InstantIso8601Serializer::class)
 data class Instant(
     val epochSeconds: Long,
     val nanosecondsOfSecond: Int = 0

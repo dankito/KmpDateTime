@@ -1,6 +1,7 @@
 package net.dankito.kotlin.datetime.serialization
 
 import com.fasterxml.jackson.databind.module.SimpleModule
+import net.dankito.kotlin.datetime.Instant
 import net.dankito.kotlin.datetime.LocalDate
 import net.dankito.kotlin.datetime.LocalDateTime
 import net.dankito.kotlin.datetime.LocalTime
@@ -23,6 +24,9 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
 
         addSerializer(LocalDateTime::class.java, JacksonLocalDateTimeIso8601Serializer())
         addDeserializer(LocalDateTime::class.java, JacksonLocalDateTimeIso8601Deserializer())
+
+        addSerializer(Instant::class.java, JacksonInstantIso8601Serializer())
+        addDeserializer(Instant::class.java, JacksonInstantIso8601Deserializer())
 
         super.setupModule(context)
     }
