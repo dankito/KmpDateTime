@@ -39,7 +39,10 @@ data class LocalDate(
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
-    val dotSeparatedIsoString: String by lazy { DateTimeFormatter.toDotSeparatedIsoString(this) }
+    /**
+     * Variant of [isoString] that uses '.' instead of '-' as separator.
+     */
+    val isoStringDotSeparated: String by lazy { DateTimeFormatter.toDotSeparatedIsoString(this) }
 
     fun atStartOfDay(): LocalDateTime = LocalDateTime(year, month, day, 0, 0, 0, 0)
 
