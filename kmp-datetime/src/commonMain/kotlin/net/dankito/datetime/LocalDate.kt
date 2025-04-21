@@ -33,6 +33,9 @@ data class LocalDate(
 
     val monthNumber: Int by lazy { month.number }
 
+    /**
+     * The day of week of this date. May returns `null` in case of an invalid date.
+     */
     val dayOfWeek: DayOfWeek? by lazy {
         Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) }
     }
