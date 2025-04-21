@@ -115,23 +115,6 @@ kotlin {
             linuxMain.get().dependsOn(this)
             mingwMain.get().dependsOn(this)
         }
-
-        appleMain.dependencies {
-
-        }
-        linuxMain.dependencies {
-
-        }
-        mingwMain.dependencies {
-
-        }
-
-        jsMain.dependencies {
-
-        }
-        wasmJsMain.dependencies {
-
-        }
     }
 }
 
