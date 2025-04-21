@@ -10,10 +10,11 @@ import net.dankito.datetime.Instant
 
 /**
  * The default serializer for [Instant] that delegates serialization according to
- * [SerializationConfig.InstantSerializationFormat]:
- * - [DateTimeSerializationFormat.Iso8601] -> delegates to [InstantIso8601Serializer]
- * - [DateTimeSerializationFormat.Components] -> delegates to [InstantComponentSerializer]
- * - [DateTimeSerializationFormat.Custom] -> delegates to serializer set in [SerializationConfig.InstantCustomSerializer]
+ * [SerializationConfig.InstantDefaultFormat]:
+ * - [InstantSerializationFormat.Iso8601] -> delegates to [InstantIso8601Serializer]
+ * - [InstantSerializationFormat.EpochMilliseconds] -> delegates to [InstantEpochMillisecondsSerializer]
+ * - [InstantSerializationFormat.Components] -> delegates to [InstantComponentSerializer]
+ * - [InstantSerializationFormat.Custom] -> delegates to serializer set in [SerializationConfig.InstantCustomSerializer]
  */
 object InstantDelegatingSerializer: KSerializer<Instant> {
 
@@ -28,10 +29,11 @@ object InstantDelegatingSerializer: KSerializer<Instant> {
     }
 
 
-    private fun getSerializer(): KSerializer<Instant> = when (SerializationConfig.InstantSerializationFormat) {
-        DateTimeSerializationFormat.Iso8601 -> InstantIso8601Serializer
-        DateTimeSerializationFormat.Components -> InstantComponentSerializer
-        DateTimeSerializationFormat.Custom -> SerializationConfig.InstantCustomSerializer
+    private fun getSerializer(): KSerializer<Instant> = when (SerializationConfig.InstantDefaultFormat) {
+        InstantSerializationFormat.Iso8601 -> InstantIso8601Serializer
+        InstantSerializationFormat.EpochMilliseconds -> InstantEpochMillisecondsSerializer
+        InstantSerializationFormat.Components -> InstantComponentSerializer
+        InstantSerializationFormat.Custom -> SerializationConfig.InstantCustomSerializer
     }
 
 }

@@ -12,7 +12,7 @@ class InstantComponentSerializerTest {
 
     @BeforeTest
     fun setup() {
-        SerializationConfig.InstantSerializationFormat = DateTimeSerializationFormat.Components
+        SerializationConfig.InstantDefaultFormat = InstantSerializationFormat.Components
     }
 
 

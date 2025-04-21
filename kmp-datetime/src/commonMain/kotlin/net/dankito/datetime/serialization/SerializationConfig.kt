@@ -17,11 +17,11 @@ import net.dankito.datetime.LocalTime
  */
 object SerializationConfig {
 
-    var LocalDateSerializationFormat = DateTimeSerializationFormat.Iso8601
+    var LocalDateDefaultFormat = DateTimeSerializationFormat.Iso8601
 
     /**
      * If you like to apply a custom serializer for [LocalDate],
-     * set [LocalDateSerializationFormat] to [DateTimeSerializationFormat.Custom]
+     * set [LocalDateDefaultFormat] to [DateTimeSerializationFormat.Custom]
      * and set your custom implementation here.
      *
      * Defaults to [LocalDateIso8601Serializer].
@@ -29,11 +29,11 @@ object SerializationConfig {
     var LocalDateCustomSerializer: KSerializer<LocalDate> = LocalDateIso8601Serializer
 
 
-    var LocalTimeSerializationFormat = DateTimeSerializationFormat.Iso8601
+    var LocalTimeDefaultFormat = DateTimeSerializationFormat.Iso8601
 
     /**
      * If you like to apply a custom serializer for [LocalTime],
-     * set [LocalTimeSerializationFormat] to [DateTimeSerializationFormat.Custom]
+     * set [LocalTimeDefaultFormat] to [DateTimeSerializationFormat.Custom]
      * and set your custom implementation here.
      *
      * Defaults to [LocalTimeIso8601Serializer].
@@ -41,11 +41,11 @@ object SerializationConfig {
     var LocalTimeCustomSerializer: KSerializer<LocalTime> = LocalTimeIso8601Serializer
 
 
-    var LocalDateTimeSerializationFormat = DateTimeSerializationFormat.Iso8601
+    var LocalDateTimeDefaultFormat = DateTimeSerializationFormat.Iso8601
 
     /**
      * If you like to apply a custom serializer for [LocalDateTime],
-     * set [LocalDateTimeSerializationFormat] to [DateTimeSerializationFormat.Custom]
+     * set [LocalDateTimeDefaultFormat] to [DateTimeSerializationFormat.Custom]
      * and set your custom implementation here.
      *
      * Defaults to [LocalDateIso8601Serializer].
@@ -53,11 +53,11 @@ object SerializationConfig {
     var LocalDateTimeCustomSerializer: KSerializer<LocalDateTime> = LocalDateTimeIso8601Serializer
 
 
-    var InstantSerializationFormat = DateTimeSerializationFormat.Iso8601
+    var InstantDefaultFormat = InstantSerializationFormat.Iso8601
 
     /**
      * If you like to apply a custom serializer for [Instant],
-     * set [InstantSerializationFormat] to [DateTimeSerializationFormat.Custom]
+     * set [InstantDefaultFormat] to [InstantSerializationFormat.Custom]
      * and set your custom implementation here.
      *
      * Defaults to [InstantIso8601Serializer].

@@ -12,7 +12,7 @@ class LocalTimeComponentSerializerTest {
 
     @BeforeTest
     fun setup() {
-        SerializationConfig.LocalTimeSerializationFormat = DateTimeSerializationFormat.Components
+        SerializationConfig.LocalTimeDefaultFormat = DateTimeSerializationFormat.Components
     }
 
 

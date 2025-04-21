@@ -12,7 +12,7 @@ class LocalDateIso8601SerializerTest {
 
     @BeforeTest
     fun setup() {
-        SerializationConfig.LocalDateSerializationFormat = DateTimeSerializationFormat.Iso8601
+        SerializationConfig.LocalDateDefaultFormat = DateTimeSerializationFormat.Iso8601
     }
 
 
