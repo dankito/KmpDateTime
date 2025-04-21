@@ -1,6 +1,7 @@
 package net.dankito.datetime.platform
 
 import net.dankito.datetime.*
+import java.time.ZoneId
 import java.time.ZoneOffset
 
 internal actual object Platform {
@@ -38,6 +39,9 @@ internal actual object Platform {
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
         dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKmpInstant()
+
+    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant =
+        dateTime.toJavaLocalDateTime().atZone(ZoneId.systemDefault()).toInstant().toKmpInstant()
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
         instant.toJavaInstant().atOffset(ZoneOffset.UTC).toLocalDateTime().toKmpLocalDateTime()

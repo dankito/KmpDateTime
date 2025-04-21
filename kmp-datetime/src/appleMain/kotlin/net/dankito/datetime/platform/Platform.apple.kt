@@ -47,20 +47,15 @@ internal actual object Platform {
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
-        val components = NSDateComponents().apply {
-            // date components expect an NSInteger, which is Int on 32-bit system and Long on 64-bit systems -> convert Ints to NSInteger
-            this.year = dateTime.year.toNSInteger()
-            this.month = dateTime.monthNumber.toNSInteger()
-            this.day = dateTime.day.toNSInteger()
-            this.hour = dateTime.hour.toNSInteger()
-            this.minute = dateTime.minute.toNSInteger()
-            this.second = dateTime.second.toNSInteger()
-            timeZone = NSTimeZone.timeZoneWithAbbreviation("UTC")  // Ensure it's interpreted as UTC
-        }
+        val nsDate = mapToNSDate(dateTime, NSTimeZone.timeZoneWithAbbreviation("UTC"))  // Ensure it's interpreted as UTC
 
-        val calendar = NSCalendar.currentCalendar
-        val nsDate = calendar.dateFromComponents(components)
-            ?: throw IllegalArgumentException("Could not convert $dateTime to NSDate")
+        val secondsSinceEpoch = nsDate.timeIntervalSince1970
+
+        return epochSecondsToInstant(secondsSinceEpoch)
+    }
+
+    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
+        val nsDate = mapToNSDate(dateTime, NSTimeZone.localTimeZone)
 
         val secondsSinceEpoch = nsDate.timeIntervalSince1970
 
@@ -99,6 +94,23 @@ internal actual object Platform {
         val currentGMTOffset = currentTimeZone.secondsFromGMTForDate(date)
         val gmtOffset = utc.secondsFromGMTForDate(date)
         return currentGMTOffset - gmtOffset
+    }
+
+    private fun mapToNSDate(dateTime: LocalDateTime, timeZone: NSTimeZone = NSTimeZone.localTimeZone): NSDate {
+        val components = NSDateComponents().apply {
+            // date components expect an NSInteger, which is Int on 32-bit system and Long on 64-bit systems -> convert Ints to NSInteger
+            this.year = dateTime.year.toNSInteger()
+            this.month = dateTime.monthNumber.toNSInteger()
+            this.day = dateTime.day.toNSInteger()
+            this.hour = dateTime.hour.toNSInteger()
+            this.minute = dateTime.minute.toNSInteger()
+            this.second = dateTime.second.toNSInteger()
+            this.timeZone = timeZone
+        }
+
+        val calendar = NSCalendar.currentCalendar
+        return calendar.dateFromComponents(components)
+            ?: throw IllegalArgumentException("Could not convert $dateTime to NSDate")
     }
 
 

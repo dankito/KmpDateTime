@@ -43,6 +43,31 @@ class LocalDateTimeTest {
 
 
     @Test
+    fun toInstantAtSystemTimeZone_WithoutDaylightSavingTime() {
+        val dateTime = LocalDateTime(2025, 2, 17, 9, 8, 7, 654_000_000)
+
+        val result = dateTime.toInstantAtSystemTimeZone()
+
+        assertThat(result.epochSeconds).isEqualTo(1_739_779_687)
+        if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
+            assertThat(result.nanosecondsOfSecond).isEqualTo(654_000_000)
+        }
+    }
+
+    @Test
+    fun toInstantAtSystemTimeZone_WithDaylightSavingTime() {
+        val dateTime = LocalDateTime(2015, 10, 21, 9, 8, 7, 654_000_000)
+
+        val result = dateTime.toInstantAtSystemTimeZone()
+
+        assertThat(result.epochSeconds).isEqualTo(1_445_411_287)
+        if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
+            assertThat(result.nanosecondsOfSecond).isEqualTo(654_000_000)
+        }
+    }
+
+
+    @Test
     fun compareTo_DateIsGreater() {
         val first = LocalDateTime(LocalDate(2025, 1, 2), LocalTime(10, 0, 0, 0))
         val second = LocalDateTime(LocalDate(2025, 1, 1), LocalTime(10, 0, 0, 0))

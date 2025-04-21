@@ -43,6 +43,15 @@ internal actual object Platform {
         return instantOfEpochMilli(millisSinceEpoch)
     }
 
+    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
+        val jsDate = Date(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
+            dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
+
+        val millisSinceEpoch = jsDate.getTime()
+
+        return instantOfEpochMilli(millisSinceEpoch)
+    }
+
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
         instant.toJsDate().toLocalDateTimeAtUtc()
 

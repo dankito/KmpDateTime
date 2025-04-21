@@ -52,6 +52,8 @@ data class LocalDateTime(
 
     fun toInstantAtUtc(): Instant = Platform.toInstantAtUtc(this)
 
+    fun toInstantAtSystemTimeZone(): Instant = Platform.toInstantAtSystemTimeZone(this)
+
 
     override fun compareTo(other: LocalDateTime): Int {
         val dateCompare = date.compareTo(other.date)

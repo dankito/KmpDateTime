@@ -12,10 +12,10 @@ internal fun getDateNow(): JsDate =
 internal fun createDateFromMillisSinceEpoch(millisSinceEpoch: Double): JsDate =
     js("new Date(millisSinceEpoch)")
 
-internal fun createDateInSystemTimeZone(year: Int, month: Int, day: Int): JsDate =
-    js("new Date(year, month, day)")
+internal fun createDateInSystemTimeZone(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, millisecond: Int = 0): JsDate =
+    js("new Date(year, month, day, hour, minute, second, millisecond)")
 
-internal fun createDateInUTC(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, millisecond: Int = 0): Double =
+internal fun createDateInUTC(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, millisecond: Int = 0): Double =
     js("Date.UTC(year, month, day, hour, minute, second, millisecond)")
 
 
@@ -55,6 +55,15 @@ internal actual object Platform {
         // do not use JsDate(), it interprets the values in system's timezone rather than in UTC
         val millisSinceEpoch = createDateInUTC(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
+
+        return instantOfEpochMilli(millisSinceEpoch)
+    }
+
+    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
+        val jsDate = createDateInSystemTimeZone(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
+            dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
+
+        val millisSinceEpoch = jsDate.getTime()
 
         return instantOfEpochMilli(millisSinceEpoch)
     }

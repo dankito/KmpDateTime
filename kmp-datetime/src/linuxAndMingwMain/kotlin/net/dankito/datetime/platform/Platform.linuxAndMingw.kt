@@ -88,7 +88,7 @@ internal actual object Platform {
         return Instant(secondsSinceEpochInSystemTimeZone + differenceToUtc)
     }
 
-    fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
+    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
         val secondsSinceEpoch = getSecondsSinceEpochInSystemTimeZone(dateTime)
 
         return Instant(secondsSinceEpoch)
