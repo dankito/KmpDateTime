@@ -35,6 +35,14 @@ data class LocalTime(
 
     val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
 
+    fun atDate(year: Int, month: Month, day: Int = 1): LocalDateTime =
+        LocalDateTime(year, month, day, hour, minute, second, nanosecondOfSecond)
+
+    fun atDate(year: Int, monthNumber: Int = 1, day: Int = 1): LocalDateTime =
+        LocalDateTime(year, monthNumber, day, hour, minute, second, nanosecondOfSecond)
+
+    fun atDate(date: LocalDate): LocalDateTime = LocalDateTime(date, this)
+
 
     override fun compareTo(other: LocalTime): Int {
         val hourCompare = hour.compareTo(other.hour)

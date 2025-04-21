@@ -41,6 +41,13 @@ data class LocalDate(
 
     val dotSeparatedIsoString: String by lazy { DateTimeFormatter.toDotSeparatedIsoString(this) }
 
+    fun atStartOfDay(): LocalDateTime = LocalDateTime(year, month, day, 0, 0, 0, 0)
+
+    fun atTime(hour: Int, minute: Int = 0, second: Int = 0, nanosecondOfSecond: Int = 0): LocalDateTime =
+        LocalDateTime(year, month, day, hour, minute, second, nanosecondOfSecond)
+
+    fun atTime(time: LocalTime): LocalDateTime = LocalDateTime(this, time)
+
 
     override fun compareTo(other: LocalDate): Int {
         val yearCompare = year.compareTo(other.year)
