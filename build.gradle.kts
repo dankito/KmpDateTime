@@ -1,6 +1,6 @@
 
 allprojects {
-    group = "net.dankito.kotlin"
+    group = "net.dankito.datetime"
     version = "1.0.0-SNAPSHOT"
 
 
