@@ -16,7 +16,7 @@ class LocalDateTimeIso8601SerializerJacksonCompatibilityTest {
 
     @BeforeTest
     fun setup() {
-        SerializationConfig.InstantDefaultFormat = InstantSerializationFormat.Iso8601
+        SerializationConfig.LocalDateTimeDefaultFormat = DateTimeSerializationFormat.Iso8601
     }
 
 
