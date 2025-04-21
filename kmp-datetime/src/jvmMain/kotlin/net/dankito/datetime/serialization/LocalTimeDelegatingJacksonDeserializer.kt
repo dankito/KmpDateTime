@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import net.dankito.datetime.LocalTime
 
-open class JacksonLocalTimeDelegatingDeserializer : StdDeserializer<LocalTime>(LocalTime::class.java) {
+open class LocalTimeDelegatingJacksonDeserializer : StdDeserializer<LocalTime>(LocalTime::class.java) {
 
     override fun deserialize(parser: JsonParser, context: DeserializationContext): LocalTime =
         getDeserializer().deserialize(parser, context)
@@ -13,7 +13,7 @@ open class JacksonLocalTimeDelegatingDeserializer : StdDeserializer<LocalTime>(L
 
     private fun getDeserializer(): StdDeserializer<LocalTime> =when (SerializationConfig.LocalTimeDefaultFormat) {
         DateTimeSerializationFormat.Custom -> SerializationConfig.LocalTimeCustomJacksonDeserializer
-        else -> JacksonLocalTimeIso8601Deserializer.Instance
+        else -> LocalTimeIso8601JacksonDeserializer.Instance
     }
 
 }

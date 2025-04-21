@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import net.dankito.datetime.Instant
 
-open class JacksonInstantEpochMillisecondsDeserializer : StdDeserializer<Instant>(Instant::class.java) {
+open class InstantEpochMillisecondsJacksonDeserializer : StdDeserializer<Instant>(Instant::class.java) {
 
     companion object {
-        val Instance = JacksonInstantEpochMillisecondsDeserializer()
+        val Instance = InstantEpochMillisecondsJacksonDeserializer()
     }
 
 

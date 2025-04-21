@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import net.dankito.datetime.LocalDate
 
-open class JacksonLocalDateDelegatingSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
+open class LocalDateDelegatingJacksonSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
 
     override fun serialize(value: LocalDate, generator: JsonGenerator, provider: SerializerProvider) {
         getSerializer().serialize(value, generator, provider)
@@ -14,7 +14,7 @@ open class JacksonLocalDateDelegatingSerializer : StdSerializer<LocalDate>(Local
 
     private fun getSerializer(): StdSerializer<LocalDate> = when (SerializationConfig.LocalDateDefaultFormat) {
         DateTimeSerializationFormat.Custom -> SerializationConfig.LocalDateCustomJacksonSerializer
-        else -> JacksonLocalDateIso8601Serializer.Instance
+        else -> LocalDateIso8601JacksonSerializer.Instance
     }
 
 }

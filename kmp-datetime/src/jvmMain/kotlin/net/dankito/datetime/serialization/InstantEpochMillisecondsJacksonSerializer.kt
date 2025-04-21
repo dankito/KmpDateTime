@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import net.dankito.datetime.Instant
 
-open class JacksonInstantEpochMillisecondsSerializer : StdSerializer<Instant>(Instant::class.java) {
+open class InstantEpochMillisecondsJacksonSerializer : StdSerializer<Instant>(Instant::class.java) {
 
     companion object {
-        val Instance = JacksonInstantEpochMillisecondsSerializer()
+        val Instance = InstantEpochMillisecondsJacksonSerializer()
     }
 
 

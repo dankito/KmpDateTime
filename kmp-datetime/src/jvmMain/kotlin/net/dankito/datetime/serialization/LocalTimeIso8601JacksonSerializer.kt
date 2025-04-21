@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import net.dankito.datetime.LocalTime
 
-open class JacksonLocalTimeIso8601Serializer : StdSerializer<LocalTime>(LocalTime::class.java) {
+open class LocalTimeIso8601JacksonSerializer : StdSerializer<LocalTime>(LocalTime::class.java) {
 
     companion object {
-        val Instance = JacksonLocalTimeIso8601Serializer()
+        val Instance = LocalTimeIso8601JacksonSerializer()
     }
 
 

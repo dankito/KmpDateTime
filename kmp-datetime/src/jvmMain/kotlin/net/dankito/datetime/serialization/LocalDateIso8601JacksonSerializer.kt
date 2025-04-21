@@ -3,16 +3,16 @@ package net.dankito.datetime.serialization
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
-import net.dankito.datetime.Instant
+import net.dankito.datetime.LocalDate
 
-open class JacksonInstantIso8601Serializer : StdSerializer<Instant>(Instant::class.java) {
+open class LocalDateIso8601JacksonSerializer : StdSerializer<LocalDate>(LocalDate::class.java) {
 
     companion object {
-        val Instance = JacksonInstantIso8601Serializer()
+        val Instance = LocalDateIso8601JacksonSerializer()
     }
 
 
-    override fun serialize(value: Instant, generator: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(value: LocalDate, generator: JsonGenerator, provider: SerializerProvider) {
         generator.writeString(value.isoString)
     }
 
