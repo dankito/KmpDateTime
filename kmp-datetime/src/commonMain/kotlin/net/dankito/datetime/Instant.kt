@@ -14,6 +14,11 @@ data class Instant(
 ) : Comparable<Instant> {
 
     companion object {
+        /**
+         * Returns the precision of the time since Epoch of the underlying platform.
+         *
+         * (Milliseconds for JVM, JS and WasmJS; Seconds for Linux, Windows and Apple systems.)
+         */
         val timeSinceEpochPrecision: TimeSinceEpochPrecision = Platform.timeSinceEpochPrecision
 
         fun now(): Instant = Platform.getInstantNow()
