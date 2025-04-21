@@ -23,4 +23,4 @@ plugins {
 rootProject.name = "KmpDateTime"
 
 
-include("kmp-date-time")
+include("kmp-datetime")

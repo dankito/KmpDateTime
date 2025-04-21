@@ -11,7 +11,7 @@ import net.dankito.datetime.LocalTime
  *
  * Either register it manually with `ObjectMapper().registerModule(KmpDateTimeModule())` or with
  * `ObjectMapper().findAndRegisterModules()`, which automatically registers this module due to our ServiceLoader file in
- * `kmp-date-time/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`.
+ * `kmp-datetime/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`.
  */
 open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
 

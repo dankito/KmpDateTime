@@ -9,7 +9,7 @@ import org.junit.Test
 class JacksonLocalTimeIso8601SerializerTest {
 
     // as we registered our Jackson module with all our serializers and deserializers in
-    // `kmp-date-time/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`
+    // `kmp-datetime/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`
     // ObjectMapper.findAndRegisterModules() registers our module and therefore serializers and deserializers automatically.
     private val objectMapper = Serializers.jacksonObjectMapper
 
