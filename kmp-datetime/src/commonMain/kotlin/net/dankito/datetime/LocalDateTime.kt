@@ -42,7 +42,9 @@ data class LocalDateTime(
     }
 
 
-    val monthNumber: Int by lazy { month.number }
+    val monthNumber: Int = month.number
+
+    val dayOfWeek: DayOfWeek? by lazy { date.dayOfWeek }
 
     val date: LocalDate by lazy { LocalDate(year, month, day) }
 
