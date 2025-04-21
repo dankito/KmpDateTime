@@ -29,5 +29,8 @@ fun NSDate.toLocalDateTime() =
     LocalDateTime(this.toLocalDate(), this.toLocalTime())
 
 
+/**
+ * Returns the Instant as NSDate in system time zone.
+ */
 fun Instant.toNSDate(): NSDate =
     NSDate.dateWithTimeIntervalSince1970(this.epochSeconds.toDouble())

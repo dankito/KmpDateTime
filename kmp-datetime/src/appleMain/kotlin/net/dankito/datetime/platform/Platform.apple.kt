@@ -75,22 +75,19 @@ internal actual object Platform {
     }
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime {
-        val nsDate = instant.toNSDate()
+        val nsDateAtSystemTimeZone = instant.toNSDate()
 
-        return nsDate.toLocalDateTime()
+        val utcOffset = getOffsetToUtcInSeconds(nsDateAtSystemTimeZone)
+
+        val nsDateAtUtc = NSDate.dateWithTimeInterval(utcOffset * -1, nsDateAtSystemTimeZone)
+
+        return nsDateAtUtc.toLocalDateTime()
     }
 
-    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime {
-        val nsDate = instant.toNSDate()
+    actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
+        instant.toNSDate().toLocalDateTime()
 
-        val utcOffset = getOffsetToUtc(nsDate)
-
-        // TODO: adjust nsDate to utcOffset
-
-        return nsDate.toLocalDateTime()
-    }
-
-    private fun getOffsetToUtc(date: NSDate): NSTimeInterval {
+    private fun getOffsetToUtcInSeconds(date: NSDate): NSTimeInterval {
         val currentTimeZone = NSTimeZone.localTimeZone
 
         val currentGMTOffset = currentTimeZone.secondsFromGMTForDate(date)
