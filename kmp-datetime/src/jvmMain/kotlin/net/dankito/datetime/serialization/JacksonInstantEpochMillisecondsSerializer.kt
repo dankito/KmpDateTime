@@ -5,15 +5,15 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import net.dankito.datetime.Instant
 
-open class JacksonInstantIso8601Serializer : StdSerializer<Instant>(Instant::class.java) {
+open class JacksonInstantEpochMillisecondsSerializer : StdSerializer<Instant>(Instant::class.java) {
 
     companion object {
-        val Instance = JacksonInstantIso8601Serializer()
+        val Instance = JacksonInstantEpochMillisecondsSerializer()
     }
 
 
     override fun serialize(value: Instant, generator: JsonGenerator, provider: SerializerProvider) {
-        generator.writeString(value.isoString)
+        generator.writeNumber(value.toEpochMilliseconds())
     }
 
 }

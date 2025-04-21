@@ -13,6 +13,7 @@ open class JacksonInstantDelegatingSerializer : StdSerializer<Instant>(Instant::
 
 
     private fun getSerializer(): StdSerializer<Instant> = when (SerializationConfig.InstantDefaultFormat) {
+        InstantSerializationFormat.EpochMilliseconds -> JacksonInstantEpochMillisecondsSerializer.Instance
         InstantSerializationFormat.Custom -> SerializationConfig.InstantCustomJacksonSerializer
         else -> JacksonInstantIso8601Serializer.Instance
     }

@@ -41,6 +41,9 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addSerializer(Instant::class.java, JacksonInstantIso8601Serializer.Instance)
         addDeserializer(Instant::class.java, JacksonInstantIso8601Deserializer.Instance)
 
+        addSerializer(Instant::class.java, JacksonInstantEpochMillisecondsSerializer.Instance)
+        addDeserializer(Instant::class.java, JacksonInstantEpochMillisecondsDeserializer.Instance)
+
         addSerializer(Instant::class.java, JacksonInstantDelegatingSerializer())
         addDeserializer(Instant::class.java, JacksonInstantDelegatingDeserializer())
 

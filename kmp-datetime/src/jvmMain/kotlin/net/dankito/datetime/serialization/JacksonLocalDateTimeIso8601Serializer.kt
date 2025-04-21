@@ -12,7 +12,6 @@ open class JacksonLocalDateTimeIso8601Serializer : StdSerializer<LocalDateTime>(
     }
 
 
-
     override fun serialize(value: LocalDateTime, generator: JsonGenerator, provider: SerializerProvider) {
         generator.writeString(value.isoString)
     }

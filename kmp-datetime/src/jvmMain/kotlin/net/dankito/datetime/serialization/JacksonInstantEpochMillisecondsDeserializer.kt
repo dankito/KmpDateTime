@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import net.dankito.datetime.Instant
 
-open class JacksonInstantIso8601Deserializer : StdDeserializer<Instant>(Instant::class.java) {
+open class JacksonInstantEpochMillisecondsDeserializer : StdDeserializer<Instant>(Instant::class.java) {
 
     companion object {
-        val Instance = JacksonInstantIso8601Deserializer()
+        val Instance = JacksonInstantEpochMillisecondsDeserializer()
     }
 
 
     override fun deserialize(parser: JsonParser, context: DeserializationContext): Instant =
-        Instant.parse(parser.valueAsString)
+        Instant.ofEpochMilli(parser.longValue)
 
 }

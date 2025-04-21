@@ -12,6 +12,7 @@ open class JacksonInstantDelegatingDeserializer : StdDeserializer<Instant>(Insta
 
 
     private fun getDeserializer(): StdDeserializer<Instant> =when (SerializationConfig.InstantDefaultFormat) {
+        InstantSerializationFormat.EpochMilliseconds -> JacksonInstantEpochMillisecondsDeserializer.Instance
         InstantSerializationFormat.Custom -> SerializationConfig.InstantCustomJacksonDeserializer
         else -> JacksonInstantIso8601Deserializer.Instance
     }

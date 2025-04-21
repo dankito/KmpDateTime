@@ -12,7 +12,6 @@ open class JacksonLocalDateTimeIso8601Deserializer : StdDeserializer<LocalDateTi
     }
 
 
-
     override fun deserialize(parser: JsonParser, context: DeserializationContext): LocalDateTime =
         LocalDateTime.parse(parser.valueAsString)
 
