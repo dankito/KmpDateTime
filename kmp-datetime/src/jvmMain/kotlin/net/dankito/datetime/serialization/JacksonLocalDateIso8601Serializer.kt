@@ -7,6 +7,11 @@ import net.dankito.datetime.LocalDate
 
 open class JacksonLocalDateIso8601Serializer : StdSerializer<LocalDate>(LocalDate::class.java) {
 
+    companion object {
+        val Instance = JacksonLocalDateIso8601Serializer()
+    }
+
+
     override fun serialize(value: LocalDate, generator: JsonGenerator, provider: SerializerProvider) {
         generator.writeString(value.isoString)
     }
