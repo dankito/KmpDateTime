@@ -13,11 +13,7 @@ internal actual object Platform {
     actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Seconds
 
 
-    actual fun getInstantNow(): Instant {
-        val secondsSinceEpoch = getNSDateNow().timeIntervalSince1970
-
-        return epochSecondsToInstant(secondsSinceEpoch)
-    }
+    actual fun getInstantNow(): Instant = getNSDateNow().toInstant()
 
 
     actual fun getLocalDateNow(): LocalDate =
@@ -49,30 +45,11 @@ internal actual object Platform {
     }
 
 
-    actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
-        val nsDate = mapToNSDate(dateTime, Utc)  // Ensure it's interpreted as UTC
+    actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
+        dateTime.toNSDateAt(Utc).toInstant()
 
-        val secondsSinceEpoch = nsDate.timeIntervalSince1970
-
-        return epochSecondsToInstant(secondsSinceEpoch)
-    }
-
-    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
-        val nsDate = mapToNSDate(dateTime, NSTimeZone.localTimeZone)
-
-        val secondsSinceEpoch = nsDate.timeIntervalSince1970
-
-        return epochSecondsToInstant(secondsSinceEpoch)
-    }
-
-    private fun epochSecondsToInstant(secondsSinceEpoch: Double): Instant { // TimeInterval is a typealias for Double
-        val nanosString = secondsSinceEpoch.toString().substringAfter('.').let {
-            if (it.length > 9) it.substring(0, 9)
-            else it.padEnd(9, '0')
-        }
-
-        return Instant(secondsSinceEpoch.toLong(), nanosString.toInt())
-    }
+    actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant =
+        dateTime.toNSDateAtSystemTimeZone().toInstant()
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime {
         val nsDateAtSystemTimeZone = instant.toNSDate()
@@ -87,29 +64,12 @@ internal actual object Platform {
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
         instant.toNSDate().toLocalDateTime()
 
-    private fun getOffsetToUtcInSeconds(date: NSDate): NSTimeInterval {
+    private fun getOffsetToUtcInSeconds(date: NSDate): NSTimeInterval { // NSTimeInterval is a typealias for Double
         val currentTimeZone = NSTimeZone.localTimeZone
 
         val currentGMTOffset = currentTimeZone.secondsFromGMTForDate(date)
         val gmtOffset = Utc.secondsFromGMTForDate(date)
         return (currentGMTOffset - gmtOffset).toDouble()
-    }
-
-    private fun mapToNSDate(dateTime: LocalDateTime, timeZone: NSTimeZone = NSTimeZone.localTimeZone): NSDate {
-        val components = NSDateComponents().apply {
-            // date components expect an NSInteger, which is Int on 32-bit system and Long on 64-bit systems -> convert Ints to NSInteger
-            this.year = dateTime.year.toNSInteger()
-            this.month = dateTime.monthNumber.toNSInteger()
-            this.day = dateTime.day.toNSInteger()
-            this.hour = dateTime.hour.toNSInteger()
-            this.minute = dateTime.minute.toNSInteger()
-            this.second = dateTime.second.toNSInteger()
-            this.timeZone = timeZone
-        }
-
-        val calendar = NSCalendar.currentCalendar
-        return calendar.dateFromComponents(components)
-            ?: throw IllegalArgumentException("Could not convert $dateTime to NSDate")
     }
 
 
