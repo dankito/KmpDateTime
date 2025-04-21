@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import net.dankito.datetime.platform.Platform
-import net.dankito.datetime.serialization.LocalTimeIso8601Serializer
+import net.dankito.datetime.serialization.LocalTimeDelegatingSerializer
 
-@Serializable(with = LocalTimeIso8601Serializer::class)
+@Serializable(with = LocalTimeDelegatingSerializer::class)
 data class LocalTime(
     val hour: Int,
     val minute: Int = 0,

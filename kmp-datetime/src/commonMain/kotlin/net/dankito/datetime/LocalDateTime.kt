@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import net.dankito.datetime.platform.Platform
-import net.dankito.datetime.serialization.LocalDateTimeIso8601Serializer
+import net.dankito.datetime.serialization.LocalDateTimeDelegatingSerializer
 
-@Serializable(with = LocalDateTimeIso8601Serializer::class)
+@Serializable(with = LocalDateTimeDelegatingSerializer::class)
 data class LocalDateTime(
     val year: Int,
     val month: Month,
