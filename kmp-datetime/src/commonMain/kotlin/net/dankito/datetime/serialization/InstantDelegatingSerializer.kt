@@ -13,6 +13,7 @@ import net.dankito.datetime.Instant
  * [SerializationConfig.InstantSerializationFormat]:
  * - [DateTimeSerializationFormat.Iso8601] -> delegates to [InstantIso8601Serializer]
  * - [DateTimeSerializationFormat.Components] -> delegates to [InstantComponentSerializer]
+ * - [DateTimeSerializationFormat.Custom] -> delegates to serializer set in [SerializationConfig.InstantCustomSerializer]
  */
 object InstantDelegatingSerializer: KSerializer<Instant> {
 
@@ -30,6 +31,7 @@ object InstantDelegatingSerializer: KSerializer<Instant> {
     private fun getSerializer(): KSerializer<Instant> = when (SerializationConfig.InstantSerializationFormat) {
         DateTimeSerializationFormat.Iso8601 -> InstantIso8601Serializer
         DateTimeSerializationFormat.Components -> InstantComponentSerializer
+        DateTimeSerializationFormat.Custom -> SerializationConfig.InstantCustomSerializer
     }
 
 }

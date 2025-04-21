@@ -13,6 +13,7 @@ import net.dankito.datetime.LocalTime
  * [SerializationConfig.LocalTimeSerializationFormat]:
  * - [DateTimeSerializationFormat.Iso8601] -> delegates to [LocalTimeIso8601Serializer]
  * - [DateTimeSerializationFormat.Components] -> delegates to [LocalTimeComponentSerializer]
+ * - [DateTimeSerializationFormat.Custom] -> delegates to serializer set in [SerializationConfig.LocalTimeCustomSerializer]
  */
 object LocalTimeDelegatingSerializer: KSerializer<LocalTime> {
 
@@ -30,6 +31,7 @@ object LocalTimeDelegatingSerializer: KSerializer<LocalTime> {
     private fun getSerializer(): KSerializer<LocalTime> = when (SerializationConfig.LocalTimeSerializationFormat) {
         DateTimeSerializationFormat.Iso8601 -> LocalTimeIso8601Serializer
         DateTimeSerializationFormat.Components -> LocalTimeComponentSerializer
+        DateTimeSerializationFormat.Custom -> SerializationConfig.LocalTimeCustomSerializer
     }
 
 }
