@@ -7,6 +7,9 @@ import platform.Foundation.*
 @OptIn(UnsafeNumber::class)
 internal actual object Platform {
 
+    private val Utc = NSTimeZone.timeZoneWithAbbreviation("UTC")!!
+
+
     actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Seconds
 
 
@@ -47,7 +50,7 @@ internal actual object Platform {
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
-        val nsDate = mapToNSDate(dateTime, NSTimeZone.timeZoneWithAbbreviation("UTC"))  // Ensure it's interpreted as UTC
+        val nsDate = mapToNSDate(dateTime, Utc)  // Ensure it's interpreted as UTC
 
         val secondsSinceEpoch = nsDate.timeIntervalSince1970
 
@@ -72,13 +75,13 @@ internal actual object Platform {
     }
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime {
-        val nsDate = NSDate(timeIntervalSince1970 = instant.epochSeconds)
+        val nsDate = instant.toNSDate()
 
         return nsDate.toLocalDateTime()
     }
 
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime {
-        val nsDate = NSDate(timeIntervalSince1970 = instant.epochSeconds)
+        val nsDate = instant.toNSDate()
 
         val utcOffset = getOffsetToUtc(nsDate)
 
@@ -87,13 +90,12 @@ internal actual object Platform {
         return nsDate.toLocalDateTime()
     }
 
-    private fun getOffsetToUtc(date: NSDate): NSInterval {
+    private fun getOffsetToUtc(date: NSDate): NSTimeInterval {
         val currentTimeZone = NSTimeZone.localTimeZone
-        val utc = NSTimeZone(timeZoneWithAbbreviation = "UTC")
 
         val currentGMTOffset = currentTimeZone.secondsFromGMTForDate(date)
-        val gmtOffset = utc.secondsFromGMTForDate(date)
-        return currentGMTOffset - gmtOffset
+        val gmtOffset = Utc.secondsFromGMTForDate(date)
+        return (currentGMTOffset - gmtOffset).toDouble()
     }
 
     private fun mapToNSDate(dateTime: LocalDateTime, timeZone: NSTimeZone = NSTimeZone.localTimeZone): NSDate {
