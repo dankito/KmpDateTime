@@ -1,4 +1,4 @@
-package net.dankito.kotlin.datetime.util
+package net.dankito.kotlin.datetime.calculation
 
 import net.dankito.kotlin.datetime.Instant
 import kotlin.math.abs

@@ -5,7 +5,7 @@ import net.dankito.kotlin.datetime.format.DateTimeFormatter
 import net.dankito.kotlin.datetime.format.DateTimeParser
 import net.dankito.kotlin.datetime.platform.Platform
 import net.dankito.kotlin.datetime.serialization.InstantIso8601Serializer
-import net.dankito.kotlin.datetime.util.DateTimeCalculator
+import net.dankito.kotlin.datetime.calculation.DateTimeCalculator
 
 @Serializable(with = InstantIso8601Serializer::class)
 data class Instant(
