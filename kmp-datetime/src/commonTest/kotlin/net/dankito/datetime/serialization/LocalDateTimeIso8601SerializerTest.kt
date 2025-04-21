@@ -5,9 +5,16 @@ import assertk.assertions.isEqualTo
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.dankito.datetime.LocalDateTime
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class LocalDateTimeIso8601SerializerTest {
+
+    @BeforeTest
+    fun setup() {
+        SerializationConfig.LocalDateTimeSerializationFormat = DateTimeSerializationFormat.Iso8601
+    }
+
 
     @Test
     fun serializeToIsoDateString() {

@@ -4,6 +4,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlinx.serialization.encodeToString
 import net.dankito.datetime.LocalDate
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class LocalDateIso8601SerializerJacksonCompatibilityTest {
@@ -11,6 +12,12 @@ class LocalDateIso8601SerializerJacksonCompatibilityTest {
     private val kotlinxJson = Serializers.kotlinxJson
 
     private val jacksonObjectMapper = Serializers.jacksonObjectMapper
+
+
+    @BeforeTest
+    fun setup() {
+        SerializationConfig.InstantSerializationFormat = DateTimeSerializationFormat.Iso8601
+    }
 
 
     @Test

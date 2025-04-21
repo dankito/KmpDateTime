@@ -8,24 +8,24 @@ import net.dankito.datetime.LocalDate
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
-class LocalDateIso8601SerializerTest {
+class LocalDateComponentSerializerTest {
 
     @BeforeTest
     fun setup() {
-        SerializationConfig.LocalDateSerializationFormat = DateTimeSerializationFormat.Iso8601
+        SerializationConfig.LocalDateSerializationFormat = DateTimeSerializationFormat.Components
     }
 
 
     @Test
-    fun serializeToIsoDateString() {
+    fun serializeToComponentsObject() {
         val result = Json.encodeToString(LocalDate(2015, 10, 21))
 
-        assertThat(result).isEqualTo("\"2015-10-21\"")
+        assertThat(result).isEqualTo("""{"year":2015,"month":10,"day":21}""")
     }
 
     @Test
-    fun deserializeFromIsoDateString() {
-        val result = Json.decodeFromString<LocalDate>("\"2015-10-21\"")
+    fun deserializeFromComponentsObject() {
+        val result = Json.decodeFromString<LocalDate>("""{"year":2015,"month":10,"day":21}""")
 
         assertThat(result).isEqualTo(LocalDate(2015, 10, 21))
     }

@@ -6,9 +6,16 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import net.dankito.datetime.Instant
 import net.dankito.datetime.LocalDateTime
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 class InstantIso8601SerializerTest {
+
+    @BeforeTest
+    fun setup() {
+        SerializationConfig.InstantSerializationFormat = DateTimeSerializationFormat.Iso8601
+    }
+
 
     // i left away the nanoseconds part as not all systems support it
 
