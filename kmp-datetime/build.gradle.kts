@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 
 plugins {
@@ -52,7 +52,6 @@ kotlin {
     wasmJs {
         browser {
             testTask {
-                enabled = false // wasmJs tests crash with Kotlin 1.9 (couldn't figure out why) even though wasmJs just works fine in production
                 useKarma {
                     useChromeHeadless()
                     useFirefoxHeadless()
