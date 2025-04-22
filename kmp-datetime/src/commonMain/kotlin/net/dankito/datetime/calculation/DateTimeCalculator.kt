@@ -10,6 +10,15 @@ object DateTimeCalculator {
         (epochMilli % 1000 * 1_000_000).toInt() // java.time.Instant uses Math.floorMod(epochMilli, 1000)
     )
 
+    fun instantFromEpochSeconds(secondsSinceEpoch: Double): Instant {
+        val nanosString = secondsSinceEpoch.toString().substringAfter('.').let {
+            if (it.length > 9) it.substring(0, 9)
+            else it.padEnd(9, '0')
+        }
+
+        return Instant(secondsSinceEpoch.toLong(), nanosString.toInt())
+    }
+
 
     // code copied from java.time.Instant.toEpochMilli() with additions from kotlinx.datetime.jvmMain/Instant.toEpochMilliseconds()
     /**

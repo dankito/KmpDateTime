@@ -32,12 +32,7 @@ fun NSDate.toLocalDateTime() =
 fun NSDate.toInstant(): Instant {
     val secondsSinceEpoch = this.timeIntervalSince1970
 
-    val nanosString = secondsSinceEpoch.toString().substringAfter('.').let {
-        if (it.length > 9) it.substring(0, 9)
-        else it.padEnd(9, '0')
-    }
-
-    return Instant(secondsSinceEpoch.toLong(), nanosString.toInt())
+    return Instant.ofEpochSeconds(secondsSinceEpoch)
 }
 
 

@@ -27,6 +27,8 @@ data class Instant(
 
         fun ofEpochMilli(epochMilli: Long): Instant = DateTimeCalculator.instantFromEpochMilli(epochMilli)
 
+        fun ofEpochSeconds(secondsSinceEpoch: Double): Instant = DateTimeCalculator.instantFromEpochSeconds(secondsSinceEpoch)
+
         fun parse(isoInstant: String): Instant = DateTimeParser.parseIsoInstantString(isoInstant)
 
         fun parseOrNull(isoInstant: String): Instant? = DateTimeParser.parseIsoInstantStringOrNull(isoInstant)
