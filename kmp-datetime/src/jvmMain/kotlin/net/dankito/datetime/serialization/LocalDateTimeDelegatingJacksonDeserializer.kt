@@ -7,6 +7,11 @@ import net.dankito.datetime.LocalDateTime
 
 open class LocalDateTimeDelegatingJacksonDeserializer : StdDeserializer<LocalDateTime>(LocalDateTime::class.java) {
 
+    companion object {
+        val Instance = LocalDateTimeDelegatingJacksonDeserializer()
+    }
+
+
     override fun deserialize(parser: JsonParser, context: DeserializationContext): LocalDateTime =
         getDeserializer().deserialize(parser, context)
 

@@ -7,6 +7,11 @@ import net.dankito.datetime.LocalTime
 
 open class LocalTimeDelegatingJacksonSerializer : StdSerializer<LocalTime>(LocalTime::class.java) {
 
+    companion object {
+        val Instance = LocalTimeDelegatingJacksonSerializer()
+    }
+
+
     override fun serialize(value: LocalTime, generator: JsonGenerator, provider: SerializerProvider) {
         getSerializer().serialize(value, generator, provider)
     }

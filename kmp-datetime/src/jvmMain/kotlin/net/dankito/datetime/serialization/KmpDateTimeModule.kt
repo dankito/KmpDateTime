@@ -23,8 +23,8 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addDeserializer(LocalDate::class.java, LocalDateComponentJacksonDeserializer.Instance)
 
         // last added serializer wins
-        addSerializer(LocalDate::class.java, LocalDateDelegatingJacksonSerializer())
-        addDeserializer(LocalDate::class.java, LocalDateDelegatingJacksonDeserializer())
+        addSerializer(LocalDate::class.java, LocalDateDelegatingJacksonSerializer.Instance)
+        addDeserializer(LocalDate::class.java, LocalDateDelegatingJacksonDeserializer.Instance)
 
 
         addSerializer(LocalTime::class.java, LocalTimeIso8601JacksonSerializer.Instance)
@@ -33,8 +33,8 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addSerializer(LocalTime::class.java, LocalTimeComponentJacksonSerializer.Instance)
         addDeserializer(LocalTime::class.java, LocalTimeComponentJacksonDeserializer.Instance)
 
-        addSerializer(LocalTime::class.java, LocalTimeDelegatingJacksonSerializer())
-        addDeserializer(LocalTime::class.java, LocalTimeDelegatingJacksonDeserializer())
+        addSerializer(LocalTime::class.java, LocalTimeDelegatingJacksonSerializer.Instance)
+        addDeserializer(LocalTime::class.java, LocalTimeDelegatingJacksonDeserializer.Instance)
 
 
         addSerializer(LocalDateTime::class.java, LocalDateTimeIso8601JacksonSerializer.Instance)
@@ -43,8 +43,8 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addSerializer(LocalDateTime::class.java, LocalDateTimeComponentJacksonSerializer.Instance)
         addDeserializer(LocalDateTime::class.java, LocalDateTimeComponentJacksonDeserializer.Instance)
 
-        addSerializer(LocalDateTime::class.java, LocalDateTimeDelegatingJacksonSerializer())
-        addDeserializer(LocalDateTime::class.java, LocalDateTimeDelegatingJacksonDeserializer())
+        addSerializer(LocalDateTime::class.java, LocalDateTimeDelegatingJacksonSerializer.Instance)
+        addDeserializer(LocalDateTime::class.java, LocalDateTimeDelegatingJacksonDeserializer.Instance)
 
 
         addSerializer(Instant::class.java, InstantIso8601JacksonSerializer.Instance)
@@ -56,8 +56,8 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addSerializer(Instant::class.java, InstantComponentJacksonSerializer.Instance)
         addDeserializer(Instant::class.java, InstantComponentJacksonDeserializer.Instance)
 
-        addSerializer(Instant::class.java, InstantDelegatingJacksonSerializer())
-        addDeserializer(Instant::class.java, InstantDelegatingJacksonDeserializer())
+        addSerializer(Instant::class.java, InstantDelegatingJacksonSerializer.Instance)
+        addDeserializer(Instant::class.java, InstantDelegatingJacksonDeserializer.Instance)
 
 
         super.setupModule(context)

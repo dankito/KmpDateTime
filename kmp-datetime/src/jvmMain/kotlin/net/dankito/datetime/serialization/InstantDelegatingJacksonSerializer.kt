@@ -7,6 +7,11 @@ import net.dankito.datetime.Instant
 
 open class InstantDelegatingJacksonSerializer : StdSerializer<Instant>(Instant::class.java) {
 
+    companion object {
+        val Instance = InstantDelegatingJacksonSerializer()
+    }
+
+
     override fun serialize(value: Instant, generator: JsonGenerator, provider: SerializerProvider) {
         getSerializer().serialize(value, generator, provider)
     }
