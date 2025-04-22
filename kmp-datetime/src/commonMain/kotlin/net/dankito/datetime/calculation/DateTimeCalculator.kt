@@ -6,8 +6,9 @@ import kotlin.math.abs
 object DateTimeCalculator {
 
     fun instantFromEpochMilli(epochMilli: Long): Instant = Instant(
-        epochMilli / 1000, // java.time.Instant uses Math.floorDiv(epochMilli, 1000)
-        (epochMilli % 1000 * 1_000_000).toInt() // java.time.Instant uses Math.floorMod(epochMilli, 1000)
+        // code copied from java.time.Instant.ofEpochMilli()
+        floorDiv(epochMilli, 1000),
+        (floorMod(epochMilli, 1000) * 1000_000).toInt()
     )
 
     fun instantFromEpochSeconds(secondsSinceEpoch: Double): Instant {
@@ -90,13 +91,78 @@ object DateTimeCalculator {
      * @return the result
      * @throws ArithmeticException if the result overflows a long
      */
-    fun addExact(x: Long, y: Long): Long {
+    private fun addExact(x: Long, y: Long): Long {
         val r = x + y
         // HD 2-12 Overflow iff both arguments have the opposite sign of the result
         if (((x xor r) and (y xor r)) < 0) {
             throw ArithmeticException("long overflow")
         }
         return r
+    }
+
+    // copied from java.lang.Math.floorDiv()
+    /**
+     * Returns the largest (closest to positive infinity)
+     * `long` value that is less than or equal to the algebraic quotient.
+     * There is one special case, if the dividend is the
+     * [Long.MIN_VALUE] and the divisor is `-1`,
+     * then integer overflow occurs and
+     * the result is equal to `Long.MIN_VALUE`.
+     *
+     *
+     * Normal integer division operates under the round to zero rounding mode
+     * (truncation).  This operation instead acts under the round toward
+     * negative infinity (floor) rounding mode.
+     * The floor rounding mode gives different results from truncation
+     * when the exact result is negative.
+     *
+     *
+     * For examples, see [.floorDiv].
+     *
+     * @param x the dividend
+     * @param y the divisor
+     * @return the largest (closest to positive infinity)
+     * `long` value that is less than or equal to the algebraic quotient.
+     * @throws ArithmeticException if the divisor `y` is zero
+     * @see .floorMod
+     * @see .floor
+     */
+    private fun floorDiv(x: Long, y: Long): Long {
+        var r = x / y
+        // if the signs are different and modulo not zero, round down
+        if ((x xor y) < 0 && (r * y != x)) {
+            r--
+        }
+        return r
+    }
+
+    // copied from java.lang.Math.floorMod()
+    /**
+     * Returns the floor modulus of the `long` arguments.
+     *
+     *
+     * The floor modulus is `x - (floorDiv(x, y) * y)`,
+     * has the same sign as the divisor `y`, and
+     * is in the range of `-abs(y) < r < +abs(y)`.
+     *
+     *
+     *
+     * The relationship between `floorDiv` and `floorMod` is such that:
+     *
+     *  * `floorDiv(x, y) * y + floorMod(x, y) == x`
+     *
+     *
+     *
+     * For examples, see [.floorMod].
+     *
+     * @param x the dividend
+     * @param y the divisor
+     * @return the floor modulus `x - (floorDiv(x, y) * y)`
+     * @throws ArithmeticException if the divisor `y` is zero
+     * @see .floorDiv
+     */
+    private fun floorMod(x: Long, y: Long): Long {
+        return x - floorDiv(x, y) * y
     }
 
 }
