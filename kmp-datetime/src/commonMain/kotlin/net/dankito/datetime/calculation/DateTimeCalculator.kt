@@ -11,12 +11,11 @@ object DateTimeCalculator {
     )
 
     fun instantFromEpochSeconds(secondsSinceEpoch: Double): Instant {
-        val nanosString = secondsSinceEpoch.toString().substringAfter('.').let {
-            if (it.length > 9) it.substring(0, 9)
-            else it.padEnd(9, '0')
-        }
+        val seconds = secondsSinceEpoch.toLong()
+        val fractionalPart = secondsSinceEpoch - seconds
+        val nanos = (fractionalPart * 1_000_000_000).toInt()
 
-        return Instant(secondsSinceEpoch.toLong(), nanosString.toInt())
+        return Instant(seconds, nanos)
     }
 
 
