@@ -4,11 +4,10 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.module.kotlin.readValue
 import net.dankito.datetime.Instant
-import net.dankito.datetime.LocalDateTime
 import org.junit.Test
 import kotlin.test.BeforeTest
 
-class InstantIso8601JacksonSerializerTest {
+class InstantComponentJacksonSerializerTest {
 
     // as we registered our Jackson module with all our serializers and deserializers in
     // `kmp-datetime/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`
@@ -18,22 +17,22 @@ class InstantIso8601JacksonSerializerTest {
 
     @BeforeTest
     fun setup() {
-        SerializationConfig.InstantDefaultFormat = InstantSerializationFormat.Iso8601
+        SerializationConfig.InstantDefaultFormat = InstantSerializationFormat.Components
     }
 
 
     @Test
     fun serialize() {
-        val result = objectMapper.writeValueAsString(LocalDateTime(2015, 10, 21, 9, 8, 7, 654).toInstantAtUtc())
+        val result = objectMapper.writeValueAsString(Instant(1_739_783_287, 654_321_098))
 
-        assertThat(result).isEqualTo("\"2015-10-21T09:08:07.000000654Z\"")
+        assertThat(result).isEqualTo("""{"epochSeconds":1739783287,"nanosecondsOfSecond":654321098}""")
     }
 
     @Test
     fun deserialize() {
-        val result = objectMapper.readValue<Instant>("\"2015-10-21T09:08:07.654Z\"")
+        val result = objectMapper.readValue<Instant>("""{"epochSeconds":1739783287,"nanosecondsOfSecond":654321098}""")
 
-        assertThat(result).isEqualTo(LocalDateTime(2015, 10, 21, 9, 8, 7, 654_000_000).toInstantAtUtc())
+        assertThat(result).isEqualTo(Instant(1_739_783_287, 654_321_098))
     }
 
 }

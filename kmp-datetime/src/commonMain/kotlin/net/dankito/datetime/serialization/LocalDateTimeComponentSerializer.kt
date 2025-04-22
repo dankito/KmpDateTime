@@ -30,8 +30,4 @@ object LocalDateTimeComponentSerializer: KSerializer<LocalDateTime> {
         return LocalDateTime(surrogate.year, surrogate.month, surrogate.day, surrogate.hour, surrogate.minute, surrogate.second, surrogate.nanosecond)
     }
 
-
-    @Serializable
-    class LocalDateTimeSurrogate(val year: Int, val month: Int, val day: Int, val hour: Int, val minute: Int, val second: Int = 0, val nanosecond: Int = 0)
-
 }

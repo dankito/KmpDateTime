@@ -2,7 +2,6 @@ package net.dankito.datetime.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -29,9 +28,5 @@ object LocalDateComponentSerializer: KSerializer<LocalDate> {
         val surrogate = decoder.decodeSerializableValue(LocalDateSurrogate.serializer())
         return LocalDate(surrogate.year, surrogate.month, surrogate.day)
     }
-
-
-    @Serializable
-    class LocalDateSurrogate(val year: Int, val month: Int, val day: Int)
 
 }

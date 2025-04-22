@@ -19,6 +19,9 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addSerializer(LocalDate::class.java, LocalDateIso8601JacksonSerializer.Instance)
         addDeserializer(LocalDate::class.java, LocalDateIso8601JacksonDeserializer.Instance)
 
+        addSerializer(LocalDate::class.java, LocalDateComponentJacksonSerializer.Instance)
+        addDeserializer(LocalDate::class.java, LocalDateComponentJacksonDeserializer.Instance)
+
         // last added serializer wins
         addSerializer(LocalDate::class.java, LocalDateDelegatingJacksonSerializer())
         addDeserializer(LocalDate::class.java, LocalDateDelegatingJacksonDeserializer())
@@ -27,12 +30,18 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addSerializer(LocalTime::class.java, LocalTimeIso8601JacksonSerializer.Instance)
         addDeserializer(LocalTime::class.java, LocalTimeIso8601JacksonDeserializer.Instance)
 
+        addSerializer(LocalTime::class.java, LocalTimeComponentJacksonSerializer.Instance)
+        addDeserializer(LocalTime::class.java, LocalTimeComponentJacksonDeserializer.Instance)
+
         addSerializer(LocalTime::class.java, LocalTimeDelegatingJacksonSerializer())
         addDeserializer(LocalTime::class.java, LocalTimeDelegatingJacksonDeserializer())
 
 
         addSerializer(LocalDateTime::class.java, LocalDateTimeIso8601JacksonSerializer.Instance)
         addDeserializer(LocalDateTime::class.java, LocalDateTimeIso8601JacksonDeserializer.Instance)
+
+        addSerializer(LocalDateTime::class.java, LocalDateTimeComponentJacksonSerializer.Instance)
+        addDeserializer(LocalDateTime::class.java, LocalDateTimeComponentJacksonDeserializer.Instance)
 
         addSerializer(LocalDateTime::class.java, LocalDateTimeDelegatingJacksonSerializer())
         addDeserializer(LocalDateTime::class.java, LocalDateTimeDelegatingJacksonDeserializer())
@@ -43,6 +52,9 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
 
         addSerializer(Instant::class.java, InstantEpochMillisecondsJacksonSerializer.Instance)
         addDeserializer(Instant::class.java, InstantEpochMillisecondsJacksonDeserializer.Instance)
+
+        addSerializer(Instant::class.java, InstantComponentJacksonSerializer.Instance)
+        addDeserializer(Instant::class.java, InstantComponentJacksonDeserializer.Instance)
 
         addSerializer(Instant::class.java, InstantDelegatingJacksonSerializer())
         addDeserializer(Instant::class.java, InstantDelegatingJacksonDeserializer())

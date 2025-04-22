@@ -5,6 +5,7 @@ import assertk.assertions.isEqualTo
 import com.fasterxml.jackson.module.kotlin.readValue
 import net.dankito.datetime.LocalDateTime
 import org.junit.Test
+import kotlin.test.BeforeTest
 
 class LocalDateTimeIso8601JacksonSerializerTest {
 
@@ -12,6 +13,12 @@ class LocalDateTimeIso8601JacksonSerializerTest {
     // `kmp-datetime/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`
     // ObjectMapper.findAndRegisterModules() registers our module and therefore serializers and deserializers automatically.
     private val objectMapper = Serializers.jacksonObjectMapper
+
+
+    @BeforeTest
+    fun setup() {
+        SerializationConfig.LocalDateTimeDefaultFormat = DateTimeSerializationFormat.Iso8601
+    }
 
 
     @Test

@@ -11,9 +11,10 @@ open class LocalDateDelegatingJacksonDeserializer : StdDeserializer<LocalDate>(L
         getDeserializer().deserialize(parser, context)
 
 
-    private fun getDeserializer(): StdDeserializer<LocalDate> =when (SerializationConfig.LocalDateDefaultFormat) {
+    private fun getDeserializer(): StdDeserializer<LocalDate> = when (SerializationConfig.LocalDateDefaultFormat) {
+        DateTimeSerializationFormat.Iso8601 -> LocalDateIso8601JacksonDeserializer.Instance
+        DateTimeSerializationFormat.Components -> LocalDateComponentJacksonDeserializer.Instance
         DateTimeSerializationFormat.Custom -> SerializationConfig.LocalDateCustomJacksonDeserializer
-        else -> LocalDateIso8601JacksonDeserializer.Instance
     }
 
 }

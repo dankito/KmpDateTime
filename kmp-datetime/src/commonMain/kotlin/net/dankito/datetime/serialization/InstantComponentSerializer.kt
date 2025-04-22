@@ -2,7 +2,6 @@ package net.dankito.datetime.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -29,9 +28,5 @@ object InstantComponentSerializer: KSerializer<Instant> {
         val surrogate = decoder.decodeSerializableValue(InstantSurrogate.serializer())
         return Instant(surrogate.epochSeconds, surrogate.nanosecondsOfSecond)
     }
-
-
-    @Serializable
-    class InstantSurrogate(val epochSeconds: Long, val nanosecondsOfSecond: Int)
 
 }

@@ -13,8 +13,9 @@ open class LocalDateTimeDelegatingJacksonSerializer : StdSerializer<LocalDateTim
 
 
     private fun getSerializer(): StdSerializer<LocalDateTime> = when (SerializationConfig.LocalDateTimeDefaultFormat) {
+        DateTimeSerializationFormat.Iso8601 -> LocalDateTimeIso8601JacksonSerializer.Instance
+        DateTimeSerializationFormat.Components -> LocalDateTimeComponentJacksonSerializer.Instance
         DateTimeSerializationFormat.Custom -> SerializationConfig.LocalDateTimeCustomJacksonSerializer
-        else -> LocalDateTimeIso8601JacksonSerializer.Instance
     }
 
 }

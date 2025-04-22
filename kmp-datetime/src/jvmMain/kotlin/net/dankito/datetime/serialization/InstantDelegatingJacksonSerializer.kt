@@ -13,9 +13,10 @@ open class InstantDelegatingJacksonSerializer : StdSerializer<Instant>(Instant::
 
 
     private fun getSerializer(): StdSerializer<Instant> = when (SerializationConfig.InstantDefaultFormat) {
+        InstantSerializationFormat.Iso8601 -> InstantIso8601JacksonSerializer.Instance
         InstantSerializationFormat.EpochMilliseconds -> InstantEpochMillisecondsJacksonSerializer.Instance
+        InstantSerializationFormat.Components -> InstantComponentJacksonSerializer.Instance
         InstantSerializationFormat.Custom -> SerializationConfig.InstantCustomJacksonSerializer
-        else -> InstantIso8601JacksonSerializer.Instance
     }
 
 }

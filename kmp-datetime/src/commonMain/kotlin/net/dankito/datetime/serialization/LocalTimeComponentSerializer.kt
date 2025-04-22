@@ -2,7 +2,6 @@ package net.dankito.datetime.serialization
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -29,9 +28,5 @@ object LocalTimeComponentSerializer: KSerializer<LocalTime> {
         val surrogate = decoder.decodeSerializableValue(LocalTimeSurrogate.serializer())
         return LocalTime(surrogate.hour, surrogate.minute, surrogate.second, surrogate.nanosecond)
     }
-
-
-    @Serializable
-    class LocalTimeSurrogate(val hour: Int, val minute: Int, val second: Int = 0, val nanosecond: Int = 0)
 
 }
