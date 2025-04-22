@@ -5,6 +5,12 @@ import kotlin.math.abs
 
 object DateTimeCalculator {
 
+    fun instantFromEpochMilli(epochMilli: Long): Instant = Instant(
+        epochMilli / 1000, // java.time.Instant uses Math.floorDiv(epochMilli, 1000)
+        (epochMilli % 1000 * 1_000_000).toInt() // java.time.Instant uses Math.floorMod(epochMilli, 1000)
+    )
+
+
     // code copied from java.time.Instant.toEpochMilli() with additions from kotlinx.datetime.jvmMain/Instant.toEpochMilliseconds()
     /**
      * Converts this instant to the number of milliseconds from the epoch

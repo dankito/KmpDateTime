@@ -25,10 +25,7 @@ data class Instant(
 
         val Epoch = Instant(0)
 
-        fun ofEpochMilli(epochMilli: Long): Instant = Instant(
-            epochMilli / 1000, // java.time.Instant uses Math.floorDiv(epochMilli, 1000)
-            (epochMilli % 1000 * 1_000_000).toInt() // java.time.Instant uses Math.floorMod(epochMilli, 1000)
-        )
+        fun ofEpochMilli(epochMilli: Long): Instant = DateTimeCalculator.instantFromEpochMilli(epochMilli)
 
         fun parse(isoInstant: String): Instant = DateTimeParser.parseIsoInstantString(isoInstant)
 
