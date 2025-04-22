@@ -1,5 +1,9 @@
 package net.dankito.datetime
 
+import kotlinx.serialization.Serializable
+import net.dankito.datetime.serialization.MonthNameSerializer
+
+@Serializable(with = MonthNameSerializer::class) // don't know why, but without serializing fails in JS and native
 enum class Month {
     January,
     February,

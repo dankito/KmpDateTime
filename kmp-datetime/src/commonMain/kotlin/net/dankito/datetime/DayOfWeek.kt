@@ -1,5 +1,9 @@
 package net.dankito.datetime
 
+import kotlinx.serialization.Serializable
+import net.dankito.datetime.serialization.DayOfWeekNameSerializer
+
+@Serializable(with = DayOfWeekNameSerializer::class) // don't know why, but without serializing fails in JS and native
 enum class DayOfWeek {
     Monday,
     Tuesday,
