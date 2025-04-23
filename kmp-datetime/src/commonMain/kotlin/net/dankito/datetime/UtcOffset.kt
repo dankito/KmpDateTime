@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import net.dankito.datetime.calculation.DateTimeCalculator
+import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import kotlin.math.abs
 
@@ -41,5 +42,10 @@ data class UtcOffset(
     val minutes: Int by lazy { (abs(totalSeconds) % DateTimeCalculator.SecondsPerHour) / DateTimeCalculator.SecondsPerMinute }
 
     val seconds: Int by lazy { abs(totalSeconds) % DateTimeCalculator.SecondsPerMinute }
+
+    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+
+
+    override fun toString() = isoString
 
 }

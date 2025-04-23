@@ -423,6 +423,52 @@ class UtcOffsetTest {
     }
 
 
+    @Test
+    fun isoString_UTC_Zulu() {
+        val offset = UtcOffset(0)
+
+        val result = offset.isoString
+
+        assertThat(result).isEqualTo("Z")
+    }
+
+    @Test
+    fun isoString_Positive_WithSeconds() {
+        val offset = UtcOffset(hours = 1, minutes = 2, seconds = 3)
+
+        val result = offset.isoString
+
+        assertThat(result).isEqualTo("+01:02:03")
+    }
+
+    @Test
+    fun isoString_Positive_WithoutSeconds() {
+        val offset = UtcOffset(hours = 1, minutes = 2, seconds = 0)
+
+        val result = offset.isoString
+
+        assertThat(result).isEqualTo("+01:02")
+    }
+
+    @Test
+    fun isoString_Negative_WithSeconds() {
+        val offset = UtcOffset(hours = -1, minutes = 2, seconds = 3)
+
+        val result = offset.isoString
+
+        assertThat(result).isEqualTo("-01:02:03")
+    }
+
+    @Test
+    fun isoString_Negative_WithoutSeconds() {
+        val offset = UtcOffset(hours = -1, minutes = 2, seconds = 0)
+
+        val result = offset.isoString
+
+        assertThat(result).isEqualTo("-01:02")
+    }
+
+
     private fun assertOffset(offset: UtcOffset, expectedHours: Int, expectedMinutes: Int = 0, expectedSeconds: Int = 0,
                              totalSeconds: Int = if (expectedHours < 0) expectedHours * 3600 - expectedMinutes * 60 - expectedSeconds else expectedHours * 3600 + expectedMinutes * 60 + expectedSeconds) {
         assertThat(offset.hours).isEqualTo(expectedHours)
