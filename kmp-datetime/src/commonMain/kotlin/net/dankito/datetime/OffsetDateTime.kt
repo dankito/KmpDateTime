@@ -1,9 +1,12 @@
 package net.dankito.datetime
 
+import kotlinx.serialization.Serializable
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
+import net.dankito.datetime.serialization.OffsetDateTimeIso8601Serializer
 
 @ExperimentalMultiplatform
+@Serializable(with = OffsetDateTimeIso8601Serializer::class)
 data class OffsetDateTime(
     val year: Int,
     val month: Month,
