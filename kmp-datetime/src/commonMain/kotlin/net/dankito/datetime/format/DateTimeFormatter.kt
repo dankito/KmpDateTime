@@ -3,6 +3,7 @@ package net.dankito.datetime.format
 import net.dankito.datetime.*
 import kotlin.math.abs
 
+@OptIn(ExperimentalMultiplatform::class)
 object DateTimeFormatter {
 
     fun toIsoString(date: LocalDate): String = with(date) {
@@ -34,7 +35,6 @@ object DateTimeFormatter {
         toIsoString(instant.toLocalDateTimeAtSystemTimeZone()) + "Z"
 
 
-    @OptIn(ExperimentalMultiplatform::class)
     fun toIsoString(offset: UtcOffset): String = with(offset) {
         if (totalSeconds == 0) {
             "Z"
@@ -45,6 +45,8 @@ object DateTimeFormatter {
                     if (seconds != 0) ":${ofLength(seconds, 2)}" else ""
         }
     }
+
+    fun toIsoString(dateTime: OffsetDateTime): String = toIsoString(dateTime.dateTime) + toIsoString(dateTime.offset)
 
 
     private fun ofLength(value: Int, length: Int): String = value.toString().padStart(length, '0')
