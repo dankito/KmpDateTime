@@ -229,6 +229,11 @@ val isoStringAtSystemTimeZone = instant.isoStringAtSystemTimeZone // result depe
 ```
 
 
+### OffsetDateTime
+
+`OffsetDateTime` is in experimental stage, its API may change in the future.
+
+
 ## Serialization
 
 Supports both `kotlinx-serialization` and Jackson out of the box. Values are serialized to and from ISO 8601 strings.
