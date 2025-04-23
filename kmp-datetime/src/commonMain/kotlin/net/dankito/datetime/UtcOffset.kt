@@ -1,8 +1,10 @@
 package net.dankito.datetime
 
+import kotlinx.serialization.Serializable
 import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
+import net.dankito.datetime.serialization.UtcOffsetIso8601Serializer
 import kotlin.math.abs
 
 /**
@@ -13,6 +15,7 @@ import kotlin.math.abs
  * ±[hh][mm], or ±[hh]. E.g. "−06:00" for Guatemala City/Guatemala or "+05:30" for India and Sri Lanka.
  */
 @ExperimentalMultiplatform
+@Serializable(with = UtcOffsetIso8601Serializer::class)
 data class UtcOffset(
     val totalSeconds: Int
 ) {
