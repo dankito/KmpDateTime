@@ -1,10 +1,7 @@
 package net.dankito.datetime.serialization
 
 import com.fasterxml.jackson.databind.module.SimpleModule
-import net.dankito.datetime.Instant
-import net.dankito.datetime.LocalDate
-import net.dankito.datetime.LocalDateTime
-import net.dankito.datetime.LocalTime
+import net.dankito.datetime.*
 
 /**
  * Jackson Module with all our date and time serializers and deserializers for Jackson.
@@ -13,6 +10,7 @@ import net.dankito.datetime.LocalTime
  * `ObjectMapper().findAndRegisterModules()`, which automatically registers this module due to our ServiceLoader file in
  * `kmp-datetime/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`.
  */
+@OptIn(ExperimentalMultiplatform::class)
 open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
 
     override fun setupModule(context: SetupContext) {
@@ -58,6 +56,10 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
 
         addSerializer(Instant::class.java, InstantDelegatingJacksonSerializer.Instance)
         addDeserializer(Instant::class.java, InstantDelegatingJacksonDeserializer.Instance)
+
+
+        addSerializer(UtcOffset::class.java, UtcOffsetIso8601JacksonSerializer.Instance)
+        addDeserializer(UtcOffset::class.java, UtcOffsetIso8601JacksonDeserializer.Instance)
 
 
         super.setupModule(context)
