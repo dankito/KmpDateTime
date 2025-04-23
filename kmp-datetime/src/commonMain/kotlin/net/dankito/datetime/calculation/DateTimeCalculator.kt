@@ -63,8 +63,11 @@ object DateTimeCalculator {
         }
     }
 
-    fun totalSeconds(hours: Int = 0, minutes: Int = 0, seconds: Int = 0): Int {
-        return hours * SecondsPerHour + minutes * SecondsPerMinute + seconds
-    }
+    fun totalSeconds(hours: Int = 0, minutes: Int = 0, seconds: Int = 0): Int =
+        if (hours < 0) {
+            hours * SecondsPerHour - minutes * SecondsPerMinute - seconds
+        } else {
+            hours * SecondsPerHour + minutes * SecondsPerMinute + seconds
+        }
 
 }

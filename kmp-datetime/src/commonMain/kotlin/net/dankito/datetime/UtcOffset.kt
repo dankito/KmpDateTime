@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import net.dankito.datetime.calculation.DateTimeCalculator
+import kotlin.math.abs
 
 /**
  * The UTC offset is the difference in hours and minutes between Coordinated Universal Time (UTC) and
@@ -28,5 +29,12 @@ data class UtcOffset(
         // range copied from java.time.ZoneOffset.ofTotalSeconds(), but according to Wikipedia UTC offsets range from -12:00 to +14:00
         require(totalSeconds in -64800..64800) { "UTC offset not in valid range: -18:00 to +18:00" }
     }
+
+
+    val hours: Int by lazy { totalSeconds / DateTimeCalculator.SecondsPerHour }
+
+    val minutes: Int by lazy { (abs(totalSeconds) % DateTimeCalculator.SecondsPerHour) / DateTimeCalculator.SecondsPerMinute }
+
+    val seconds: Int by lazy { abs(totalSeconds) % DateTimeCalculator.SecondsPerMinute }
 
 }
