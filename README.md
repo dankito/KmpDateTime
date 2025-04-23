@@ -18,6 +18,7 @@ It features:
 - The few logic to create and parse an ISO string is extracted from data classes to `DateTimeFormatter` and `DateTimeParser`.
 - The only platform specific code are the `now()` methods (`Instant.now()`, `LocalDate.today()`, ...) and converting an `Instant` to `LocalDateTime` at UTC and back.
 - Serializers that automatically convert them to and from ISO 8601 representation with kotlinx-serialization and Jackson.
+- Additional serializers to convert them to and from there components (like `{"year":2020,"month":12,"day":9}`) and `Instant` to and from Epoch milliseconds.
 
 
 ## Setup
@@ -236,7 +237,22 @@ val isoStringAtSystemTimeZone = instant.isoStringAtSystemTimeZone // result depe
 
 ## Serialization
 
-Supports both `kotlinx-serialization` and Jackson out of the box. Values are serialized to and from ISO 8601 strings.
+Supports both `kotlinx-serialization` and `Jackson` out of the box. 
+
+For `Jackson` simply call `ObjectMapper().findAndRegisterModules()` - it finds and registers our module automatically -
+or register it manually with `ObjectMapper().registerModule(KmpDateTimeModule())`.
+
+By default values are serialized to and from ISO 8601 strings.
+But you can configure this via `SerializationConfig`, e.g.
+```kotlin
+SerializationConfig.LocalDateDefaultFormat = DateTimeSerializationFormat.Components
+
+SerializationConfig.InstantDefaultFormat = InstantSerializationFormat.EpochMilliseconds
+
+// you can also configure your custom serializer
+SerializationConfig.LocalTimeDefaultFormat = DateTimeSerializationFormat.Custom // to enable that `SerializationConfig.LocalTimeCustomSerializer` is used
+SerializationConfig.LocalTimeCustomSerializer = MyLocalTimeSerializer
+```
 
 
 ## License
