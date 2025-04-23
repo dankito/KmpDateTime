@@ -62,6 +62,10 @@ open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
         addDeserializer(UtcOffset::class.java, UtcOffsetIso8601JacksonDeserializer.Instance)
 
 
+        addSerializer(OffsetDateTime::class.java, OffsetDateTimeIso8601JacksonSerializer.Instance)
+        addDeserializer(OffsetDateTime::class.java, OffsetDateTimeIso8601JacksonDeserializer.Instance)
+
+
         super.setupModule(context)
     }
 
