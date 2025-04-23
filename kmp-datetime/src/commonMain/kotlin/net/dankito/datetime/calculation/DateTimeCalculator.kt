@@ -4,6 +4,17 @@ import net.dankito.datetime.Instant
 
 object DateTimeCalculator {
 
+    const val SecondsPerMinute = 60
+
+    const val MinutesPerHour = 60
+
+    const val SecondsPerHour = MinutesPerHour * SecondsPerMinute
+
+    const val HoursPerDay = 24
+
+    const val SecondsPerDay: Int = SecondsPerHour * HoursPerDay
+
+
     fun instantFromEpochMilli(epochMilli: Long): Instant = Instant(
         // code copied from java.time.Instant.ofEpochMilli()
         Math.floorDiv(epochMilli, 1000),
@@ -50,6 +61,10 @@ object DateTimeCalculator {
             if (epochSeconds > 0) Long.MAX_VALUE
             else Long.MIN_VALUE
         }
+    }
+
+    fun totalSeconds(hours: Int = 0, minutes: Int = 0, seconds: Int = 0): Int {
+        return hours * SecondsPerHour + minutes * SecondsPerMinute + seconds
     }
 
 }
