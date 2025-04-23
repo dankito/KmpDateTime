@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import net.dankito.datetime.format.DateTimeFormatter
+import net.dankito.datetime.format.DateTimeParser
 
 @ExperimentalMultiplatform
 data class OffsetDateTime(
@@ -13,6 +14,12 @@ data class OffsetDateTime(
     val nanosecondOfSecond: Int = 0,
     val offset: UtcOffset = UtcOffset.UTC
 ) {
+    companion object {
+        fun parse(offsetDateTimeString: String): OffsetDateTime = DateTimeParser.parseOffsetDateTimeString(offsetDateTimeString)
+
+        fun parseOrNull(offsetDateTimeString: String): OffsetDateTime? = DateTimeParser.parseOffsetDateTimeStringOrNull(offsetDateTimeString)
+    }
+
 
     constructor(dateTime: LocalDateTime, offset: UtcOffset = UtcOffset.UTC) :
             this(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond, offset)

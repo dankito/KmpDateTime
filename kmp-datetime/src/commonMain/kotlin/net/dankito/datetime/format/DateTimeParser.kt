@@ -15,6 +15,8 @@ object DateTimeParser {
 
     val UtcOffsetPattern = "Z|±[hh]:[mm](:[ss])|±[hh]([mm]([ss]))|±[hh][mm]"
 
+    val OffsetDateTimePattern = "${LocalDateTimePattern}$UtcOffsetPattern"
+
 
     fun parseIsoDateStringOrNull(isoDate: String): LocalDate? = parseIsoDateStringOrError(isoDate).second
 
@@ -247,7 +249,7 @@ object DateTimeParser {
         }
         if (timeParts.any { it.length != 2 }) {
             return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
-                    "but all colon separated time part of the UTC offset part '$utcOffsetTrimmed' must consist of two digits (like '02', '14', '00'.", null)
+                    "but all colon separated time part of the UTC offset part '$utcOffsetTrimmed' must consist of two digits (like '02', '14', '00').", null)
         }
 
         val hours = timeParts[0].toInt().let { if (isNegative) -it else it }
@@ -255,6 +257,48 @@ object DateTimeParser {
         val seconds = if (timeParts.size > 2) timeParts[2].toInt() else 0
 
         return Pair(null, UtcOffset(hours, minutes, seconds))
+    }
+
+
+    fun parseOffsetDateTimeStringOrNull(utcOffset: String): OffsetDateTime? = parseOffsetDateTimeStringOrError(utcOffset).second
+
+    fun parseOffsetDateTimeString(utcOffset: String): OffsetDateTime = parseOffsetDateTimeStringOrError(utcOffset).let { (errorString, dateTime) ->
+        dateTime ?: throw IllegalArgumentException(errorString)
+    }
+
+    /**
+     * The parameters [parsedString], [typeName], [isoTypeName] and [pattern] are only there to provide correct error
+     * messages if this method is used for parsing the date time part of a larger string.
+     */
+    private fun parseOffsetDateTimeStringOrError(offsetDateTime: String, parsedString: String = offsetDateTime, typeName: String = "OffsetDateTime",
+                                                 isoTypeName: String = "offset datetime", pattern: String = OffsetDateTimePattern): Pair<String?, OffsetDateTime?> {
+        val trimmed = offsetDateTime.trim()
+
+        return if (trimmed.endsWith('Z', ignoreCase = true)) {
+            val localDateTimeOrError = parseIsoDateTimeStringOrError(trimmed.substring(0, trimmed.length - 1), parsedString, typeName, isoTypeName, pattern)
+            if (localDateTimeOrError.second != null) {
+                Pair(null, OffsetDateTime(localDateTimeOrError.second!!, UtcOffset.UTC))
+            } else {
+                Pair(localDateTimeOrError.first, null)
+            }
+        } else {
+            val indexOfPlusOrMinus = trimmed.lastIndexOf('+').takeUnless { it < 0 }
+                ?: trimmed.lastIndexOf('-').takeUnless { it < 0 }
+            if (indexOfPlusOrMinus == null) {
+                Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
+                        "but does neither end with 'Z' or 'z', nor with a zone offset that starts with '+' or '-'.", null)
+            } else {
+                val localTimeOrError = parseIsoDateTimeStringOrError(trimmed.substring(0, indexOfPlusOrMinus), parsedString, typeName, isoTypeName, pattern)
+                val offsetOrError = parseUtcOffsetStringOrError(trimmed.substring(indexOfPlusOrMinus), parsedString, typeName, isoTypeName, pattern)
+                if (localTimeOrError.second == null) {
+                    Pair(localTimeOrError.first, null)
+                } else if (offsetOrError.second == null) {
+                    Pair(offsetOrError.first, null)
+                } else {
+                    Pair(null, OffsetDateTime(localTimeOrError.second!!, offsetOrError.second!!))
+                }
+            }
+        }
     }
 
 
