@@ -9,6 +9,298 @@ import kotlin.test.assertFailsWith
 class UtcOffsetTest {
 
     @Test
+    fun parse_Zulu() {
+        val result = UtcOffset.parse("Z")
+
+        assertOffset(result, 0)
+    }
+
+
+    @Test
+    fun parse_IsoOffset_HoursMinutesSeconds_Positive() {
+        val result = UtcOffset.parse("+01:02:03")
+
+        assertOffset(result, 1, 2, 3)
+    }
+
+    @Test
+    fun parse_IsoOffset_HoursMinutes_Positive() {
+        val result = UtcOffset.parse("+01:02")
+
+        assertOffset(result, 1, 2)
+    }
+
+    @Test
+    fun parse_IsoOffset_Hours_Positive() {
+        val result = UtcOffset.parse("+01")
+
+        assertOffset(result, 1)
+    }
+
+    @Test
+    fun parse_IsoOffset_HoursMinutesSeconds_Negative() {
+        val result = UtcOffset.parse("-01:02:03")
+
+        assertOffset(result, -1, 2, 3)
+    }
+
+    @Test
+    fun parse_IsoOffset_HoursMinutes_Negative() {
+        val result = UtcOffset.parse("-01:02")
+
+        assertOffset(result, -1, 2)
+    }
+
+    @Test
+    fun parse_IsoOffset_Hours_Negative() {
+        val result = UtcOffset.parse("-01")
+
+        assertOffset(result, -1)
+    }
+
+    @Test
+    fun parse_IsoOffset_HoursOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+1:02:03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_HoursThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+012:02:03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_HoursNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+1.5:02:03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_MinutesOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:2:03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_MinutesThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:023:03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_MinutesNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:2a:03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_SecondsOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:02:3")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_SecondsThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:02:034")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_SecondsNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:02:true")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffset_MoreThanThreeParts() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01:02:03:04")
+        }
+    }
+
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursMinutesSeconds_Positive() {
+        val result = UtcOffset.parse("+010203")
+
+        assertOffset(result, 1, 2, 3)
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursMinutes_Positive() {
+        val result = UtcOffset.parse("+0102")
+
+        assertOffset(result, 1, 2)
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_Hours_Positive() {
+        val result = UtcOffset.parse("+01")
+
+        assertOffset(result, 1)
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursMinutesSeconds_Negative() {
+        val result = UtcOffset.parse("-010203")
+
+        assertOffset(result, -1, 2, 3)
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursMinutes_Negative() {
+        val result = UtcOffset.parse("-0102")
+
+        assertOffset(result, -1, 2)
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_Hours_Negative() {
+        val result = UtcOffset.parse("-01")
+
+        assertOffset(result, -1)
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+10203")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+0120203")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_HoursNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+1.50203")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_MinutesOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01203")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_MinutesThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+0102303")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_MinutesNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+012a03")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_SecondsOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01023")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_SecondsThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+0102034")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_SecondsNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+0102true")
+        }
+    }
+
+    @Test
+    fun parse_IsoOffsetBasic_MoreThanThreeParts() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01020304")
+        }
+    }
+
+
+
+    @Test
+    fun parse_FourDigitOffset_Positive() {
+        val result = UtcOffset.parse("+0102")
+
+        assertOffset(result, 1, 2)
+    }
+
+    @Test
+    fun parse_FourDigitOffset_Negative() {
+        val result = UtcOffset.parse("-0102")
+
+        assertOffset(result, -1, 2)
+    }
+
+    @Test
+    fun parse_FourDigitOffset_HoursOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+102")
+        }
+    }
+
+    @Test
+    fun parse_FourDigitOffset_HoursThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01202")
+        }
+    }
+
+    @Test
+    fun parse_FourDigitOffset_HoursNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+1.502")
+        }
+    }
+
+    @Test
+    fun parse_FourDigitOffset_MinutesOnlyOneDigit() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+012")
+        }
+    }
+
+    @Test
+    fun parse_FourDigitOffset_MinutesThreeDigits() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+01023")
+        }
+    }
+
+    @Test
+    fun parse_FourDigitOffset_MinutesNotAnInteger() {
+        assertFailsWith(IllegalArgumentException::class) {
+            UtcOffset.parse("+012a")
+        }
+    }
+
+
+    @Test
     fun fromTotalSeconds_PositiveHours() {
         val result = UtcOffset(14 * 3_600 + 45 * 60 + 17)
 

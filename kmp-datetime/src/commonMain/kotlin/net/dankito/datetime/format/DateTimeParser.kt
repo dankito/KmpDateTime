@@ -1,10 +1,8 @@
 package net.dankito.datetime.format
 
-import net.dankito.datetime.Instant
-import net.dankito.datetime.LocalDate
-import net.dankito.datetime.LocalDateTime
-import net.dankito.datetime.LocalTime
+import net.dankito.datetime.*
 
+@OptIn(ExperimentalMultiplatform::class)
 object DateTimeParser {
 
     val LocalDatePattern = "yyyy-MM-dd"
@@ -14,6 +12,8 @@ object DateTimeParser {
     val LocalDateTimePattern = "${LocalDatePattern}'T'$LocalTimePattern"
 
     val InstantPattern = "${LocalDateTimePattern}Z"
+
+    val UtcOffsetPattern = "Z|±[hh]:[mm](:[ss])|±[hh]([mm]([ss]))|±[hh][mm]"
 
 
     fun parseIsoDateStringOrNull(isoDate: String): LocalDate? = parseIsoDateStringOrError(isoDate).second
@@ -195,11 +195,74 @@ object DateTimeParser {
     }
 
 
+    fun parseUtcOffsetStringOrNull(utcOffset: String): UtcOffset? = parseUtcOffsetStringOrError(utcOffset).second
+
+    fun parseUtcOffsetString(utcOffset: String): UtcOffset = parseUtcOffsetStringOrError(utcOffset).let { (errorString, parsedOffset) ->
+        parsedOffset ?: throw IllegalArgumentException(errorString)
+    }
+
+    /**
+     * The parameters [parsedString], [typeName], [isoTypeName] and [pattern] are only there to provide correct error
+     * messages if this method is used for parsing the date time part of a larger string.
+     */
+    private fun parseUtcOffsetStringOrError(utcOffset: String, parsedString: String = utcOffset, typeName: String = "UtcOffset",
+                                            isoTypeName: String = "UTC offset", pattern: String = UtcOffsetPattern): Pair<String?, UtcOffset?> {
+        val utcOffsetTrimmed = utcOffset.trim()
+        if ("Z".equals(utcOffsetTrimmed, ignoreCase = true)) {
+            return Pair(null, UtcOffset.UTC)
+        }
+
+        if (utcOffsetTrimmed.startsWith('+') == false && utcOffsetTrimmed.startsWith('-') == false) {
+            return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' but the UTC offset part '$utcOffsetTrimmed' did not start either with '+', '-', 'Z' or 'z'.", null)
+        }
+
+        val isNegative = utcOffsetTrimmed.startsWith('-')
+        val timePart = utcOffsetTrimmed.substring(1)
+        val timeParts = timePart.split(':')
+
+        if (timeParts.size == 1) { // time parts not separated by ':'
+            if (timePart.toIntOrNull() == null) {
+                return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
+                        "but the time part of the UTC offset part '$utcOffsetTrimmed' does not consist only of digits or colons.", null)
+            } else if (timePart.length !in listOf(2, 4, 6)) {
+                return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
+                        "but the time part without colons of the UTC offset part '$utcOffsetTrimmed' must either have " +
+                        "two (hours only), four (hours and minutes) or six (hours, minutes and seconds) digits.", null)
+            }
+
+            val hours = timePart.substring(0, 2).toInt().let { if (isNegative) -it else it }
+            val minutes = if (timePart.length > 2) timePart.substring(2, 4).toInt() else 0
+            val seconds = if (timePart.length > 4) timePart.substring(4, 6).toInt() else 0
+            return Pair(null, UtcOffset(hours, minutes, seconds))
+        }
+
+        // time parts separated by ':'
+        if (timeParts.size > 3) {
+            return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
+                    "but the colon separated time part of the UTC offset part '$utcOffsetTrimmed' has more then 3 parts (at maximum hours, minutes and seconds are allowed).", null)
+        }
+        if (timeParts.any { it.toIntOrNull() == null }) {
+            return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
+                    "but the time part of the UTC offset part '$utcOffsetTrimmed' does not consist only of digits or colons.", null)
+        }
+        if (timeParts.any { it.length != 2 }) {
+            return Pair("$typeName string '$parsedString' must be in ISO 8601 $isoTypeName representation '$pattern' " +
+                    "but all colon separated time part of the UTC offset part '$utcOffsetTrimmed' must consist of two digits (like '02', '14', '00'.", null)
+        }
+
+        val hours = timeParts[0].toInt().let { if (isNegative) -it else it }
+        val minutes = if (timeParts.size > 1) timeParts[1].toInt() else 0
+        val seconds = if (timeParts.size > 2) timeParts[2].toInt() else 0
+
+        return Pair(null, UtcOffset(hours, minutes, seconds))
+    }
+
+
 
     /**
      * Finds all indices of [char] in this CharSequence
      */
-    fun CharSequence.indicesOf(char: Char, ignoreCase: Boolean = false): List<Int> {
+    private fun CharSequence.indicesOf(char: Char, ignoreCase: Boolean = false): List<Int> {
         val indices = mutableListOf<Int>()
         var index = -1
 

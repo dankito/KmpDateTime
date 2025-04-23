@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import net.dankito.datetime.calculation.DateTimeCalculator
+import net.dankito.datetime.format.DateTimeParser
 import kotlin.math.abs
 
 /**
@@ -16,6 +17,10 @@ data class UtcOffset(
 ) {
     companion object {
         val UTC = UtcOffset(0)
+
+        fun parse(utcOffsetString: String): UtcOffset = DateTimeParser.parseUtcOffsetString(utcOffsetString)
+
+        fun parseOrNull(utcOffsetString: String): UtcOffset? = DateTimeParser.parseUtcOffsetStringOrNull(utcOffsetString)
     }
 
 
