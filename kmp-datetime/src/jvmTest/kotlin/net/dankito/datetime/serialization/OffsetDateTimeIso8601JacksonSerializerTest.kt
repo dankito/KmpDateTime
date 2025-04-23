@@ -7,7 +7,6 @@ import net.dankito.datetime.OffsetDateTime
 import net.dankito.datetime.UtcOffset
 import org.junit.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class OffsetDateTimeIso8601JacksonSerializerTest {
 
     // as we registered our Jackson module with all our serializers and deserializers in

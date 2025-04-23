@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import net.dankito.datetime.OffsetDateTime
 
-@OptIn(ExperimentalMultiplatform::class)
 open class OffsetDateTimeIso8601JacksonDeserializer : StdDeserializer<OffsetDateTime>(OffsetDateTime::class.java) {
 
     companion object {

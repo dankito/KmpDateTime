@@ -10,7 +10,6 @@ import net.dankito.datetime.*
  * `ObjectMapper().findAndRegisterModules()`, which automatically registers this module due to our ServiceLoader file in
  * `kmp-datetime/src/jvmMain/resources/META-INF/services/com.fasterxml.jackson.databind.Module`.
  */
-@OptIn(ExperimentalMultiplatform::class)
 open class KmpDateTimeModule : SimpleModule("KmpDateTimeModule") {
 
     override fun setupModule(context: SetupContext) {

@@ -3,7 +3,6 @@ package net.dankito.datetime.format
 import net.dankito.datetime.*
 import kotlin.math.abs
 
-@OptIn(ExperimentalMultiplatform::class)
 object DateTimeFormatter {
 
     fun toIsoString(date: LocalDate): String = with(date) {

@@ -5,7 +5,6 @@ import assertk.assertions.isEqualTo
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
-@OptIn(ExperimentalMultiplatform::class)
 class UtcOffsetTest {
 
     @Test

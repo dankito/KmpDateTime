@@ -7,7 +7,6 @@ import kotlinx.serialization.json.Json
 import net.dankito.datetime.UtcOffset
 import kotlin.test.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class UtcOffsetIso8601SerializerTest {
 
     @Test

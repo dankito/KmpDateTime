@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import net.dankito.datetime.UtcOffset
 
-@OptIn(ExperimentalMultiplatform::class)
 open class UtcOffsetIso8601JacksonSerializer : StdSerializer<UtcOffset>(UtcOffset::class.java) {
 
     companion object {

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import net.dankito.datetime.UtcOffset
 import org.junit.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class UtcOffsetIso8601JacksonSerializerTest {
 
     // as we registered our Jackson module with all our serializers and deserializers in

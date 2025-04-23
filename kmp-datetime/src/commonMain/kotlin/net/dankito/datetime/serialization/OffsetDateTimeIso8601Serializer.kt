@@ -16,7 +16,6 @@ import net.dankito.datetime.OffsetDateTime
  * @see OffsetDateTime.parse
  * @see OffsetDateTime.isoString
  */
-@OptIn(ExperimentalMultiplatform::class)
 object OffsetDateTimeIso8601Serializer: KSerializer<OffsetDateTime> {
 
     override val descriptor: SerialDescriptor =

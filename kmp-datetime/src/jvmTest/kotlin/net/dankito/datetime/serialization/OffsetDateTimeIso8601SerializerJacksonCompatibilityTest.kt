@@ -8,7 +8,6 @@ import net.dankito.datetime.UtcOffset
 import java.time.ZoneOffset
 import kotlin.test.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class OffsetDateTimeIso8601SerializerJacksonCompatibilityTest {
 
     private val kotlinxJson = Serializers.kotlinxJson

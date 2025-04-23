@@ -16,7 +16,6 @@ import net.dankito.datetime.UtcOffset
  * @see UtcOffset.parse
  * @see UtcOffset.isoString
  */
-@OptIn(ExperimentalMultiplatform::class)
 object UtcOffsetIso8601Serializer : KSerializer<UtcOffset> {
 
     override val descriptor: SerialDescriptor =

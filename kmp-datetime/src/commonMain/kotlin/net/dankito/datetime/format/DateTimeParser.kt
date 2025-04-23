@@ -2,7 +2,6 @@ package net.dankito.datetime.format
 
 import net.dankito.datetime.*
 
-@OptIn(ExperimentalMultiplatform::class)
 object DateTimeParser {
 
     val LocalDatePattern = "yyyy-MM-dd"

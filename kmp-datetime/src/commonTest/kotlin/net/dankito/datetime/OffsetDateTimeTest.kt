@@ -4,7 +4,6 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlin.test.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class OffsetDateTimeTest {
 
     @Test

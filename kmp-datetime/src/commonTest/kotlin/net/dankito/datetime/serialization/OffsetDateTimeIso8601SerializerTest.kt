@@ -8,7 +8,6 @@ import net.dankito.datetime.OffsetDateTime
 import net.dankito.datetime.UtcOffset
 import kotlin.test.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class OffsetDateTimeIso8601SerializerTest {
 
     @Test

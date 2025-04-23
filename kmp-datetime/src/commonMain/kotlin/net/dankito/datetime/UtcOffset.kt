@@ -14,7 +14,7 @@ import kotlin.math.abs
  * This difference is expressed with respect to UTC and is generally shown in the format ±[hh]:[mm],
  * ±[hh][mm], or ±[hh]. E.g. "−06:00" for Guatemala City/Guatemala or "+05:30" for India and Sri Lanka.
  */
-@ExperimentalMultiplatform
+@ExperimentalDateTimeApi
 @Serializable(with = UtcOffsetIso8601Serializer::class)
 data class UtcOffset(
     val totalSeconds: Int

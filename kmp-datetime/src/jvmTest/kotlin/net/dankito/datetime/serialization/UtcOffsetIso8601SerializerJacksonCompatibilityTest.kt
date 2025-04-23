@@ -6,7 +6,6 @@ import kotlinx.serialization.encodeToString
 import net.dankito.datetime.UtcOffset
 import kotlin.test.Test
 
-@OptIn(ExperimentalMultiplatform::class)
 class UtcOffsetIso8601SerializerJacksonCompatibilityTest {
 
     private val kotlinxJson = Serializers.kotlinxJson
