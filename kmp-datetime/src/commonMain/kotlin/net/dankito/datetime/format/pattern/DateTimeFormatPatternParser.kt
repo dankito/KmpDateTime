@@ -1,7 +1,6 @@
 package net.dankito.datetime.format.pattern
 
-import net.dankito.datetime.format.pattern.component.DateTimeFormatPatternComponent
-import net.dankito.datetime.format.pattern.component.LiteralComponent
+import net.dankito.datetime.format.pattern.component.*
 
 open class DateTimeFormatPatternParser {
 
@@ -24,10 +23,41 @@ open class DateTimeFormatPatternParser {
             } else if (char.isLetter() == false) { // e.g. '.', '-', ...
                 components.add(LiteralComponent(char.toString()))
                 index++
+            } else {
+                index = parseComponentPattern(pattern, char, index, components)
             }
         }
 
         return DateTimeFormatPattern(components)
+    }
+
+
+    protected open fun parseComponentPattern(pattern: String, formatSymbol: Char, startIndex: Int, components: MutableList<DateTimeFormatPatternComponent>): Int {
+        var symbolLength = 1
+
+        var index = startIndex + 1
+        while (index < pattern.length && pattern[index] == formatSymbol) {
+            symbolLength++
+            index++
+        }
+
+        components.add(createComponent(formatSymbol, symbolLength))
+
+        return index
+    }
+
+    protected open fun createComponent(formatSymbol: Char, length: Int): DateTimeFormatPatternComponent = when (formatSymbol) {
+
+        // date components
+        'y' -> YearComponent(length) // TODO: also handle Y, u, U and r
+        'd' -> DayOfMonthComponent(length) // TODO: also handle D, F and g
+
+        // time components
+        'm' -> MinuteComponent(length)
+        's' -> SecondComponent(length)
+        'S' -> FractionalSecondComponent(length)
+
+        else -> throw IllegalArgumentException("Unknown format pattern symbol '$formatSymbol' encountered. Implemented ISO 8601 format pattern symbols are: y, M, d, H, m, s, S")
     }
 
 
