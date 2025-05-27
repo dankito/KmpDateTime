@@ -1,9 +1,6 @@
 package net.dankito.datetime.format.pattern
 
-import net.dankito.datetime.LocalDate
-import net.dankito.datetime.LocalDateTime
-import net.dankito.datetime.LocalTime
-import net.dankito.datetime.Month
+import net.dankito.datetime.*
 import net.dankito.datetime.format.pattern.component.*
 
 open class DateTimeComponentFormatter(
@@ -23,7 +20,7 @@ open class DateTimeComponentFormatter(
                 is YearComponent -> append(formatYear(date.year, component))
                 is MonthComponent -> append(formatMonth(date.month, component))
                 is DayOfMonthComponent -> append(ensureMinLength(date.day, component))
-                is DayOfWeekComponent -> throw UnsupportedOperationException("Day of week component is not supported yet as determining a LocalDate's day of week is not implemented yet.")
+                is DayOfWeekComponent -> append(formatDayOfWeek(date.dayOfWeek, component))
                 is LiteralComponent -> append(component.literal)
                 else -> throw IllegalArgumentException("${component::class} is not a component of LocalDate")
             }
@@ -56,7 +53,7 @@ open class DateTimeComponentFormatter(
                 is YearComponent -> append(formatYear(dateTime.year, component))
                 is MonthComponent -> append(formatMonth(dateTime.month, component))
                 is DayOfMonthComponent -> append(ensureMinLength(dateTime.day, component))
-                is DayOfWeekComponent -> throw UnsupportedOperationException("Day of week component is not supported yet as determining a LocalDate's day of week is not implemented yet.")
+                is DayOfWeekComponent -> append(formatDayOfWeek(dateTime.dayOfWeek, component))
 
                 // time
                 is HourComponent -> append(formatHour(dateTime.hour, component))
@@ -87,6 +84,21 @@ open class DateTimeComponentFormatter(
         MonthStyle.Abbreviated -> month.name.take(3) // TODO: localize
         MonthStyle.Wide -> month.name // TODO: localize
         MonthStyle.Narrow -> month.name.take(1) // TODO: localize
+    }
+
+    protected open fun formatDayOfWeek(dayOfWeek: DayOfWeek?, component: DayOfWeekComponent): String {
+        if (dayOfWeek == null) {
+            return "<day_of_week_not_available"
+        }
+
+        val englishName = dayOfWeek.name // TODO: localize
+
+        return when (component.style) {
+            DayOfWeekStyle.Abbreviated -> englishName.take(3)
+            DayOfWeekStyle.Wide -> englishName
+            DayOfWeekStyle.Narrow -> englishName.take(1)
+            DayOfWeekStyle.Short -> englishName.take(2)
+        }
     }
 
     protected open fun formatHour(hour: Int, component: HourComponent): String = when (component.style) {

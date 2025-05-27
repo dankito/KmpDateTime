@@ -68,10 +68,45 @@ class DateTimeComponentFormatterTest {
     }
 
     @Test
-    fun localDate_DayOfWeek() {
-        assertFailsWith<UnsupportedOperationException> {
-            underTest.format(date, "E")
-        }
+    fun localDate_DayOfWeek_E() {
+        val result = underTest.format(date, "EE")
+
+        assertThat(result).isEqualTo("Wed")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EE() {
+        val result = underTest.format(date, "EE")
+
+        assertThat(result).isEqualTo("Wed")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEE() {
+        val result = underTest.format(date, "EEE")
+
+        assertThat(result).isEqualTo("Wed")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEEE() {
+        val result = underTest.format(date, "EEEE")
+
+        assertThat(result).isEqualTo("Wednesday")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEEEE() {
+        val result = underTest.format(date, "EEEEE")
+
+        assertThat(result).isEqualTo("W")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEEEEE() {
+        val result = underTest.format(date, "EEEEEE")
+
+        assertThat(result).isEqualTo("We")
     }
 
     @Test

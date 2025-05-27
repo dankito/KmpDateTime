@@ -54,6 +54,33 @@ class DateTimeComponentFormatterCompareWithJavaTimeTest {
         compare(date, "MMMMM")
     }
 
+    @Test
+    fun localDate_DayOfWeek_E() {
+        compare(date, "E")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EE() {
+        compare(date, "EE")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEE() {
+        compare(date, "EEE")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEEE() {
+        compare(date, "EEEE")
+    }
+
+    @Test
+    fun localDate_DayOfWeek_EEEEE() {
+        compare(date, "EEEEE")
+    }
+
+    // Java Time does not support 'EEEEEE'
+
     private fun compare(date: LocalDate, pattern: String) {
         val result = underTest.format(date, pattern)
 
