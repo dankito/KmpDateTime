@@ -1,0 +1,3 @@
+package net.dankito.datetime.format.pattern.component
+
+interface DateTimeFormatPatternComponent
