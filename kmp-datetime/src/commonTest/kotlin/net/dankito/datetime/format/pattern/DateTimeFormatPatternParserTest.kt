@@ -2,6 +2,7 @@ package net.dankito.datetime.format.pattern
 
 import assertk.assertThat
 import assertk.assertions.hasSize
+import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import net.dankito.datetime.format.pattern.component.*
@@ -29,7 +30,43 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
-    fun dayOfMonth_Min1Digit() {
+    fun month_minDigits() {
+        val result = underTest.parsePattern("M")
+
+        assertMonthComponent(result, MonthStyle.NumericMinDigits)
+    }
+
+    @Test
+    fun month_2Digits() {
+        val result = underTest.parsePattern("MM")
+
+        assertMonthComponent(result, MonthStyle.Numeric2Digits)
+    }
+
+    @Test
+    fun month_Abbreviated() {
+        val result = underTest.parsePattern("MMM")
+
+        assertMonthComponent(result, MonthStyle.Abbreviated)
+    }
+
+    @Test
+    fun month_Wide() {
+        val result = underTest.parsePattern("MMMM")
+
+        assertMonthComponent(result, MonthStyle.Wide)
+    }
+
+    @Test
+    fun month_Narrow() {
+        val result = underTest.parsePattern("MMMMM")
+
+        assertMonthComponent(result, MonthStyle.Narrow)
+    }
+
+
+    @Test
+    fun dayOfMonth_MinDigits() {
         val result = underTest.parsePattern("d")
 
         assertComponentWithMinLength<DayOfMonthComponent>(result, 1)
@@ -44,7 +81,50 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
-    fun hour_12Hours_1_Based_Min1Digit() {
+    fun dayOfWeek_Abbreviated_1_Digit() {
+        val result = underTest.parsePattern("E")
+
+        assertDayOfWeekComponent(result, DayOfWeekStyle.Abbreviated)
+    }
+
+    @Test
+    fun dayOfWeek_Abbreviated_2_Digits() {
+        val result = underTest.parsePattern("EE")
+
+        assertDayOfWeekComponent(result, DayOfWeekStyle.Abbreviated)
+    }
+
+    @Test
+    fun dayOfWeek_Abbreviated_3_Digits() {
+        val result = underTest.parsePattern("EEE")
+
+        assertDayOfWeekComponent(result, DayOfWeekStyle.Abbreviated)
+    }
+
+    @Test
+    fun dayOfWeek_Wide() {
+        val result = underTest.parsePattern("EEEE")
+
+        assertDayOfWeekComponent(result, DayOfWeekStyle.Wide)
+    }
+
+    @Test
+    fun dayOfWeek_Narrow() {
+        val result = underTest.parsePattern("EEEEE")
+
+        assertDayOfWeekComponent(result, DayOfWeekStyle.Narrow)
+    }
+
+    @Test
+    fun dayOfWeek_Short() {
+        val result = underTest.parsePattern("EEEEEE")
+
+        assertDayOfWeekComponent(result, DayOfWeekStyle.Short)
+    }
+
+
+    @Test
+    fun hour_12Hours_1_Based_MinDigits() {
         val result = underTest.parsePattern("h")
 
         assertHourComponent(result, HourStyle.Hour_12_Start_1, 1)
@@ -58,7 +138,7 @@ class DateTimeFormatPatternParserTest {
     }
 
     @Test
-    fun hour_24Hours_0_Based_Min1Digit() {
+    fun hour_24Hours_0_Based_MinDigits() {
         val result = underTest.parsePattern("H")
 
         assertHourComponent(result, HourStyle.Hour_24_Start_0, 1)
@@ -72,7 +152,7 @@ class DateTimeFormatPatternParserTest {
     }
 
     @Test
-    fun hour_12Hours_0_Based_Min1Digit() {
+    fun hour_12Hours_0_Based_MinDigits() {
         val result = underTest.parsePattern("K")
 
         assertHourComponent(result, HourStyle.Hour_12_Start_0, 1)
@@ -86,7 +166,7 @@ class DateTimeFormatPatternParserTest {
     }
 
     @Test
-    fun hour_24Hours_1_Based_Min1Digit() {
+    fun hour_24Hours_1_Based_MinDigits() {
         val result = underTest.parsePattern("k")
 
         assertHourComponent(result, HourStyle.Hour_24_Start_1, 1)
@@ -101,7 +181,7 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
-    fun minute_Min1Digit() {
+    fun minute_MinDigits() {
         val result = underTest.parsePattern("m")
 
         assertComponentWithMinLength<MinuteComponent>(result, 1)
@@ -116,7 +196,7 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
-    fun second_Min1Digit() {
+    fun second_MinDigits() {
         val result = underTest.parsePattern("s")
 
         assertComponentWithMinLength<SecondComponent>(result, 1)
@@ -131,7 +211,7 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
-    fun fractionalSecond_Min1Digit() {
+    fun fractionalSecond_MinDigits() {
         val result = underTest.parsePattern("S")
 
         assertComponent<FractionalSecondComponent>(result) {
@@ -186,9 +266,21 @@ class DateTimeFormatPatternParserTest {
         }
     }
 
+    private fun assertMonthComponent(result: DateTimeFormatPattern, style: MonthStyle) {
+        assertComponent<MonthComponent>(result) { component ->
+            assertThat(component.style).isEqualByComparingTo(style)
+        }
+    }
+
+    private fun assertDayOfWeekComponent(result: DateTimeFormatPattern, style: DayOfWeekStyle) {
+        assertComponent<DayOfWeekComponent>(result) { component ->
+            assertThat(component.style).isEqualByComparingTo(style)
+        }
+    }
+
     private fun assertHourComponent(result: DateTimeFormatPattern, style: HourStyle, minLength: Int) {
         assertComponent<HourComponent>(result) { component ->
-            assertThat(component.style).isEqualTo(style)
+            assertThat(component.style).isEqualByComparingTo(style)
             assertThat(component.minLength).isEqualTo(minLength)
         }
     }

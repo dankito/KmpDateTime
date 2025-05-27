@@ -50,15 +50,46 @@ open class DateTimeFormatPatternParser {
 
         // date components
         'y' -> YearComponent(length) // TODO: also handle Y, u, U and r
+        'M' -> MonthComponent(mapMonthStyle(length)) // TODO: also handle L
         'd' -> DayOfMonthComponent(length) // TODO: also handle D, F and g
+        'E' -> DayOfWeekComponent(mapDayOfWeekStyle(length)) // TODO: also handle e and c
+
+        // TODO: also handle day period b, a and B
+
+        // TODO: also handle quarter (Q, q) and week (w, W)
+
+        // TODO: also handle period (a, b, B)
 
         // time components
-        'h', 'H', 'k', 'K' -> HourComponent(mapHourStyle(formatSymbol), length)
+        'h', 'H', 'k', 'K' -> HourComponent(mapHourStyle(formatSymbol), length) // TODO: also handle hb and hB
         'm' -> MinuteComponent(length)
         's' -> SecondComponent(length)
         'S' -> FractionalSecondComponent(length)
 
+        // TODO: there's also A (millisconds in a day), but don't know if i ever will support that
+
+        // TODO: also parse zone (z, Z, O, v, V, X)
+
         else -> throw IllegalArgumentException("Unknown format pattern symbol '$formatSymbol' encountered. Implemented ISO 8601 format pattern symbols are: y, M, d, H, m, s, S")
+    }
+
+    protected open fun mapMonthStyle(length: Int): MonthStyle = when (length) {
+        1 -> MonthStyle.NumericMinDigits
+        2 -> MonthStyle.Numeric2Digits
+        3 -> MonthStyle.Abbreviated
+        4 -> MonthStyle.Wide
+        5 -> MonthStyle.Narrow
+        // TODO: that's not full correct, only valid for 0 (the only remaining valid value); not specified for count 'M' > 5
+        else -> throw IllegalArgumentException("Illegal 'M' pattern length of $length for Month encountered. Valid values are in range 'M' - 'MMMMM'")
+    }
+
+    protected open fun mapDayOfWeekStyle(length: Int): DayOfWeekStyle = when (length) {
+        1, 2, 3 -> DayOfWeekStyle.Abbreviated
+        4 -> DayOfWeekStyle.Wide
+        5 -> DayOfWeekStyle.Narrow
+        6 -> DayOfWeekStyle.Short
+        // TODO: that's not full correct, only valid for 0 (the only remaining valid value); not specified for count 'E' > 6
+        else -> throw IllegalArgumentException("Illegal 'E' pattern length of $length for Day of Week encountered. Valid values are in range 'E' - 'EEEEEE'")
     }
 
     protected open fun mapHourStyle(formatSymbol: Char): HourStyle = when (formatSymbol) {
