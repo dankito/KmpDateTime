@@ -32,7 +32,7 @@ class LocalDateExamples {
         // the day of week of this date; returns null in case of an invalid date
         val dayOfWeek: DayOfWeek? = date.dayOfWeek // returns DayOfWeek.Wednesday
 
-        // to LocalTimeTime (from there you can convert it further to Instant, see LocalDateTime examples)
+        // to LocalTimeTime (from there you can convert it further to Instant or OffsetDateTime, see LocalDateTime examples)
         val atMidnight: LocalDateTime = date.atStartOfDay()
         val byHourMinutesSeconds: LocalDateTime = date.atTime(12, 15, 30)
         val byLocalTime: LocalDateTime = date.atTime(LocalTime.Noon)

@@ -35,7 +35,7 @@ class LocalTimeExamples {
         val second: Int = time.second // returns 30
         val nanosecondOfSecond: Int = time.nanosecondOfSecond // returns 654_000_000
 
-        // to LocalTimeTime (from there you can convert it further to Instant, see LocalDateTime examples)
+        // to LocalTimeTime (from there you can convert it further to Instant or OffsetDateTime, see LocalDateTime examples)
         val byYearMonthDay: LocalDateTime = time.atDate(2015, Month.October, 21)
         val byLocalDate: LocalDateTime = time.atDate(LocalDate(2015, Month.October, 21))
 
