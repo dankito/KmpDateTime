@@ -17,11 +17,7 @@ class DateTimeFormatPatternParserTest {
     fun literalString() {
         val result = underTest.parsePattern("'T'")
 
-        assertThat(result.components).hasSize(1)
-
-        val component = result.components.first()
-        assertThat(component).isInstanceOf<LiteralComponent>()
-        assertThat((component as LiteralComponent).literal).isEqualTo("T")
+        assertLiteralComponent(result, "T")
     }
 
     @Test
@@ -29,6 +25,22 @@ class DateTimeFormatPatternParserTest {
         assertFailsWith<IllegalArgumentException> {
             underTest.parsePattern("'T")
         }
+    }
+
+    @Test
+    fun escapedQuote() {
+        val result = underTest.parsePattern("''")
+
+        assertLiteralComponent(result, "'")
+    }
+
+
+    private fun assertLiteralComponent(result: DateTimeFormatPattern, literal: String) {
+        assertThat(result.components).hasSize(1)
+
+        val component = result.components.first()
+        assertThat(component).isInstanceOf<LiteralComponent>()
+        assertThat((component as LiteralComponent).literal).isEqualTo(literal)
     }
 
 }

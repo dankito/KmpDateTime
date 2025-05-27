@@ -31,6 +31,11 @@ open class DateTimeFormatPatternParser {
     protected open fun parseLiteral(pattern: String, literalStartIndex: Int, length: Int, components: MutableList<DateTimeFormatPatternComponent>): Int {
         var index = literalStartIndex
 
+        if (index < length && pattern[index] == '\'') { // escaped quote
+            components.add(LiteralComponent("'"))
+            return index + 1
+        }
+
         // skip to end of literal
         while (index < length && pattern[index] != '\'') {
             index++
