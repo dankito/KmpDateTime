@@ -56,6 +56,28 @@ class OffsetDateTimeTest {
     }
 
 
+    @Test
+    fun toIsoString_millisecondsResolution() {
+        val dateTime = OffsetDateTime(2025, 1, 1, 0, 0, 0, 123_000_000, UtcOffset.UTC)
+
+        assertThat(dateTime.isoString).isEqualTo("2025-01-01T00:00:00.123Z")
+    }
+
+    @Test
+    fun toIsoString_microsecondsResolution() {
+        val dateTime = OffsetDateTime(2025, 1, 1, 0, 0, 0, 123_456_000, UtcOffset.UTC)
+
+        assertThat(dateTime.isoString).isEqualTo("2025-01-01T00:00:00.123456Z")
+    }
+
+    @Test
+    fun toIsoString_nanosecondsResolution() {
+        val dateTime = OffsetDateTime(2025, 1, 1, 0, 0, 0, 123_456_789, UtcOffset.UTC)
+
+        assertThat(dateTime.isoString).isEqualTo("2025-01-01T00:00:00.123456789Z")
+    }
+
+
     private fun assertOffsetDateTime(dateTime: OffsetDateTime, expectedLocalDateTime: LocalDateTime, expectedUtcOffset: UtcOffset) {
         assertThat(dateTime.dateTime).isEqualTo(expectedLocalDateTime)
         assertThat(dateTime.offset).isEqualTo(expectedUtcOffset)

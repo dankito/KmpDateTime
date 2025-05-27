@@ -117,4 +117,26 @@ class LocalDateTimeTest {
         assertThat(result).isEqualTo(0)
     }
 
+
+    @Test
+    fun toIsoString_millisecondsResolution() {
+        val dateTime = LocalDateTime(2025, 1, 1, 0, 0, 0, 123_000_000)
+
+        assertThat(dateTime.isoString).isEqualTo("2025-01-01T00:00:00.123")
+    }
+
+    @Test
+    fun toIsoString_microsecondsResolution() {
+        val dateTime = LocalDateTime(2025, 1, 1, 0, 0, 0, 123_456_000)
+
+        assertThat(dateTime.isoString).isEqualTo("2025-01-01T00:00:00.123456")
+    }
+
+    @Test
+    fun toIsoString_nanosecondsResolution() {
+        val dateTime = LocalDateTime(2025, 1, 1, 0, 0, 0, 123_456_789)
+
+        assertThat(dateTime.isoString).isEqualTo("2025-01-01T00:00:00.123456789")
+    }
+
 }

@@ -21,14 +21,23 @@ class DateTimeFormatter(
         componentFormatter.format(date, DateTimeFormatPattern.IsoDateDotSeparatedComponents)
 
     // LocalTime has varying fraction of second digits, therefore we cannot use a fixed pattern like DateTimeFormatPattern.IsoTimePattern here
-    fun toIsoString(time: LocalTime): String = with(time) {
+    /**
+     * Formats the given [LocalTime] as an ISO 8601-compliant string.
+     *
+     * ISO 8601 does not specify a fixed number of digits for the fractional second part. The implementation rule is:
+     * - If [LocalTime.nanosecondOfSecond] is `0`, the fractional second part is omitted.
+     * - If the nanosecond component is non-zero, by default all available digits are used, with no truncation or padding.
+     * - To instead group fractional digits based on resolution — 3 for milliseconds, 6 for microseconds,
+     * or 9 for nanoseconds — set [useGroupedFractionDigits] to `true`.
+     *
+     * @param time the [LocalTime] instance to format
+     * @param useGroupedFractionDigits whether to format the fractional seconds using
+     * 3/6/9 digits depending on resolution (e.g., milliseconds, microseconds, nanoseconds)
+     * @return the ISO 8601 formatted time string
+     */
+    fun toIsoString(time: LocalTime, useGroupedFractionDigits: Boolean = false): String = with(time) {
             "${ofLength(hour, 2)}:${ofLength(minute, 2)}:${ofLength(second, 2)}" +
-            "" +
-            if (nanosecondOfSecond > 0) {
-                ".${ofLength(nanosecondOfSecond, 9).trimEnd('0')}"
-            } else {
-                ""
-            }
+            formatNanosecondOfSecond(nanosecondOfSecond, useGroupedFractionDigits)
     }
 
     fun toIsoString(dateTime: LocalDateTime) = with(dateTime) {
@@ -57,5 +66,22 @@ class DateTimeFormatter(
 
 
     private fun ofLength(value: Int, length: Int): String = value.toString().padStart(length, '0')
+
+    private fun formatNanosecondOfSecond(nanosecondOfSecond: Int, useGroupedFractionDigits: Boolean): String = when (nanosecondOfSecond) {
+        0 -> ""
+        else -> {
+            val formatted = ".${ofLength(nanosecondOfSecond, 9)}"
+            when (useGroupedFractionDigits) {
+                false -> formatted.trimEnd('0')
+                true -> if (formatted.endsWith("000000")) {
+                    formatted.dropLast(6)
+                } else if (formatted.endsWith("000")) {
+                    formatted.dropLast(3)
+                } else {
+                    formatted
+                }
+            }
+        }
+    }
 
 }

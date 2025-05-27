@@ -105,4 +105,26 @@ class LocalTimeTest {
         assertThat(result).isEqualTo(0)
     }
 
+
+    @Test
+    fun toIsoString_millisecondsResolution() {
+        val time = LocalTime(0, 0, 0, 123_000_000)
+
+        assertThat(time.isoString).isEqualTo("00:00:00.123")
+    }
+
+    @Test
+    fun toIsoString_microsecondsResolution() {
+        val time = LocalTime(0, 0, 0, 123_456_000)
+
+        assertThat(time.isoString).isEqualTo("00:00:00.123456")
+    }
+
+    @Test
+    fun toIsoString_nanosecondsResolution() {
+        val time = LocalTime(0, 0, 0, 123_456_789)
+
+        assertThat(time.isoString).isEqualTo("00:00:00.123456789")
+    }
+
 }
