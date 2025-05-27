@@ -10,6 +10,10 @@ open class DateTimeComponentFormatter(
     protected val parser: DateTimeFormatPatternParser = DateTimeFormatPatternParser.Default
 ) {
 
+    companion object {
+        val Default = DateTimeComponentFormatter()
+    }
+
 
     open fun format(date: LocalDate, pattern: String): String = format(date, parser.parse(pattern))
 
