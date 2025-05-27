@@ -27,7 +27,7 @@ internal actual object Platform {
     actual fun getInstantNow(): Instant {
         val millisSinceEpoch = getMillisSinceEpoch()
 
-        return instantOfEpochMilli(millisSinceEpoch)
+        return Instant.ofEpochMilli(millisSinceEpoch.toLong())
     }
 
     actual fun getLocalDateNow(): LocalDate =
@@ -56,7 +56,7 @@ internal actual object Platform {
         val millisSinceEpoch = createDateInUTC(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
 
-        return instantOfEpochMilli(millisSinceEpoch)
+        return instantOfEpochMilli(millisSinceEpoch, dateTime)
     }
 
     actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
@@ -65,17 +65,17 @@ internal actual object Platform {
 
         val millisSinceEpoch = jsDate.getTime()
 
-        return instantOfEpochMilli(millisSinceEpoch)
+        return instantOfEpochMilli(millisSinceEpoch, dateTime)
     }
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime =
-        instant.toJsDate().toLocalDateTimeAtUtc()
+        instant.toJsDate().toLocalDateTimeAtUtc(instant.nanosecondsOfSecond)
 
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
-        instant.toJsDate().toLocalDateTime()
+        instant.toJsDate().toLocalDateTime(instant.nanosecondsOfSecond)
 
 
-    private fun instantOfEpochMilli(millisSinceEpoch: Double): Instant =
-        Instant.ofEpochMilli(millisSinceEpoch.toLong())
+    private fun instantOfEpochMilli(millisSinceEpoch: Double, originalDateTime: LocalDateTime): Instant =
+        Instant((millisSinceEpoch / 1_000).toLong(), originalDateTime.nanosecondOfSecond)
 
 }

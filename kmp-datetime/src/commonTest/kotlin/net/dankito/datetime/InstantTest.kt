@@ -32,11 +32,7 @@ class InstantTest {
         val result = instant.toLocalDateTimeAtUtc()
 
         val expected = LocalDateTime(2025, 2, 17, 9, 8, 7, 654_000_000)
-        if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
-            assertThat(result).isEqualTo(expected)
-        } else { // not all systems support milliseconds timestamp resolution
-            assertThat(result).isEqualTo(expected.copy(nanosecondOfSecond = 0))
-        }
+        assertThat(result).isEqualTo(expected)
     }
 
     @Test
@@ -46,11 +42,7 @@ class InstantTest {
         val result = instant.toLocalDateTimeAtUtc()
 
         val expected = LocalDateTime(2015, 10, 21, 9, 8, 7, 654_000_000)
-        if (Instant.timeSinceEpochPrecision == TimeSinceEpochPrecision.Milliseconds) {
-            assertThat(result).isEqualTo(expected)
-        } else { // not all systems support milliseconds timestamp resolution
-            assertThat(result).isEqualTo(expected.copy(nanosecondOfSecond = 0))
-        }
+        assertThat(result).isEqualTo(expected)
     }
 
 

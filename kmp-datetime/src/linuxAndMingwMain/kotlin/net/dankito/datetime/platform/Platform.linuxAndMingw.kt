@@ -85,13 +85,13 @@ internal actual object Platform {
 
         val differenceToUtc = secondsSinceEpochInSystemTimeZone - secondsSinceEpochUtc
 
-        return Instant(secondsSinceEpochInSystemTimeZone + differenceToUtc)
+        return Instant(secondsSinceEpochInSystemTimeZone + differenceToUtc, dateTime.nanosecondOfSecond)
     }
 
     actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
         val secondsSinceEpoch = getSecondsSinceEpochInSystemTimeZone(dateTime)
 
-        return Instant(secondsSinceEpoch)
+        return Instant(secondsSinceEpoch, dateTime.nanosecondOfSecond)
     }
 
     private fun getSecondsSinceEpochInSystemTimeZone(dateTime: LocalDateTime): Long = memScoped {
@@ -113,7 +113,7 @@ internal actual object Platform {
         time.value = instant.epochSeconds
 
         gmtime(time.ptr)
-    }?.pointed?.toLocalDateTime()
+    }?.pointed?.toLocalDateTime(instant.nanosecondsOfSecond)
         ?: LocalDateTime(0) // TODO: what to do in case of error?
 
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime = memScoped {
@@ -121,7 +121,7 @@ internal actual object Platform {
         time.value = instant.epochSeconds
 
         localtime(time.ptr)
-    }?.pointed?.toLocalDateTime()
+    }?.pointed?.toLocalDateTime(instant.nanosecondsOfSecond)
         ?: LocalDateTime(0) // TODO: what to do in case of error?
 
 

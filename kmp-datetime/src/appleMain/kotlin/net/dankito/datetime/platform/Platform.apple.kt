@@ -46,10 +46,10 @@ internal actual object Platform {
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
-        dateTime.toNSDateAt(Utc).toInstant()
+        dateTime.toNSDateAt(Utc).toInstant(dateTime.nanosecondOfSecond)
 
     actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant =
-        dateTime.toNSDateAtSystemTimeZone().toInstant()
+        dateTime.toNSDateAtSystemTimeZone().toInstant(dateTime.nanosecondOfSecond)
 
     actual fun toLocalDateTimeAtUtc(instant: Instant): LocalDateTime {
         val nsDateAtSystemTimeZone = instant.toNSDate()
@@ -58,11 +58,11 @@ internal actual object Platform {
 
         val nsDateAtUtc = NSDate.dateWithTimeInterval(utcOffset * -1, nsDateAtSystemTimeZone)
 
-        return nsDateAtUtc.toLocalDateTime()
+        return nsDateAtUtc.toLocalDateTime(instant.nanosecondsOfSecond)
     }
 
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
-        instant.toNSDate().toLocalDateTime()
+        instant.toNSDate().toLocalDateTime(instant.nanosecondsOfSecond)
 
     private fun getOffsetToUtcInSeconds(date: NSDate): NSTimeInterval { // NSTimeInterval is a typealias for Double
         val currentTimeZone = NSTimeZone.localTimeZone

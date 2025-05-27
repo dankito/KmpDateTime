@@ -10,13 +10,15 @@ fun tm.toLocalDate(): LocalDate {
     return LocalDate(year, month, day)
 }
 
-fun tm.toLocalTime(): LocalTime {
+// when converting from another datetime type, set providedNanosecondsOfSecond to retain nanos of second (will be lost otherwise)
+fun tm.toLocalTime(providedNanosecondsOfSecond: Int = 0): LocalTime {
     val hour = this.tm_hour
     val minute = this.tm_min
     val second = this.tm_sec
 
-    return LocalTime(hour, minute, second)
+    return LocalTime(hour, minute, second, providedNanosecondsOfSecond)
 }
 
-fun tm.toLocalDateTime() =
-    LocalDateTime(this.toLocalDate(), this.toLocalTime())
+// when converting from another datetime type, set providedNanosecondsOfSecond to retain nanos of second (will be lost otherwise)
+fun tm.toLocalDateTime(providedNanosecondsOfSecond: Int = 0) =
+    LocalDateTime(this.toLocalDate(), this.toLocalTime(providedNanosecondsOfSecond))

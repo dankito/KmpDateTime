@@ -16,23 +16,31 @@ fun NSDate.toLocalDate(): LocalDate {
     return LocalDate(components.year.toInt(), components.month.toInt(), components.day.toInt())
 }
 
-fun NSDate.toLocalTime(): LocalTime {
+// when converting from another datetime type, set providedNanosecondsOfSecond to retain nanos of second (will be lost otherwise)
+fun NSDate.toLocalTime(providedNanosecondsOfSecond: Int? = null): LocalTime {
     val calendar = NSCalendar.currentCalendar
     val components = calendar.components(
         NSCalendarUnitHour or NSCalendarUnitMinute or NSCalendarUnitSecond or NSCalendarUnitNanosecond, // TODO: there doesn't seem to be a nanosecond component
         fromDate = this
     )
 
-    return LocalTime(components.hour.toInt(), components.minute.toInt(), components.second.toInt(), components.nanosecond.toInt())
+    return LocalTime(components.hour.toInt(), components.minute.toInt(), components.second.toInt(), providedNanosecondsOfSecond ?: components.nanosecond.toInt())
 }
 
-fun NSDate.toLocalDateTime() =
-    LocalDateTime(this.toLocalDate(), this.toLocalTime())
+// when converting from another datetime type, set providedNanosecondsOfSecond to retain nanos of second (will be lost otherwise)
+fun NSDate.toLocalDateTime(providedNanosecondsOfSecond: Int? = null) =
+    LocalDateTime(this.toLocalDate(), this.toLocalTime(providedNanosecondsOfSecond))
 
-fun NSDate.toInstant(): Instant {
+// when converting from another datetime type, set providedNanosecondsOfSecond to retain nanos of second (will be lost otherwise)
+fun NSDate.toInstant(providedNanosecondsOfSecond: Int? = null): Instant {
     val secondsSinceEpoch = this.timeIntervalSince1970
 
-    return Instant.ofEpochSeconds(secondsSinceEpoch)
+    return if (providedNanosecondsOfSecond != null) {
+        Instant(secondsSinceEpoch.toLong(), providedNanosecondsOfSecond)
+    } else {
+        Instant.ofEpochSeconds(secondsSinceEpoch)
+
+    }
 }
 
 
