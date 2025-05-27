@@ -1,6 +1,7 @@
 package net.dankito.datetime.format.pattern
 
 import net.dankito.datetime.LocalDate
+import net.dankito.datetime.LocalDateTime
 import net.dankito.datetime.LocalTime
 import net.dankito.datetime.Month
 import net.dankito.datetime.format.pattern.component.*
@@ -26,11 +27,45 @@ open class DateTimeComponentFormatter(
     }
 
 
-    protected open fun ensureMinLength(value: Int, component: DateTimeFormatPatternComponentWithMinLength): String =
-        ensureMinLength(value, component.minLength)
+    open fun format(time: LocalTime, pattern: String): String = format(time, parser.parse(pattern))
 
-    protected open fun ensureMinLength(value: Int, minLength: Int): String =
-        value.toString().padStart(minLength, '0')
+    open fun format(time: LocalTime, pattern: DateTimeFormatPattern): String = buildString {
+        pattern.components.forEach { component ->
+            when (component) {
+                is HourComponent -> append(formatHour(time.hour, component))
+                is MinuteComponent -> append(ensureMinLength(time.minute, component))
+                is SecondComponent -> append(ensureMinLength(time.second, component))
+                is FractionalSecondComponent -> append(ensureLength(time.nanosecondOfSecond, component))
+                is LiteralComponent -> append(component.literal)
+                else -> throw IllegalArgumentException("${component::class} is not a component of LocalDate")
+            }
+        }
+    }
+
+
+    open fun format(dateTime: LocalDateTime, pattern: String): String = format(dateTime, parser.parse(pattern))
+
+    open fun format(dateTime: LocalDateTime, pattern: DateTimeFormatPattern): String = buildString {
+        pattern.components.forEach { component ->
+            when (component) {
+                // date
+                is YearComponent -> append(formatYear(dateTime.year, component))
+                is MonthComponent -> append(formatMonth(dateTime.month, component))
+                is DayOfMonthComponent -> append(ensureMinLength(dateTime.day, component))
+                is DayOfWeekComponent -> throw UnsupportedOperationException("Day of week component is not supported yet as determining a LocalDate's day of week is not implemented yet.")
+
+                // time
+                is HourComponent -> append(formatHour(dateTime.hour, component))
+                is MinuteComponent -> append(ensureMinLength(dateTime.minute, component))
+                is SecondComponent -> append(ensureMinLength(dateTime.second, component))
+                is FractionalSecondComponent -> append(ensureLength(dateTime.nanosecondOfSecond, component))
+
+                is LiteralComponent -> append(component.literal)
+                else -> throw IllegalArgumentException("${component::class} is not a component of LocalDate")
+            }
+        }
+    }
+
 
     protected open fun formatYear(year: Int, component: YearComponent): String {
         val formatted = year.toString().padStart(component.minLength, '0')
@@ -49,5 +84,25 @@ open class DateTimeComponentFormatter(
         MonthStyle.Wide -> month.name // TODO: localize
         MonthStyle.Narrow -> month.name.take(1) // TODO: localize
     }
+
+    protected open fun formatHour(hour: Int, component: HourComponent): String = when (component.style) {
+        HourStyle.Hour_12_Start_1 -> ensureMinLength(if (hour == 0 || hour == 12) 12 else hour % 12, component)
+        HourStyle.Hour_24_Start_0 -> ensureMinLength(hour, component)
+        HourStyle.Hour_12_Start_0 -> ensureMinLength(hour % 12, component)
+        HourStyle.Hour_24_Start_1 -> ensureMinLength(if (hour == 0) 24 else hour, component)
+    }
+
+
+    protected open fun ensureMinLength(value: Int, component: DateTimeFormatPatternComponentWithMinLength): String =
+        ensureMinLength(value, component.minLength)
+
+    protected open fun ensureMinLength(value: Int, minLength: Int): String =
+        value.toString().padStart(minLength, '0')
+
+    protected open fun ensureLength(value: Int, component: DateTimeFormatPatternComponentWithFixedLength): String =
+        ensureLength(value, component.length)
+
+    protected open fun ensureLength(value: Int, length: Int): String =
+        ensureMinLength(value, length).take(length)
 
 }
