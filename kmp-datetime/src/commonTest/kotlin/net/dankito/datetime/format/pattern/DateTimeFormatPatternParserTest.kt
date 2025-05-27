@@ -44,6 +44,63 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
+    fun hour_12Hours_1_Based_Min1Digit() {
+        val result = underTest.parsePattern("h")
+
+        assertHourComponent(result, HourStyle.Hour_12_Start_1, 1)
+    }
+
+    @Test
+    fun hour_12Hours_1_Based_2Digits() {
+        val result = underTest.parsePattern("hh")
+
+        assertHourComponent(result, HourStyle.Hour_12_Start_1, 2)
+    }
+
+    @Test
+    fun hour_24Hours_0_Based_Min1Digit() {
+        val result = underTest.parsePattern("H")
+
+        assertHourComponent(result, HourStyle.Hour_24_Start_0, 1)
+    }
+
+    @Test
+    fun hour_24Hours_0_Based_2Digits() {
+        val result = underTest.parsePattern("HH")
+
+        assertHourComponent(result, HourStyle.Hour_24_Start_0, 2)
+    }
+
+    @Test
+    fun hour_12Hours_0_Based_Min1Digit() {
+        val result = underTest.parsePattern("K")
+
+        assertHourComponent(result, HourStyle.Hour_12_Start_0, 1)
+    }
+
+    @Test
+    fun hour_12Hours_0_Based_2Digits() {
+        val result = underTest.parsePattern("KK")
+
+        assertHourComponent(result, HourStyle.Hour_12_Start_0, 2)
+    }
+
+    @Test
+    fun hour_24Hours_1_Based_Min1Digit() {
+        val result = underTest.parsePattern("k")
+
+        assertHourComponent(result, HourStyle.Hour_24_Start_1, 1)
+    }
+
+    @Test
+    fun hour_24Hours_1_Based_2Digits() {
+        val result = underTest.parsePattern("kk")
+
+        assertHourComponent(result, HourStyle.Hour_24_Start_1, 2)
+    }
+
+
+    @Test
     fun minute_Min1Digit() {
         val result = underTest.parsePattern("m")
 
@@ -126,6 +183,13 @@ class DateTimeFormatPatternParserTest {
     private inline fun <reified T : DateTimeFormatPatternComponentWithMinLength> assertComponentWithMinLength(result: DateTimeFormatPattern, minLength: Int) {
         assertComponent<T>(result) {
             assertThat(it.minLength).isEqualTo(minLength)
+        }
+    }
+
+    private fun assertHourComponent(result: DateTimeFormatPattern, style: HourStyle, minLength: Int) {
+        assertComponent<HourComponent>(result) { component ->
+            assertThat(component.style).isEqualTo(style)
+            assertThat(component.minLength).isEqualTo(minLength)
         }
     }
 

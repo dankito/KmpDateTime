@@ -53,11 +53,20 @@ open class DateTimeFormatPatternParser {
         'd' -> DayOfMonthComponent(length) // TODO: also handle D, F and g
 
         // time components
+        'h', 'H', 'k', 'K' -> HourComponent(mapHourStyle(formatSymbol), length)
         'm' -> MinuteComponent(length)
         's' -> SecondComponent(length)
         'S' -> FractionalSecondComponent(length)
 
         else -> throw IllegalArgumentException("Unknown format pattern symbol '$formatSymbol' encountered. Implemented ISO 8601 format pattern symbols are: y, M, d, H, m, s, S")
+    }
+
+    protected open fun mapHourStyle(formatSymbol: Char): HourStyle = when (formatSymbol) {
+        'h' -> HourStyle.Hour_12_Start_1
+        'H' -> HourStyle.Hour_24_Start_0
+        'K' -> HourStyle.Hour_12_Start_0
+        'k' -> HourStyle.Hour_24_Start_1
+        else -> throw IllegalArgumentException("Illegal '$formatSymbol' pattern symbol for Hour encountered. Valid values are 'h', 'H', 'k' and 'K'")
     }
 
 
