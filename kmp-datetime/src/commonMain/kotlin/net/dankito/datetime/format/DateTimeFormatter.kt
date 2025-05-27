@@ -3,7 +3,12 @@ package net.dankito.datetime.format
 import net.dankito.datetime.*
 import kotlin.math.abs
 
-object DateTimeFormatter {
+class DateTimeFormatter {
+
+    companion object {
+        val Default = DateTimeFormatter()
+    }
+
 
     fun toIsoString(date: LocalDate): String = with(date) {
         "${ofLength(year, 4)}-${ofLength(monthNumber, 2)}-${ofLength(day, 2)}"

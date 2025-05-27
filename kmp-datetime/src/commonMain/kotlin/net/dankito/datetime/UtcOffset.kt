@@ -46,7 +46,7 @@ data class UtcOffset(
 
     val seconds: Int by lazy { abs(totalSeconds) % DateTimeCalculator.SecondsPerMinute }
 
-    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+    val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
 
     override fun toString() = isoString

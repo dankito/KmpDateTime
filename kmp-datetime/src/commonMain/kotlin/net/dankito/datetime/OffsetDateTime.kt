@@ -46,7 +46,7 @@ data class OffsetDateTime(
 
     val dateTime: LocalDateTime by lazy { LocalDateTime(year, month, day, hour, minute, second, nanosecondOfSecond) }
 
-    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+    val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
 
     override fun toString() = isoString

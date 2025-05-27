@@ -41,9 +41,9 @@ data class Instant(
 
     fun toLocalDateTimeAtSystemTimeZone(): LocalDateTime = Platform.toLocalDateTimeAtSystemTimeZone(this)
 
-    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+    val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
-    val isoStringAtSystemTimeZone: String by lazy { DateTimeFormatter.toIsoStringAtSystemTimeZone(this) }
+    val isoStringAtSystemTimeZone: String by lazy { DateTimeFormatter.Default.toIsoStringAtSystemTimeZone(this) }
 
 
     override fun compareTo(other: Instant): Int {

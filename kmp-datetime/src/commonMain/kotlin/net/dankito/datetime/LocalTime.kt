@@ -33,7 +33,7 @@ data class LocalTime(
     }
 
 
-    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+    val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
     fun atDate(year: Int, month: Month, day: Int = 1): LocalDateTime =
         LocalDateTime(year, month, day, hour, minute, second, nanosecondOfSecond)

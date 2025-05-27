@@ -40,12 +40,12 @@ data class LocalDate(
         Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) }
     }
 
-    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+    val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
     /**
      * Variant of [isoString] that uses '.' instead of '-' as separator.
      */
-    val isoStringDotSeparated: String by lazy { DateTimeFormatter.toDotSeparatedIsoString(this) }
+    val isoStringDotSeparated: String by lazy { DateTimeFormatter.Default.toDotSeparatedIsoString(this) }
 
     fun atStartOfDay(): LocalDateTime = LocalDateTime(year, month, day, 0, 0, 0, 0)
 

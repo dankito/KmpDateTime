@@ -50,7 +50,7 @@ data class LocalDateTime(
 
     val time: LocalTime by lazy { LocalTime(hour, minute, second, nanosecondOfSecond) }
 
-    val isoString: String by lazy { DateTimeFormatter.toIsoString(this) }
+    val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
     fun toInstantAtUtc(): Instant = Platform.toInstantAtUtc(this)
 
