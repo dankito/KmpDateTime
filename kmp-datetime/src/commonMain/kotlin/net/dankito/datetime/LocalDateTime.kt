@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import kotlinx.serialization.Serializable
+import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import net.dankito.datetime.platform.Platform
@@ -44,13 +45,15 @@ data class LocalDateTime(
 
     val monthNumber: Int = month.number
 
+    val date: LocalDate by lazy { LocalDate(year, month, day) }
+
     val dayOfWeek: DayOfWeek? by lazy { date.dayOfWeek }
 
     val dayOfYear: Int? by lazy { date.dayOfYear }
 
-    val isInDaylightSavingTime: Boolean by lazy { date.isInDaylightSavingTime }
+    val quarter: Quarter by lazy { date.quarter }
 
-    val date: LocalDate by lazy { LocalDate(year, month, day) }
+    val isInDaylightSavingTime: Boolean by lazy { date.isInDaylightSavingTime }
 
     val time: LocalTime by lazy { LocalTime(hour, minute, second, nanosecondOfSecond) }
 

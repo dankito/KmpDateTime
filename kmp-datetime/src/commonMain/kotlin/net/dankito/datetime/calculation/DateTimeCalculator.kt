@@ -1,6 +1,8 @@
 package net.dankito.datetime.calculation
 
 import net.dankito.datetime.Instant
+import net.dankito.datetime.LocalDate
+import net.dankito.datetime.Quarter
 
 object DateTimeCalculator {
 
@@ -73,5 +75,13 @@ object DateTimeCalculator {
         } else {
             hours * SecondsPerHour + minutes * SecondsPerMinute + seconds
         }
+
+
+    fun getQuarter(date: LocalDate): Quarter = when (date.monthNumber) {
+        1, 2, 3 -> Quarter.Q1
+        4, 5, 6 -> Quarter.Q2
+        7, 8, 9 -> Quarter.Q3
+        else -> Quarter.Q4
+    }
 
 }

@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import assertk.assertThat
+import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
 import assertk.assertions.isGreaterThanOrEqualTo
 import assertk.assertions.isTrue
@@ -64,6 +65,91 @@ class LocalDateTest {
         val result = LocalDate(2015, 10, 21).dayOfYear
 
         assertThat(result).isEqualTo(294)
+    }
+
+
+    @Test
+    fun quarter_January() {
+        val date = LocalDate(2025, Month.January, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q1)
+    }
+
+    @Test
+    fun quarter_February() {
+        val date = LocalDate(2025, Month.February, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q1)
+    }
+
+    @Test
+    fun quarter_March() {
+        val date = LocalDate(2025, Month.March, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q1)
+    }
+
+    @Test
+    fun quarter_April() {
+        val date = LocalDate(2025, Month.April, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q2)
+    }
+
+    @Test
+    fun quarter_May() {
+        val date = LocalDate(2025, Month.May, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q2)
+    }
+
+    @Test
+    fun quarter_June() {
+        val date = LocalDate(2025, Month.June, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q2)
+    }
+
+    @Test
+    fun quarter_July() {
+        val date = LocalDate(2025, Month.July, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q3)
+    }
+
+    @Test
+    fun quarter_August() {
+        val date = LocalDate(2025, Month.August, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q3)
+    }
+
+    @Test
+    fun quarter_September() {
+        val date = LocalDate(2025, Month.September, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q3)
+    }
+
+    @Test
+    fun quarter_October() {
+        val date = LocalDate(2025, Month.October, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q4)
+    }
+
+    @Test
+    fun quarter_November() {
+        val date = LocalDate(2025, Month.November, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q4)
+    }
+
+    @Test
+    fun quarter_December() {
+        val date = LocalDate(2025, Month.December, 1)
+
+        assertThat(date.quarter).isEqualByComparingTo(Quarter.Q4)
     }
 
 

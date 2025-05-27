@@ -1,6 +1,7 @@
 package net.dankito.datetime
 
 import kotlinx.serialization.Serializable
+import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import net.dankito.datetime.platform.Platform
@@ -36,20 +37,16 @@ data class LocalDate(
     /**
      * The day of week of this date. May returns `null` in case of an invalid date.
      */
-    val dayOfWeek: DayOfWeek? by lazy {
-        Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) }
-    }
+    val dayOfWeek: DayOfWeek? by lazy { Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) } }
 
     /**
      * The day of week of this date. May returns `null` in case of an invalid date.
      */
-    val dayOfYear: Int? by lazy {
-        Platform.getDayOfYear(this)
-    }
+    val dayOfYear: Int? by lazy { Platform.getDayOfYear(this) }
 
-    val isInDaylightSavingTime: Boolean by lazy {
-        Platform.isInDaylightSavingTime(this)
-    }
+    val quarter: Quarter by lazy { DateTimeCalculator.getQuarter(this) }
+
+    val isInDaylightSavingTime: Boolean by lazy { Platform.isInDaylightSavingTime(this) }
 
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
