@@ -14,6 +14,10 @@ object DateTimeCalculator {
 
     const val SecondsPerDay: Int = SecondsPerHour * HoursPerDay
 
+    const val MillisecondsPerSecond = 1000L
+
+    const val MillisecondsPerDay = SecondsPerDay * MillisecondsPerSecond
+
 
     fun instantFromEpochMilli(epochMilli: Long): Instant = Instant(
         // code copied from java.time.Instant.ofEpochMilli()

@@ -38,29 +38,34 @@ internal actual object Platform {
 
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
-        val weekDay = memScoped {
-            val unixDate = alloc<tm>().apply {
-                tm_year = date.year - 1900
-                tm_mon = date.monthNumber - 1
-                tm_mday = date.day
-                tm_hour = 12 // Set a safe time (no DST issues)
-                tm_min = 0
-                tm_sec = 0
-            }
-
-            // convert to time_t and normalize
-            val time = mktime(unixDate.ptr)
-            if (time == -1L) {
-                null // Invalid date
-            } else {
-                unixDate.tm_wday
-            }
-        }
+        val weekDay = convertToUnixDate(date)?.tm_wday
 
         return weekDay?.let {
             // 0 = Sunday, ..., 6 = Saturday
             if (it == 0) 7
             else it
+        }
+    }
+
+    actual fun getDayOfYear(date: LocalDate): Int? =
+        convertToUnixDate(date)?.tm_yday?.let { it + 1 }
+
+    private fun convertToUnixDate(date: LocalDate): tm? = memScoped {
+        val unixDate = alloc<tm>().apply {
+            tm_year = date.year - 1900
+            tm_mon = date.monthNumber - 1
+            tm_mday = date.day
+            tm_hour = 12 // Set a safe time (no DST issues)
+            tm_min = 0
+            tm_sec = 0
+        }
+
+        // convert to time_t and normalize
+        val time = mktime(unixDate.ptr)
+        if (time == -1L) {
+            null // Invalid date
+        } else {
+            unixDate
         }
     }
 

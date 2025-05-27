@@ -20,6 +20,8 @@ internal expect object Platform {
      */
     fun getDayOfWeekDayNumber(date: LocalDate): Int?
 
+    fun getDayOfYear(date: LocalDate): Int?
+
 
     fun toInstantAtUtc(dateTime: LocalDateTime): Instant
 

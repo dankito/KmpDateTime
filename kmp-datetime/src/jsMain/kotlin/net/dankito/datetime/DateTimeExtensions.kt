@@ -27,6 +27,10 @@ fun Date.toLocalDateTimeAtUtc(providedNanosecondsOfSecond: Int? = null) =
     LocalDateTime(this.toLocalDateAtUtc(), this.toLocalTimeAtUtc(providedNanosecondsOfSecond))
 
 
+fun LocalDate.toJsDateInSystemTimeZone(): Date = Date(this.year, this.monthNumber - 1, this.day)
+
+fun LocalDate.millisSinceEpochUtc(): Double = Date.UTC(this.year, this.monthNumber - 1, this.day)
+
 fun Instant.toJsDate(): Date = Date(this.toEpochMilliseconds())
 
 private fun getNanosecondsOfSecond(millisecondsOfJsDate: Int, providedNanosecondsOfSecond: Int?): Int =

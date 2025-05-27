@@ -36,6 +36,9 @@ internal actual object Platform {
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? =
         date.toJavaLocalDate().dayOfWeek.value
 
+    actual fun getDayOfYear(date: LocalDate): Int? =
+        date.toJavaLocalDate().dayOfYear
+
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
         dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKmpInstant()

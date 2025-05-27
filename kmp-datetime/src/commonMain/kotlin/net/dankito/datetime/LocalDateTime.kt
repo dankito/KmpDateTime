@@ -46,6 +46,8 @@ data class LocalDateTime(
 
     val dayOfWeek: DayOfWeek? by lazy { date.dayOfWeek }
 
+    val dayOfYear: Int? by lazy { date.dayOfYear }
+
     val date: LocalDate by lazy { LocalDate(year, month, day) }
 
     val time: LocalTime by lazy { LocalTime(hour, minute, second, nanosecondOfSecond) }

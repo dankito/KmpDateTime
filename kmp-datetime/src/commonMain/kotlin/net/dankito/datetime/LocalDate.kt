@@ -40,12 +40,21 @@ data class LocalDate(
         Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) }
     }
 
+    /**
+     * The day of week of this date. May returns `null` in case of an invalid date.
+     */
+    val dayOfYear: Int? by lazy {
+        Platform.getDayOfYear(this)
+    }
+
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
     /**
      * Variant of [isoString] that uses '.' instead of '-' as separator.
      */
     val isoStringDotSeparated: String by lazy { DateTimeFormatter.Default.toDotSeparatedIsoString(this) }
+
+    fun atStartOfYear(): LocalDate = LocalDate(year, Month.January, 1)
 
     fun atStartOfDay(): LocalDateTime = LocalDateTime(year, month, day, 0, 0, 0, 0)
 

@@ -38,6 +38,35 @@ class LocalDateTest {
 
 
     @Test
+    fun dayOfYear_January1st() {
+        val result = LocalDate(2025, 1, 1).dayOfYear
+
+        assertThat(result).isEqualTo(1)
+    }
+
+    @Test
+    fun dayOfYear_December1st_NonLeapYear() {
+        val result = LocalDate(2025, 12, 31).dayOfYear
+
+        assertThat(result).isEqualTo(365)
+    }
+
+    @Test
+    fun dayOfYear_December1st_LeapYear() {
+        val result = LocalDate(2024, 12, 31).dayOfYear
+
+        assertThat(result).isEqualTo(366)
+    }
+
+    @Test
+    fun dayOfYear_DayWithDaylightSavingTime() { // JS needs special handling when day has daylight-saving time
+        val result = LocalDate(2015, 10, 21).dayOfYear
+
+        assertThat(result).isEqualTo(294)
+    }
+
+
+    @Test
     fun compareTo_YearIsGreater() {
         val first = LocalDate(2025, 1, 1)
         val second = LocalDate(2024, 1, 1)

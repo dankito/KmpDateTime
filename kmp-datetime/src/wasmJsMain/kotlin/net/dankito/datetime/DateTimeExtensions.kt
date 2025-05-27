@@ -2,6 +2,8 @@ package net.dankito.datetime
 
 import net.dankito.datetime.platform.JsDate
 import net.dankito.datetime.platform.createDateFromMillisSinceEpoch
+import net.dankito.datetime.platform.createDateInSystemTimeZone
+import net.dankito.datetime.platform.createDateInUTC
 
 fun JsDate.toLocalDate() =
     // getMonth() = month as number (0 - 11) -> + 1; getDate() = day as number (1 - 31), getDay() = weekday (0 - 6)
@@ -27,6 +29,10 @@ fun JsDate.toLocalTimeAtUtc(providedNanosecondsOfSecond: Int? = null) =
 fun JsDate.toLocalDateTimeAtUtc(providedNanosecondsOfSecond: Int? = null) =
     LocalDateTime(this.toLocalDateAtUtc(), this.toLocalTimeAtUtc(providedNanosecondsOfSecond))
 
+
+fun LocalDate.toJsDateInSystemTimeZone(): JsDate = createDateInSystemTimeZone(this.year, this.monthNumber - 1, this.day)
+
+fun LocalDate.millisSinceEpochUtc(): Double = createDateInUTC(this.year, this.monthNumber - 1, this.day)
 
 fun Instant.toJsDate(): JsDate =
     // don't know why but for WASM epochMillis have to be converted to Double (in JS it works with Long)

@@ -44,6 +44,22 @@ fun NSDate.toInstant(providedNanosecondsOfSecond: Int? = null): Instant {
 }
 
 
+fun LocalDate.toNSDateAtSystemTimeZone(): NSDate = this.toNSDateAt(NSTimeZone.localTimeZone)
+
+fun LocalDate.toNSDateAt(timeZone: NSTimeZone = NSTimeZone.localTimeZone): NSDate = this.let { date ->
+    val components = NSDateComponents().apply {
+        // date components expect an NSInteger, which is Int on 32-bit system and Long on 64-bit systems -> convert Ints to NSInteger
+        this.year = date.year.toNSInteger()
+        this.month = date.monthNumber.toNSInteger()
+        this.day = date.day.toNSInteger()
+    }
+
+    val calendar = NSCalendar.currentCalendar
+
+    return calendar.dateFromComponents(components)
+        ?: throw IllegalArgumentException("Could not convert $date to NSDate")
+}
+
 fun LocalDateTime.toNSDateAtSystemTimeZone(): NSDate = this.toNSDateAt(NSTimeZone.localTimeZone)
 
 fun LocalDateTime.toNSDateAt(timeZone: NSTimeZone = NSTimeZone.localTimeZone): NSDate = this.let { dateTime ->
@@ -59,6 +75,7 @@ fun LocalDateTime.toNSDateAt(timeZone: NSTimeZone = NSTimeZone.localTimeZone): N
     }
 
     val calendar = NSCalendar.currentCalendar
+
     return calendar.dateFromComponents(components)
         ?: throw IllegalArgumentException("Could not convert $dateTime to NSDate")
 }

@@ -1,7 +1,9 @@
 package net.dankito.datetime.platform
 
 import net.dankito.datetime.*
+import net.dankito.datetime.calculation.DateTimeCalculator
 import kotlin.js.Date
+import kotlin.math.floor
 
 internal actual object Platform {
 
@@ -25,13 +27,22 @@ internal actual object Platform {
 
 
     actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
-        val jsDate = Date(date.year, date.monthNumber - 1, date.day)
+        val jsDate = date.toJsDateInSystemTimeZone()
 
         // 0 = Sunday
         return jsDate.getDay().let {
             if (it == 0) 7
             else it
         }
+    }
+
+    actual fun getDayOfYear(date: LocalDate): Int? {
+        // do not use date.toJsDateInSystemTimeZone(), it has issues with days with dayligh-saving time
+        val millisSinceEpoch = date.millisSinceEpochUtc()
+        val millisSinceEpochForStartOfYear = date.atStartOfYear().millisSinceEpochUtc()
+        val diffInMillis = millisSinceEpoch - millisSinceEpochForStartOfYear
+
+        return floor(diffInMillis / DateTimeCalculator.MillisecondsPerDay).toInt() + 1
     }
 
 
