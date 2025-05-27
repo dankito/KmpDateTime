@@ -1,23 +1,26 @@
 package net.dankito.datetime.format
 
 import net.dankito.datetime.*
+import net.dankito.datetime.format.pattern.DateTimeComponentFormatter
+import net.dankito.datetime.format.pattern.DateTimeFormatPattern
 import kotlin.math.abs
 
-class DateTimeFormatter {
+class DateTimeFormatter(
+    protected val componentFormatter: DateTimeComponentFormatter = DateTimeComponentFormatter.Default
+) {
 
     companion object {
         val Default = DateTimeFormatter()
     }
 
 
-    fun toIsoString(date: LocalDate): String = with(date) {
-        "${ofLength(year, 4)}-${ofLength(monthNumber, 2)}-${ofLength(day, 2)}"
-    }
+    fun toIsoString(date: LocalDate): String =
+        componentFormatter.format(date, DateTimeFormatPattern.IsoDateComponents)
 
-    fun toDotSeparatedIsoString(date: LocalDate): String = with(date) {
-        "${ofLength(year, 4)}.${ofLength(monthNumber, 2)}.${ofLength(day, 2)}"
-    }
+    fun toDotSeparatedIsoString(date: LocalDate): String =
+        componentFormatter.format(date, DateTimeFormatPattern.IsoDateDotSeparatedComponents)
 
+    // LocalTime has varying fraction of second digits, therefore we cannot use a fixed pattern like DateTimeFormatPattern.IsoTimePattern here
     fun toIsoString(time: LocalTime): String = with(time) {
             "${ofLength(hour, 2)}:${ofLength(minute, 2)}:${ofLength(second, 2)}" +
             "" +
