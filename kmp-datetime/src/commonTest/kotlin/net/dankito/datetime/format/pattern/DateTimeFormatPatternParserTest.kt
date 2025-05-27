@@ -13,14 +13,14 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun year_2Digits() {
-        val result = underTest.parsePattern("yy")
+        val result = underTest.parse("yy")
 
         assertComponentWithMinLength<YearComponent>(result, 2)
     }
 
     @Test
     fun year_4Digits() {
-        val result = underTest.parsePattern("yyyy")
+        val result = underTest.parse("yyyy")
 
         assertComponentWithMinLength<YearComponent>(result, 4)
     }
@@ -28,35 +28,35 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun month_minDigits() {
-        val result = underTest.parsePattern("M")
+        val result = underTest.parse("M")
 
         assertMonthComponent(result, MonthStyle.NumericMinDigits)
     }
 
     @Test
     fun month_2Digits() {
-        val result = underTest.parsePattern("MM")
+        val result = underTest.parse("MM")
 
         assertMonthComponent(result, MonthStyle.Numeric2Digits)
     }
 
     @Test
     fun month_Abbreviated() {
-        val result = underTest.parsePattern("MMM")
+        val result = underTest.parse("MMM")
 
         assertMonthComponent(result, MonthStyle.Abbreviated)
     }
 
     @Test
     fun month_Wide() {
-        val result = underTest.parsePattern("MMMM")
+        val result = underTest.parse("MMMM")
 
         assertMonthComponent(result, MonthStyle.Wide)
     }
 
     @Test
     fun month_Narrow() {
-        val result = underTest.parsePattern("MMMMM")
+        val result = underTest.parse("MMMMM")
 
         assertMonthComponent(result, MonthStyle.Narrow)
     }
@@ -64,14 +64,14 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun dayOfMonth_MinDigits() {
-        val result = underTest.parsePattern("d")
+        val result = underTest.parse("d")
 
         assertComponentWithMinLength<DayOfMonthComponent>(result, 1)
     }
 
     @Test
     fun dayOfMonth_2Digits() {
-        val result = underTest.parsePattern("dd")
+        val result = underTest.parse("dd")
 
         assertComponentWithMinLength<DayOfMonthComponent>(result, 2)
     }
@@ -79,42 +79,42 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun dayOfWeek_Abbreviated_1_Digit() {
-        val result = underTest.parsePattern("E")
+        val result = underTest.parse("E")
 
         assertDayOfWeekComponent(result, DayOfWeekStyle.Abbreviated)
     }
 
     @Test
     fun dayOfWeek_Abbreviated_2_Digits() {
-        val result = underTest.parsePattern("EE")
+        val result = underTest.parse("EE")
 
         assertDayOfWeekComponent(result, DayOfWeekStyle.Abbreviated)
     }
 
     @Test
     fun dayOfWeek_Abbreviated_3_Digits() {
-        val result = underTest.parsePattern("EEE")
+        val result = underTest.parse("EEE")
 
         assertDayOfWeekComponent(result, DayOfWeekStyle.Abbreviated)
     }
 
     @Test
     fun dayOfWeek_Wide() {
-        val result = underTest.parsePattern("EEEE")
+        val result = underTest.parse("EEEE")
 
         assertDayOfWeekComponent(result, DayOfWeekStyle.Wide)
     }
 
     @Test
     fun dayOfWeek_Narrow() {
-        val result = underTest.parsePattern("EEEEE")
+        val result = underTest.parse("EEEEE")
 
         assertDayOfWeekComponent(result, DayOfWeekStyle.Narrow)
     }
 
     @Test
     fun dayOfWeek_Short() {
-        val result = underTest.parsePattern("EEEEEE")
+        val result = underTest.parse("EEEEEE")
 
         assertDayOfWeekComponent(result, DayOfWeekStyle.Short)
     }
@@ -122,56 +122,56 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun hour_12Hours_1_Based_MinDigits() {
-        val result = underTest.parsePattern("h")
+        val result = underTest.parse("h")
 
         assertHourComponent(result, HourStyle.Hour_12_Start_1, 1)
     }
 
     @Test
     fun hour_12Hours_1_Based_2Digits() {
-        val result = underTest.parsePattern("hh")
+        val result = underTest.parse("hh")
 
         assertHourComponent(result, HourStyle.Hour_12_Start_1, 2)
     }
 
     @Test
     fun hour_24Hours_0_Based_MinDigits() {
-        val result = underTest.parsePattern("H")
+        val result = underTest.parse("H")
 
         assertHourComponent(result, HourStyle.Hour_24_Start_0, 1)
     }
 
     @Test
     fun hour_24Hours_0_Based_2Digits() {
-        val result = underTest.parsePattern("HH")
+        val result = underTest.parse("HH")
 
         assertHourComponent(result, HourStyle.Hour_24_Start_0, 2)
     }
 
     @Test
     fun hour_12Hours_0_Based_MinDigits() {
-        val result = underTest.parsePattern("K")
+        val result = underTest.parse("K")
 
         assertHourComponent(result, HourStyle.Hour_12_Start_0, 1)
     }
 
     @Test
     fun hour_12Hours_0_Based_2Digits() {
-        val result = underTest.parsePattern("KK")
+        val result = underTest.parse("KK")
 
         assertHourComponent(result, HourStyle.Hour_12_Start_0, 2)
     }
 
     @Test
     fun hour_24Hours_1_Based_MinDigits() {
-        val result = underTest.parsePattern("k")
+        val result = underTest.parse("k")
 
         assertHourComponent(result, HourStyle.Hour_24_Start_1, 1)
     }
 
     @Test
     fun hour_24Hours_1_Based_2Digits() {
-        val result = underTest.parsePattern("kk")
+        val result = underTest.parse("kk")
 
         assertHourComponent(result, HourStyle.Hour_24_Start_1, 2)
     }
@@ -179,14 +179,14 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun minute_MinDigits() {
-        val result = underTest.parsePattern("m")
+        val result = underTest.parse("m")
 
         assertComponentWithMinLength<MinuteComponent>(result, 1)
     }
 
     @Test
     fun minute_2Digits() {
-        val result = underTest.parsePattern("mm")
+        val result = underTest.parse("mm")
 
         assertComponentWithMinLength<MinuteComponent>(result, 2)
     }
@@ -194,14 +194,14 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun second_MinDigits() {
-        val result = underTest.parsePattern("s")
+        val result = underTest.parse("s")
 
         assertComponentWithMinLength<SecondComponent>(result, 1)
     }
 
     @Test
     fun second_2Digits() {
-        val result = underTest.parsePattern("ss")
+        val result = underTest.parse("ss")
 
         assertComponentWithMinLength<SecondComponent>(result, 2)
     }
@@ -209,7 +209,7 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun fractionalSecond_MinDigits() {
-        val result = underTest.parsePattern("S")
+        val result = underTest.parse("S")
 
         assertComponent<FractionalSecondComponent>(result) {
             assertThat(it.length).isEqualTo(1)
@@ -218,7 +218,7 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun fractionalSecond_3Digits() {
-        val result = underTest.parsePattern("SSS")
+        val result = underTest.parse("SSS")
 
         assertComponent<FractionalSecondComponent>(result) {
             assertThat(it.length).isEqualTo(3)
@@ -227,7 +227,7 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun fractionalSecond_9Digits() {
-        val result = underTest.parsePattern("SSSSSSSSS")
+        val result = underTest.parse("SSSSSSSSS")
 
         assertComponent<FractionalSecondComponent>(result) {
             assertThat(it.length).isEqualTo(9)
@@ -237,7 +237,7 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun literalString() {
-        val result = underTest.parsePattern("'T'")
+        val result = underTest.parse("'T'")
 
         assertLiteralComponent(result, "T")
     }
@@ -245,13 +245,13 @@ class DateTimeFormatPatternParserTest {
     @Test
     fun unclosedLiteralString() {
         assertFailsWith<IllegalArgumentException> {
-            underTest.parsePattern("'T")
+            underTest.parse("'T")
         }
     }
 
     @Test
     fun escapedQuote() {
-        val result = underTest.parsePattern("''")
+        val result = underTest.parse("''")
 
         assertLiteralComponent(result, "'")
     }
@@ -259,7 +259,7 @@ class DateTimeFormatPatternParserTest {
 
     @Test
     fun iso8601DateTimePattern() {
-        val result = underTest.parsePattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+        val result = underTest.parse("yyyy-MM-dd'T'HH:mm:ss.SSS")
 
         with(result) {
             assertThat(components).hasSize(13)

@@ -10,7 +10,7 @@ open class DateTimeFormatPatternParser {
      * The table with the field symbols is a bit below that:
      * [https://www.unicode.org/reports/tr35/tr35-73/tr35-dates.html#table-date-field-symbol-table](https://www.unicode.org/reports/tr35/tr35-73/tr35-dates.html#table-date-field-symbol-table)
      */
-    open fun parsePattern(pattern: String): DateTimeFormatPattern {
+    open fun parse(pattern: String): DateTimeFormatPattern {
         val components = mutableListOf<DateTimeFormatPatternComponent>()
         var index = 0
         val length = pattern.length
