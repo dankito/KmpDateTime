@@ -21,6 +21,9 @@ open class DateTimeFormatPatternParser {
 
             if (char == '\'') { // literal string mask
                 index = parseLiteral(pattern, index + 1, length, components)
+            } else if (char.isLetter() == false) { // e.g. '.', '-', ...
+                components.add(LiteralComponent(char.toString()))
+                index++
             }
         }
 
@@ -45,7 +48,7 @@ open class DateTimeFormatPatternParser {
             throw IllegalArgumentException("DateTime pattern string ended with an unclosed literal string mask: $pattern")
         }
 
-        components.add(LiteralComponent(pattern.substring(literalStartIndex, index)))
+        components.add(LiteralComponent(pattern.substring(literalStartIndex, index), true))
 
         index++
 
