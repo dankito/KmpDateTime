@@ -5,6 +5,8 @@ import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
 import assertk.assertions.isGreaterThanOrEqualTo
 import assertk.assertions.isTrue
+import net.codinux.kotlin.platform.Platform
+import net.codinux.kotlin.platform.isJavaScript
 import kotlin.test.Test
 
 class LocalDateTest {
@@ -150,6 +152,62 @@ class LocalDateTest {
         val date = LocalDate(2025, Month.December, 1)
 
         assertThat(date.quarter).isEqualByComparingTo(Quarter.Q4)
+    }
+
+
+    @Test
+    fun weekOfYear_FirstWeek() {
+        if (Platform.isJavaScript) {
+            return // TODO: does not work on JS Browser and NodeJS yet
+        }
+
+        val date = LocalDate(2025, 1, 4)
+
+        assertThat(date.weekOfYear).isEqualTo(1)
+    }
+
+    @Test
+    fun weekOfYear_LastWeek() {
+        if (Platform.isJavaScript) {
+            return // TODO: does not work on JS Browser and NodeJS yet
+        }
+
+        val date = LocalDate(2024, 12, 29)
+
+        assertThat(date.weekOfYear).isEqualTo(52)
+    }
+
+    @Test
+    fun weekOfYear_LastDayBelongsToNextYearsFirstWeek() {
+        if (Platform.isJavaScript) {
+            return // TODO: does not work on JS Browser and NodeJS yet
+        }
+
+        val date = LocalDate(2024, 12, 31)
+
+        assertThat(date.weekOfYear).isEqualTo(1)
+    }
+
+    @Test
+    fun weekOfYear_LastDay_Week53() {
+        if (Platform.isJavaScript) {
+            return // TODO: does not work on JS Browser and NodeJS yet
+        }
+
+        val date = LocalDate(2020, 12, 31)
+
+        assertThat(date.weekOfYear).isEqualTo(53)
+    }
+
+    @Test
+    fun weekOfYear_WeekInYear() {
+        if (Platform.isJavaScript) {
+            return // TODO: does not work on JS Browser and NodeJS yet
+        }
+
+        val date = LocalDate(2015, 10, 21)
+
+        assertThat(date.weekOfYear).isEqualTo(43)
     }
 
 

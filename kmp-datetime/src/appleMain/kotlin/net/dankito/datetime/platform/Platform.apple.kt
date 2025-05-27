@@ -46,6 +46,9 @@ internal actual object Platform {
         return calendar.ordinalityOfUnit(NSCalendarUnitDay, NSCalendarUnitYear, nsDate).toInt()
     }
 
+    actual fun getWeekOfYear(date: LocalDate): Int? =
+        getCalendarComponent(date, NSCalendarUnitWeekOfYear)
+
     actual fun isInDaylightSavingTime(date: LocalDate): Boolean {
         val nsDate = date.toNSDateAtSystemTimeZone() ?: return false
 
@@ -53,6 +56,24 @@ internal actual object Platform {
 
         return timeZone.isDaylightSavingTimeForDate(nsDate)
     }
+
+    private fun getCalendarComponent(date: LocalDate, component: ULong): Int? {
+        val nsDate = date.toNSDateAtSystemTimeZone() ?: return null
+
+        val calendar = NSCalendar.currentCalendar
+
+        return calendar.component(component, nsDate).toInt()
+    }
+
+
+    // TODO
+    fun getEra(date: LocalDate): Int? = getCalendarComponent(date, NSCalendarUnitEra)
+
+    fun getQuarter(date: LocalDate): Int? = getCalendarComponent(date, NSCalendarUnitQuarter)
+
+    fun getWeekOfMonth(date: LocalDate): Int? = getCalendarComponent(date, NSCalendarUnitWeekOfMonth)
+
+    fun getTimeZone(date: LocalDate): Int? = getCalendarComponent(date, NSCalendarUnitTimeZone)
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =

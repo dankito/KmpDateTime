@@ -84,4 +84,30 @@ object DateTimeCalculator {
         else -> Quarter.Q4
     }
 
+    fun getWeekOfYear(date: LocalDate, firstDayOfWeek: Int, minimalDaysInFirstWeek: Int): Int? {
+        // Get day of the week for Jan 1 of this year
+        val yearStart = LocalDate(date.year, 1, 1)
+        if (yearStart.dayOfWeek == null || yearStart.dayOfYear == null) {
+            return null
+        }
+
+        val yearStartWeekday = yearStart.dayOfWeek!!.isoDayNumber // 1=Monday, 7=Sunday
+
+        // Shift the first day so 1 = firstDay of week
+        fun shiftedDay(isoDay: Int): Int = ((isoDay - firstDayOfWeek + 7) % 7)
+
+        val startShift = shiftedDay(yearStartWeekday)
+        val yearStartWeekLength = 7 - startShift
+
+        val startOfWeek1 = if (yearStartWeekLength >= minimalDaysInFirstWeek) {
+            yearStart.dayOfYear!! - startShift
+        } else {
+            yearStart.dayOfYear!! + (7 - startShift)
+        }
+
+        val daysBetween = date.dayOfYear!! - startOfWeek1
+
+        return daysBetween / 7 + 1
+    }
+
 }

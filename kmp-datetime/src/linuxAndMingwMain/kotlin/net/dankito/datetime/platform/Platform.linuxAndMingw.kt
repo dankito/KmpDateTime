@@ -50,6 +50,16 @@ internal actual object Platform {
     actual fun getDayOfYear(date: LocalDate): Int? =
         convertToUnixDate(date)?.tm_yday?.let { it + 1 }
 
+    actual fun getWeekOfYear(date: LocalDate): Int? =
+        convertToUnixDate(date)?.let { time ->
+            val buffer = ByteArray(4) // Enough for "53\0"
+            buffer.usePinned { pinned ->
+                strftime(pinned.addressOf(0), buffer.size.convert(), "%V", time.ptr)
+            }
+
+            return buffer.toKString().toInt()
+        }
+
     actual fun isInDaylightSavingTime(date: LocalDate): Boolean =
         (convertToUnixDate(date)?.tm_isdst ?: -1) > 0
 

@@ -2,6 +2,8 @@ package net.dankito.datetime.platform
 
 import net.dankito.datetime.*
 import net.dankito.datetime.calculation.DateTimeCalculator
+import net.dankito.datetime.platform.js.IntlLocale
+import net.dankito.datetime.platform.js.WeekInfo
 import kotlin.math.floor
 
 
@@ -19,6 +21,15 @@ internal fun createDateInSystemTimeZone(year: Int, month: Int, day: Int, hour: I
 
 internal fun createDateInUTC(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, millisecond: Int = 0): Double =
     js("Date.UTC(year, month, day, hour, minute, second, millisecond)")
+
+internal fun getCurrentLocaleLanguageTag(): String =
+    js("Intl.NumberFormat().resolvedOptions().locale")
+
+internal fun getLocale(languageTag: String): IntlLocale =
+    js("new Intl.Locale(languageTag)")
+
+internal fun getWeekInfo(locale: String): JsAny =
+    js("new Intl.Locale(locale).weekInfo")
 
 
 internal actual object Platform {
@@ -59,6 +70,23 @@ internal actual object Platform {
         val diffInMillis = millisSinceEpoch - millisSinceEpochForStartOfYear
 
         return floor(diffInMillis / DateTimeCalculator.MillisecondsPerDay).toInt() + 1
+    }
+
+    actual fun getWeekOfYear(date: LocalDate): Int? {
+        val languageTag = getCurrentLocaleLanguageTag()
+
+        val weekInfo = getWeekInfo(languageTag)
+
+        return weekInfo?.let { DateTimeCalculator.getWeekOfYear(date, it.firstDay, it.minimalDays ?: 4) }
+    }
+
+    fun getWeekInfo(languageTag: String): WeekInfo? = try {
+        val locale = getLocale(languageTag)
+
+        locale.weekInfo ?: locale.getWeekInfo()
+    } catch (e: Throwable) {
+        println("Could not get WeekInfo for language tag '$languageTag': $e")
+        null
     }
 
     actual fun isInDaylightSavingTime(date: LocalDate): Boolean =

@@ -3,6 +3,7 @@ package net.dankito.datetime.platform
 import net.dankito.datetime.*
 import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.temporal.IsoFields
 
 internal actual object Platform {
 
@@ -38,6 +39,9 @@ internal actual object Platform {
 
     actual fun getDayOfYear(date: LocalDate): Int? =
         date.toJavaLocalDate().dayOfYear
+
+    actual fun getWeekOfYear(date: LocalDate): Int? =
+        date.toJavaLocalDate().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
 
     actual fun isInDaylightSavingTime(date: LocalDate): Boolean =
         ZoneId.systemDefault().rules.isDaylightSavings(date.atStartOfDay().toInstantAtSystemTimeZone().toJavaInstant())

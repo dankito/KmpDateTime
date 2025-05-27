@@ -79,7 +79,9 @@ kotlin {
 
     val kotlinxSerializationVersion: String by project
 
+    // only used for tests
     val assertKVersion: String by project
+    val kmpBaseVersion: String by project
     val jacksonVersion: String by project
     val logbackVersion: String by project
 
@@ -89,6 +91,8 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+
+            implementation("net.codinux.kotlin:kmp-base:$kmpBaseVersion")
 
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
@@ -114,6 +118,18 @@ kotlin {
             dependsOn(nativeMain.get())
             linuxMain.get().dependsOn(this)
             mingwMain.get().dependsOn(this)
+        }
+
+
+        val jsCommonMain by creating {
+            dependsOn(commonMain.get())
+            jsMain.get().dependsOn(this)
+            wasmJsMain.get().dependsOn(this)
+        }
+        val jsCommonTest by creating {
+            dependsOn(commonTest.get())
+            jsTest.get().dependsOn(this)
+            wasmJsTest.get().dependsOn(this)
         }
     }
 }

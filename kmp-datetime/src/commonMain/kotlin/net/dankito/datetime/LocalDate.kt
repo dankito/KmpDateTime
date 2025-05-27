@@ -44,6 +44,11 @@ data class LocalDate(
      */
     val dayOfYear: Int? by lazy { Platform.getDayOfYear(this) }
 
+    /**
+     * Not available on JavaScript platforms (JS/Browser, JS/Node, WASM).
+     */
+    internal val weekOfYear: Int? by lazy { Platform.getWeekOfYear(this) }
+
     val quarter: Quarter by lazy { DateTimeCalculator.getQuarter(this) }
 
     val isInDaylightSavingTime: Boolean by lazy { Platform.isInDaylightSavingTime(this) }
