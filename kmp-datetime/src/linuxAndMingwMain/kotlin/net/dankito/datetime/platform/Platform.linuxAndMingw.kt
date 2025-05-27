@@ -50,6 +50,9 @@ internal actual object Platform {
     actual fun getDayOfYear(date: LocalDate): Int? =
         convertToUnixDate(date)?.tm_yday?.let { it + 1 }
 
+    actual fun isInDaylightSavingTime(date: LocalDate): Boolean =
+        (convertToUnixDate(date)?.tm_isdst ?: -1) > 0
+
     private fun convertToUnixDate(date: LocalDate): tm? = memScoped {
         val unixDate = alloc<tm>().apply {
             tm_year = date.year - 1900

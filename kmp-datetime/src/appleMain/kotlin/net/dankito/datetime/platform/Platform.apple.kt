@@ -46,6 +46,14 @@ internal actual object Platform {
         return calendar.ordinalityOfUnit(NSCalendarUnitDay, NSCalendarUnitYear, nsDate).toInt()
     }
 
+    actual fun isInDaylightSavingTime(date: LocalDate): Boolean {
+        val nsDate = date.toNSDateAtSystemTimeZone() ?: return false
+
+        val timeZone = NSTimeZone.systemTimeZone // .localTimeZone?
+
+        return timeZone.isDaylightSavingTimeForDate(nsDate)
+    }
+
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
         dateTime.toNSDateAt(Utc).toInstant(dateTime.nanosecondOfSecond)

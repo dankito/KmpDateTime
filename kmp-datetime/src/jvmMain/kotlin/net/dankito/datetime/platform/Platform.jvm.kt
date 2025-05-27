@@ -39,6 +39,9 @@ internal actual object Platform {
     actual fun getDayOfYear(date: LocalDate): Int? =
         date.toJavaLocalDate().dayOfYear
 
+    actual fun isInDaylightSavingTime(date: LocalDate): Boolean =
+        ZoneId.systemDefault().rules.isDaylightSavings(date.atStartOfDay().toInstantAtSystemTimeZone().toJavaInstant())
+
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant =
         dateTime.toJavaLocalDateTime().toInstant(ZoneOffset.UTC).toKmpInstant()

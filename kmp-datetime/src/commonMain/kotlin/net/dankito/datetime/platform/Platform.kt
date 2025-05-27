@@ -22,6 +22,8 @@ internal expect object Platform {
 
     fun getDayOfYear(date: LocalDate): Int?
 
+    fun isInDaylightSavingTime(date: LocalDate): Boolean
+
 
     fun toInstantAtUtc(dateTime: LocalDateTime): Instant
 

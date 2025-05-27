@@ -47,6 +47,10 @@ data class LocalDate(
         Platform.getDayOfYear(this)
     }
 
+    val isInDaylightSavingTime: Boolean by lazy {
+        Platform.isInDaylightSavingTime(this)
+    }
+
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
     /**

@@ -48,6 +48,8 @@ data class LocalDateTime(
 
     val dayOfYear: Int? by lazy { date.dayOfYear }
 
+    val isInDaylightSavingTime: Boolean by lazy { date.isInDaylightSavingTime }
+
     val date: LocalDate by lazy { LocalDate(year, month, day) }
 
     val time: LocalTime by lazy { LocalTime(hour, minute, second, nanosecondOfSecond) }

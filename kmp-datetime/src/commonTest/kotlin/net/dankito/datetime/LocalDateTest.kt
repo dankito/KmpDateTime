@@ -3,6 +3,7 @@ package net.dankito.datetime
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isGreaterThanOrEqualTo
+import assertk.assertions.isTrue
 import kotlin.test.Test
 
 class LocalDateTest {
@@ -63,6 +64,14 @@ class LocalDateTest {
         val result = LocalDate(2015, 10, 21).dayOfYear
 
         assertThat(result).isEqualTo(294)
+    }
+
+
+    @Test
+    fun isDaylightSavingTime() { // TODO: works only on machines with clocks in timezones with daylight-saving time
+        val dayWithDaylightSavingTime = LocalDate(2015, 10, 21)
+
+        assertThat(dayWithDaylightSavingTime.isInDaylightSavingTime).isTrue()
     }
 
 

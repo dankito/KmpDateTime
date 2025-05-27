@@ -45,6 +45,12 @@ internal actual object Platform {
         return floor(diffInMillis / DateTimeCalculator.MillisecondsPerDay).toInt() + 1
     }
 
+    actual fun isInDaylightSavingTime(date: LocalDate): Boolean =
+        getTimeZoneOffset(date) - getTimeZoneOffset(date.atStartOfYear()) != 0
+
+    fun getTimeZoneOffset(date: LocalDate): Int =
+        date.toJsDateInSystemTimeZone().getTimezoneOffset()
+
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
         // do not use Date(), it interprets the values in system's timezone rather than in UTC
