@@ -1,10 +1,7 @@
 package net.dankito.datetime.format.pattern
 
 import assertk.assertThat
-import assertk.assertions.hasSize
-import assertk.assertions.isEqualByComparingTo
-import assertk.assertions.isEqualTo
-import assertk.assertions.isInstanceOf
+import assertk.assertions.*
 import net.dankito.datetime.format.pattern.component.*
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
@@ -257,6 +254,62 @@ class DateTimeFormatPatternParserTest {
         val result = underTest.parsePattern("''")
 
         assertLiteralComponent(result, "'")
+    }
+
+
+    @Test
+    fun iso8601DateTimePattern() {
+        val result = underTest.parsePattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+
+        with(result) {
+            assertThat(components).hasSize(13)
+
+            // date
+            assertThat(components[0]).isInstanceOf<YearComponent>()
+            assertThat((components[0] as YearComponent).minLength).isEqualTo(4)
+
+            assertThat(components[1]).isInstanceOf<LiteralComponent>()
+            assertThat((components[1] as LiteralComponent).literal).isEqualTo("-")
+
+            assertThat(components[2]).isInstanceOf<MonthComponent>()
+            assertThat((components[2] as MonthComponent).style).isEqualByComparingTo(MonthStyle.Numeric2Digits)
+
+            assertThat(components[3]).isInstanceOf<LiteralComponent>()
+            assertThat((components[3] as LiteralComponent).literal).isEqualTo("-")
+
+            assertThat(components[4]).isInstanceOf<DayOfMonthComponent>()
+            assertThat((components[4] as DayOfMonthComponent).minLength).isEqualTo(2)
+
+
+            assertThat(components[5]).isInstanceOf<LiteralComponent>()
+            assertThat((components[5] as LiteralComponent).literal).isEqualTo("T")
+            assertThat((components[5] as LiteralComponent).masked).isTrue()
+
+
+            // time
+
+            assertThat(components[6]).isInstanceOf<HourComponent>()
+            assertThat((components[6] as HourComponent).minLength).isEqualTo(2)
+            assertThat((components[6] as HourComponent).style).isEqualByComparingTo(HourStyle.Hour_24_Start_0)
+
+            assertThat(components[7]).isInstanceOf<LiteralComponent>()
+            assertThat((components[7] as LiteralComponent).literal).isEqualTo(":")
+
+            assertThat(components[8]).isInstanceOf<MinuteComponent>()
+            assertThat((components[8] as MinuteComponent).minLength).isEqualTo(2)
+
+            assertThat(components[9]).isInstanceOf<LiteralComponent>()
+            assertThat((components[9] as LiteralComponent).literal).isEqualTo(":")
+
+            assertThat(components[10]).isInstanceOf<SecondComponent>()
+            assertThat((components[10] as SecondComponent).minLength).isEqualTo(2)
+
+            assertThat(components[11]).isInstanceOf<LiteralComponent>()
+            assertThat((components[11] as LiteralComponent).literal).isEqualTo(".")
+
+            assertThat(components[12]).isInstanceOf<FractionalSecondComponent>()
+            assertThat((components[12] as FractionalSecondComponent).length).isEqualTo(3)
+        }
     }
 
 
