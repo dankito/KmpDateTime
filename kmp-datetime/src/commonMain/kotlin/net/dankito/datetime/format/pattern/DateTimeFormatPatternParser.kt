@@ -4,6 +4,11 @@ import net.dankito.datetime.format.pattern.component.*
 
 open class DateTimeFormatPatternParser {
 
+    companion object {
+        val Default = DateTimeFormatPatternParser()
+    }
+
+
     /**
      * All date time format fields are documented here:
      * [https://www.unicode.org/reports/tr35/tr35-73/tr35-dates.html#date-format-patterns](https://www.unicode.org/reports/tr35/tr35-73/tr35-dates.html#date-format-patterns)
