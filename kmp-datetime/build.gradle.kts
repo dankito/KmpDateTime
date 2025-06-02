@@ -119,6 +119,11 @@ kotlin {
             linuxMain.get().dependsOn(this)
             mingwMain.get().dependsOn(this)
         }
+        val linuxAndMingwTest by creating {
+            dependsOn(nativeTest.get())
+            linuxTest.get().dependsOn(this)
+            mingwTest.get().dependsOn(this)
+        }
 
 
         val jsCommonMain by creating {
