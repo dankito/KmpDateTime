@@ -5,7 +5,7 @@ import net.dankito.datetime.*
 import platform.Foundation.*
 
 @OptIn(UnsafeNumber::class)
-internal actual object Platform {
+internal actual object DateTimePlatform {
 
     private val Utc = NSTimeZone.timeZoneWithAbbreviation("UTC")!!
 

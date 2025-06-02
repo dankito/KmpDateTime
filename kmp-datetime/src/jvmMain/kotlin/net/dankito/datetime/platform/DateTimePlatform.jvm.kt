@@ -5,7 +5,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.temporal.IsoFields
 
-internal actual object Platform {
+internal actual object DateTimePlatform {
 
     actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Milliseconds
 

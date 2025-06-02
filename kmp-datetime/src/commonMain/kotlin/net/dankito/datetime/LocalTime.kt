@@ -3,7 +3,7 @@ package net.dankito.datetime
 import kotlinx.serialization.Serializable
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
-import net.dankito.datetime.platform.Platform
+import net.dankito.datetime.platform.DateTimePlatform
 import net.dankito.datetime.serialization.LocalTimeDelegatingSerializer
 
 @Serializable(with = LocalTimeDelegatingSerializer::class)
@@ -25,7 +25,7 @@ data class LocalTime(
         val Max = EndOfDay
 
 
-        fun now(): LocalTime = Platform.getLocalTimeNow()
+        fun now(): LocalTime = DateTimePlatform.getLocalTimeNow()
 
         fun parse(isoTime: String): LocalTime = DateTimeParser.parseIsoTimeString(isoTime)
 

@@ -1,10 +1,9 @@
 package net.dankito.datetime
 
 import kotlinx.serialization.Serializable
-import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
-import net.dankito.datetime.platform.Platform
+import net.dankito.datetime.platform.DateTimePlatform
 import net.dankito.datetime.serialization.LocalDateTimeDelegatingSerializer
 
 @Serializable(with = LocalDateTimeDelegatingSerializer::class)
@@ -19,7 +18,7 @@ data class LocalDateTime(
 ) : Comparable<LocalDateTime> {
 
     companion object {
-        fun now(): LocalDateTime = Platform.getLocalDateTimeNow()
+        fun now(): LocalDateTime = DateTimePlatform.getLocalDateTimeNow()
 
         fun parse(isoDateTime: String): LocalDateTime = DateTimeParser.parseIsoDateTimeString(isoDateTime)
 
@@ -59,9 +58,9 @@ data class LocalDateTime(
 
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
-    fun toInstantAtUtc(): Instant = Platform.toInstantAtUtc(this)
+    fun toInstantAtUtc(): Instant = DateTimePlatform.toInstantAtUtc(this)
 
-    fun toInstantAtSystemTimeZone(): Instant = Platform.toInstantAtSystemTimeZone(this)
+    fun toInstantAtSystemTimeZone(): Instant = DateTimePlatform.toInstantAtSystemTimeZone(this)
 
 
     override fun compareTo(other: LocalDateTime): Int {

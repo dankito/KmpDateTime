@@ -2,7 +2,7 @@ package net.dankito.datetime.platform
 
 import net.dankito.datetime.*
 
-internal expect object Platform {
+internal expect object DateTimePlatform {
 
     val timeSinceEpochPrecision: TimeSinceEpochPrecision
 

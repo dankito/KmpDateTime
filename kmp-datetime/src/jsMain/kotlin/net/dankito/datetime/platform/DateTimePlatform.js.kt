@@ -4,41 +4,16 @@ import net.dankito.datetime.*
 import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.platform.js.IntlLocale
 import net.dankito.datetime.platform.js.WeekInfo
+import kotlin.js.Date
 import kotlin.math.floor
 
-
-internal fun getMillisSinceEpoch(): Double =
-    js("Date.now()")
-
-internal fun getDateNow(): JsDate =
-    js("new Date(Date.now())")
-
-internal fun createDateFromMillisSinceEpoch(millisSinceEpoch: Double): JsDate =
-    js("new Date(millisSinceEpoch)")
-
-internal fun createDateInSystemTimeZone(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, millisecond: Int = 0): JsDate =
-    js("new Date(year, month, day, hour, minute, second, millisecond)")
-
-internal fun createDateInUTC(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0, millisecond: Int = 0): Double =
-    js("Date.UTC(year, month, day, hour, minute, second, millisecond)")
-
-internal fun getCurrentLocaleLanguageTag(): String =
-    js("Intl.NumberFormat().resolvedOptions().locale")
-
-internal fun getLocale(languageTag: String): IntlLocale =
-    js("new Intl.Locale(languageTag)")
-
-internal fun getWeekInfo(locale: String): JsAny =
-    js("new Intl.Locale(locale).weekInfo")
-
-
-internal actual object Platform {
+internal actual object DateTimePlatform {
 
     actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Milliseconds
 
 
     actual fun getInstantNow(): Instant {
-        val millisSinceEpoch = getMillisSinceEpoch()
+        val millisSinceEpoch = Date.now()
 
         return Instant.ofEpochMilli(millisSinceEpoch.toLong())
     }
@@ -80,15 +55,6 @@ internal actual object Platform {
         return weekInfo?.let { DateTimeCalculator.getWeekOfYear(date, it.firstDay, it.minimalDays ?: 4) }
     }
 
-    fun getWeekInfo(languageTag: String): WeekInfo? = try {
-        val locale = getLocale(languageTag)
-
-        locale.weekInfo ?: locale.getWeekInfo()
-    } catch (e: Throwable) {
-        println("Could not get WeekInfo for language tag '$languageTag': $e")
-        null
-    }
-
     actual fun isInDaylightSavingTime(date: LocalDate): Boolean =
         getTimeZoneOffset(date) - getTimeZoneOffset(date.atStartOfYear()) != 0
 
@@ -97,15 +63,15 @@ internal actual object Platform {
 
 
     actual fun toInstantAtUtc(dateTime: LocalDateTime): Instant {
-        // do not use JsDate(), it interprets the values in system's timezone rather than in UTC
-        val millisSinceEpoch = createDateInUTC(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
+        // do not use Date(), it interprets the values in system's timezone rather than in UTC
+        val millisSinceEpoch = Date.UTC(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
 
         return instantOfEpochMilli(millisSinceEpoch, dateTime)
     }
 
     actual fun toInstantAtSystemTimeZone(dateTime: LocalDateTime): Instant {
-        val jsDate = createDateInSystemTimeZone(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
+        val jsDate = Date(dateTime.year, dateTime.monthNumber - 1, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second, dateTime.nanosecondOfSecond / 1_000_000)
 
         val millisSinceEpoch = jsDate.getTime()
@@ -118,6 +84,25 @@ internal actual object Platform {
 
     actual fun toLocalDateTimeAtSystemTimeZone(instant: Instant): LocalDateTime =
         instant.toJsDate().toLocalDateTime(instant.nanosecondsOfSecond)
+
+
+    private fun getDateNow() = Date(Date.now())
+
+
+    private fun getWeekInfo(languageTag: String): WeekInfo? = try {
+        val locale = getLocale(languageTag)
+
+        locale.weekInfo ?: locale.getWeekInfo()
+    } catch (e: Throwable) {
+        console.error("Could not get WeekInfo for language tag '$languageTag'", e)
+        null
+    }
+
+    private fun getLocale(languageTag: String): IntlLocale =
+        js("new Intl.Locale(languageTag)")
+
+    private fun getCurrentLocaleLanguageTag(): String =
+        js("Intl.DateTimeFormat().resolvedOptions().locale").toString()
 
 
     private fun instantOfEpochMilli(millisSinceEpoch: Double, originalDateTime: LocalDateTime): Instant =

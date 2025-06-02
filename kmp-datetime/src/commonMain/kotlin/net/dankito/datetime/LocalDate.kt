@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
-import net.dankito.datetime.platform.Platform
+import net.dankito.datetime.platform.DateTimePlatform
 import net.dankito.datetime.serialization.LocalDateDelegatingSerializer
 
 @Serializable(with = LocalDateDelegatingSerializer::class)
@@ -15,7 +15,7 @@ data class LocalDate(
 ) : Comparable<LocalDate> {
 
     companion object {
-        fun today(): LocalDate = Platform.getLocalDateNow()
+        fun today(): LocalDate = DateTimePlatform.getLocalDateNow()
 
         fun parse(isoDate: String): LocalDate = DateTimeParser.parseIsoDateString(isoDate)
 
@@ -37,21 +37,21 @@ data class LocalDate(
     /**
      * The day of week of this date. May returns `null` in case of an invalid date.
      */
-    val dayOfWeek: DayOfWeek? by lazy { Platform.getDayOfWeekDayNumber(this)?.let { DayOfWeek.forDayNumber(it) } }
+    val dayOfWeek: DayOfWeek? by lazy { DateTimePlatform.getDayOfWeekIsoDayNumber(this)?.let { DayOfWeek.forDayNumber(it) } }
 
     /**
      * The day of week of this date. May returns `null` in case of an invalid date.
      */
-    val dayOfYear: Int? by lazy { Platform.getDayOfYear(this) }
+    val dayOfYear: Int? by lazy { DateTimePlatform.getDayOfYear(this) }
 
     /**
      * Not available on JavaScript platforms (JS/Browser, JS/Node, WASM).
      */
-    internal val weekOfYear: Int? by lazy { Platform.getWeekOfYear(this) }
+    internal val weekOfYear: Int? by lazy { DateTimePlatform.getWeekOfYear(this) }
 
     val quarter: Quarter by lazy { DateTimeCalculator.getQuarter(this) }
 
-    val isInDaylightSavingTime: Boolean by lazy { Platform.isInDaylightSavingTime(this) }
+    val isInDaylightSavingTime: Boolean by lazy { DateTimePlatform.isInDaylightSavingTime(this) }
 
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 

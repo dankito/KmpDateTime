@@ -5,7 +5,7 @@ import net.dankito.datetime.*
 import platform.posix.*
 
 @OptIn(ExperimentalForeignApi::class)
-internal actual object Platform {
+internal actual object DateTimePlatform {
 
     actual val timeSinceEpochPrecision = TimeSinceEpochPrecision.Seconds
 

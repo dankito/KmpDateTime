@@ -3,7 +3,7 @@ package net.dankito.datetime
 import kotlinx.serialization.Serializable
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
-import net.dankito.datetime.platform.Platform
+import net.dankito.datetime.platform.DateTimePlatform
 import net.dankito.datetime.calculation.DateTimeCalculator
 import net.dankito.datetime.serialization.InstantDelegatingSerializer
 
@@ -19,9 +19,9 @@ data class Instant(
          *
          * (Milliseconds for JVM, JS and WasmJS; Seconds for Linux, Windows and Apple systems.)
          */
-        val timeSinceEpochPrecision: TimeSinceEpochPrecision = Platform.timeSinceEpochPrecision
+        val timeSinceEpochPrecision: TimeSinceEpochPrecision = DateTimePlatform.timeSinceEpochPrecision
 
-        fun now(): Instant = Platform.getInstantNow()
+        fun now(): Instant = DateTimePlatform.getInstantNow()
 
         val Epoch = Instant(0)
 
@@ -37,9 +37,9 @@ data class Instant(
 
     fun toEpochMilliseconds(): Long = DateTimeCalculator.toEpochMilliseconds(this)
 
-    fun toLocalDateTimeAtUtc(): LocalDateTime = Platform.toLocalDateTimeAtUtc(this)
+    fun toLocalDateTimeAtUtc(): LocalDateTime = DateTimePlatform.toLocalDateTimeAtUtc(this)
 
-    fun toLocalDateTimeAtSystemTimeZone(): LocalDateTime = Platform.toLocalDateTimeAtSystemTimeZone(this)
+    fun toLocalDateTimeAtSystemTimeZone(): LocalDateTime = DateTimePlatform.toLocalDateTimeAtSystemTimeZone(this)
 
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
