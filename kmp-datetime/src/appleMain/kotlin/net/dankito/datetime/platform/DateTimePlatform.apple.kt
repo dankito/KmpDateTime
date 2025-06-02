@@ -57,7 +57,7 @@ internal actual object DateTimePlatform {
         return timeZone.isDaylightSavingTimeForDate(nsDate)
     }
 
-    private fun getCalendarComponent(date: LocalDate, component: ULong): Int? {
+    private fun getCalendarComponent(date: LocalDate, component: NSCalendarUnit): Int? {
         val nsDate = date.toNSDateAtSystemTimeZone() ?: return null
 
         val calendar = NSCalendar.currentCalendar
