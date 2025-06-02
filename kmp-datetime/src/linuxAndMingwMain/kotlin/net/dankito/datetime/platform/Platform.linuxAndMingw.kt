@@ -37,7 +37,7 @@ internal actual object Platform {
             ?: LocalDateTime(0) // TODO: what to do in case of error?
 
 
-    actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
+    actual fun getDayOfWeekIsoDayNumber(date: LocalDate): Int? {
         val weekDay = convertToUnixDate(date)?.tm_wday
 
         return weekDay?.let {

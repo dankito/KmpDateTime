@@ -26,7 +26,7 @@ internal actual object Platform {
         getNSDateNow().toLocalDateTime()
 
 
-    actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
+    actual fun getDayOfWeekIsoDayNumber(date: LocalDate): Int? {
         val nsDate = date.toNSDateAtSystemTimeZone() ?: return null
 
         val calendar = NSCalendar.currentCalendar

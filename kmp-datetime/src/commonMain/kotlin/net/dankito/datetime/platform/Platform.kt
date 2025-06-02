@@ -18,7 +18,7 @@ internal expect object Platform {
     /**
      * If day of week can be determined returns a value from 1 = Monday to 7 = Sunday.
      */
-    fun getDayOfWeekDayNumber(date: LocalDate): Int?
+    fun getDayOfWeekIsoDayNumber(date: LocalDate): Int?
 
     fun getDayOfYear(date: LocalDate): Int?
 

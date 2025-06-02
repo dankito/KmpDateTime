@@ -28,7 +28,7 @@ internal actual object Platform {
         getDateNow().toLocalDateTime()
 
 
-    actual fun getDayOfWeekDayNumber(date: LocalDate): Int? {
+    actual fun getDayOfWeekIsoDayNumber(date: LocalDate): Int? {
         val jsDate = date.toJsDateInSystemTimeZone()
 
         // 0 = Sunday

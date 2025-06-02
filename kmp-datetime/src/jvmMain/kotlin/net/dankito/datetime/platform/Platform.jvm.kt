@@ -34,7 +34,7 @@ internal actual object Platform {
         return javaLocalDateTime.toKmpLocalDateTime()
     }
 
-    actual fun getDayOfWeekDayNumber(date: LocalDate): Int? =
+    actual fun getDayOfWeekIsoDayNumber(date: LocalDate): Int? =
         date.toJavaLocalDate().dayOfWeek.value
 
     actual fun getDayOfYear(date: LocalDate): Int? =
