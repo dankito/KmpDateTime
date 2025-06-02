@@ -115,8 +115,6 @@ class InstantTest {
     fun toIsoString_nanosecondsResolution() {
         val instant = LocalDateTime(2025, 1, 1, 0, 0, 0, 123_456_789).toInstantAtUtc()
 
-        println("nanos: ${instant.nanosecondsOfSecond}")
-
         assertThat(instant.isoString).isEqualTo("2025-01-01T00:00:00.123456789Z")
     }
 
