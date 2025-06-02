@@ -49,14 +49,14 @@ class LocalDateTest {
     }
 
     @Test
-    fun dayOfYear_December1st_NonLeapYear() {
+    fun dayOfYear_December31st_NonLeapYear() {
         val result = LocalDate(2025, 12, 31).dayOfYear
 
         assertThat(result).isEqualTo(365)
     }
 
     @Test
-    fun dayOfYear_December1st_LeapYear() {
+    fun dayOfYear_December31st_LeapYear() {
         val result = LocalDate(2024, 12, 31).dayOfYear
 
         assertThat(result).isEqualTo(366)
