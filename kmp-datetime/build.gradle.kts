@@ -98,8 +98,6 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
 
             implementation("com.willowtreeapps.assertk:assertk:$assertKVersion")
-
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
         }
 
 
@@ -108,6 +106,8 @@ kotlin {
         }
 
         jvmTest.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
+
             implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
             implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
