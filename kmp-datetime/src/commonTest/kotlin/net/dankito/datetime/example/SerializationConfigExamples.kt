@@ -11,6 +11,7 @@ import net.dankito.datetime.serialization.DateTimeSerializationFormat
 import net.dankito.datetime.serialization.InstantSerializationFormat
 import net.dankito.datetime.serialization.SerializationConfig
 
+@Suppress("UNUSED_VARIABLE")
 class SerializationConfigExamples {
 
     fun configureSerializers() {

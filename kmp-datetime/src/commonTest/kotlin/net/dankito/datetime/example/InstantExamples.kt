@@ -2,6 +2,7 @@ package net.dankito.datetime.example
 
 import net.dankito.datetime.*
 
+@Suppress("UNUSED_VARIABLE")
 class InstantExamples {
 
     fun create() {

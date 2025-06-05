@@ -5,6 +5,7 @@ import net.dankito.datetime.LocalDateTime
 import net.dankito.datetime.LocalTime
 import net.dankito.datetime.Month
 
+@Suppress("UNUSED_VARIABLE")
 class LocalTimeExamples {
 
     fun create() {
