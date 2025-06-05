@@ -5,8 +5,7 @@ import assertk.assertions.isEqualByComparingTo
 import assertk.assertions.isEqualTo
 import assertk.assertions.isGreaterThanOrEqualTo
 import assertk.assertions.isTrue
-import net.codinux.kotlin.platform.Platform
-import net.codinux.kotlin.platform.isJavaScript
+import net.dankito.datetime.test.TestPlatform
 import kotlin.test.Test
 
 class LocalDateTest {
@@ -157,7 +156,7 @@ class LocalDateTest {
 
     @Test
     fun weekOfYear_FirstWeek() {
-        if (Platform.isJavaScript) {
+        if (TestPlatform.isJavaScript) {
             return // TODO: does not work on JS Browser and NodeJS yet
         }
 
@@ -168,7 +167,7 @@ class LocalDateTest {
 
     @Test
     fun weekOfYear_LastWeek() {
-        if (Platform.isJavaScript) {
+        if (TestPlatform.isJavaScript) {
             return // TODO: does not work on JS Browser and NodeJS yet
         }
 
@@ -179,7 +178,7 @@ class LocalDateTest {
 
     @Test
     fun weekOfYear_LastDayBelongsToNextYearsFirstWeek() {
-        if (Platform.isJavaScript) {
+        if (TestPlatform.isJavaScript) {
             return // TODO: does not work on JS Browser and NodeJS yet
         }
 
@@ -190,7 +189,7 @@ class LocalDateTest {
 
     @Test
     fun weekOfYear_LastDay_Week53() {
-        if (Platform.isJavaScript) {
+        if (TestPlatform.isJavaScript) {
             return // TODO: does not work on JS Browser and NodeJS yet
         }
 
@@ -201,7 +200,7 @@ class LocalDateTest {
 
     @Test
     fun weekOfYear_WeekInYear() {
-        if (Platform.isJavaScript) {
+        if (TestPlatform.isJavaScript) {
             return // TODO: does not work on JS Browser and NodeJS yet
         }
 
