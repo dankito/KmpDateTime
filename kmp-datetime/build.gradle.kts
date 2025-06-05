@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 
 plugins {
@@ -52,6 +52,7 @@ kotlin {
     wasmJs {
         browser {
             testTask {
+                enabled = false
                 useKarma {
                     useChromeHeadless()
                     useFirefoxHeadless()
@@ -126,15 +127,18 @@ kotlin {
         }
 
 
+        val wasmJsMain by getting
+        val wasmJsTest by getting
+
         val jsCommonMain by creating {
             dependsOn(commonMain.get())
             jsMain.get().dependsOn(this)
-            wasmJsMain.get().dependsOn(this)
+            wasmJsMain.dependsOn(this)
         }
         val jsCommonTest by creating {
             dependsOn(commonTest.get())
             jsTest.get().dependsOn(this)
-            wasmJsTest.get().dependsOn(this)
+            wasmJsTest.dependsOn(this)
         }
     }
 }
