@@ -62,7 +62,8 @@ open class DateTimeFormatPatternParser {
 
         // TODO: also handle day period b, a and B
 
-        // TODO: also handle quarter (Q, q) and week (w, W)
+        // TODO: also handle quarter (q) and week (w, W)
+        'Q' -> QuarterComponent(mapQuarterStyle(length))
 
         // TODO: also handle period (a, b, B)
 
@@ -96,6 +97,16 @@ open class DateTimeFormatPatternParser {
         6 -> DayOfWeekStyle.Short
         // TODO: that's not full correct, only valid for 0 (the only remaining valid value); not specified for count 'E' > 6
         else -> throw IllegalArgumentException("Illegal 'E' pattern length of $length for Day of Week encountered. Valid values are in range 'E' - 'EEEEEE'")
+    }
+
+    protected open fun mapQuarterStyle(length: Int): QuarterStyle = when (length) {
+        1 -> QuarterStyle.NumericMinDigits
+        2 -> QuarterStyle.Numeric2Digits
+        3 -> QuarterStyle.Abbreviated
+        4 -> QuarterStyle.Wide
+        5 -> QuarterStyle.Narrow
+        // TODO: that's not full correct, only valid for 0 (the only remaining valid value); not specified for count 'Q' > 5
+        else -> throw IllegalArgumentException("Illegal 'Q' pattern length of $length for Quarter encountered. Valid values are in range 'Q' - 'QQQQQ'")
     }
 
     protected open fun mapHourStyle(formatSymbol: Char): HourStyle = when (formatSymbol) {

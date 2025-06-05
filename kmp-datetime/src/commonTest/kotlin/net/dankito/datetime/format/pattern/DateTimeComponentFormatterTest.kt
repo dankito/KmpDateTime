@@ -132,6 +132,91 @@ class DateTimeComponentFormatterTest {
         assertThat(result).isEqualTo("We")
     }
 
+
+    @Test
+    fun localDate_Quarter_minDigits() {
+        val result = underTest.format(date, "Q")
+
+        assertThat(result).isEqualTo("4")
+    }
+
+    @Test
+    fun localDate_Quarter_2Digits() {
+        val result = underTest.format(date, "QQ")
+
+        assertThat(result).isEqualTo("04")
+    }
+
+    @Test
+    fun localDate_Quarter_Abbreviated() {
+        val result = underTest.format(date, "QQQ")
+
+        assertThat(result).isEqualTo("Q4")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_FirstQuarter_Start() {
+        val result = underTest.format(LocalDate(0, 1, 1), "QQQQ")
+
+        assertThat(result).isEqualTo("1st quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_FirstQuarter_End() {
+        val result = underTest.format(LocalDate(0, 3, 31), "QQQQ")
+
+        assertThat(result).isEqualTo("1st quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_SecondQuarter_Start() {
+        val result = underTest.format(LocalDate(0, 4, 1), "QQQQ")
+
+        assertThat(result).isEqualTo("2nd quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_SecondQuarter_End() {
+        val result = underTest.format(LocalDate(0, 6, 30), "QQQQ")
+
+        assertThat(result).isEqualTo("2nd quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_ThirdQuarter_Start() {
+        val result = underTest.format(LocalDate(0, 7, 1), "QQQQ")
+
+        assertThat(result).isEqualTo("3rd quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_ThirdQuarter_End() {
+        val result = underTest.format(LocalDate(0, 9, 30), "QQQQ")
+
+        assertThat(result).isEqualTo("3rd quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_FourthQuarter_Start() {
+        val result = underTest.format(LocalDate(0, 10, 1), "QQQQ")
+
+        assertThat(result).isEqualTo("4th quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Wide_FourthQuarter_End() {
+        val result = underTest.format(LocalDate(0, 12, 31), "QQQQ")
+
+        assertThat(result).isEqualTo("4th quarter")
+    }
+
+    @Test
+    fun localDate_Quarter_Narrow() {
+        val result = underTest.format(date, "QQQQQ")
+
+        assertThat(result).isEqualTo("4")
+    }
+
     @Test
     fun localDate_UnsupportedComponent() {
         assertFailsWith<IllegalArgumentException> {

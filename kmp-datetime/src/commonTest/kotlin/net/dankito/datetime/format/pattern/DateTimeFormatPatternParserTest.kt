@@ -143,6 +143,43 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
+    fun quarter_minDigits() {
+        val result = underTest.parse("Q")
+
+        assertQuarterComponent(result, QuarterStyle.NumericMinDigits)
+    }
+
+    @Test
+    fun quarter_2Digits() {
+        val result = underTest.parse("QQ")
+
+        assertQuarterComponent(result, QuarterStyle.Numeric2Digits)
+    }
+
+    @Test
+    fun quarter_Abbreviated() {
+        val result = underTest.parse("QQQ")
+
+        assertQuarterComponent(result, QuarterStyle.Abbreviated)
+    }
+
+    @Test
+    fun quarter_Wide() {
+        val result = underTest.parse("QQQQ")
+
+        assertQuarterComponent(result, QuarterStyle.Wide)
+    }
+
+    @Test
+    fun quarter_Narrow() {
+        val result = underTest.parse("QQQQQ")
+
+        assertQuarterComponent(result, QuarterStyle.Narrow)
+    }
+
+
+
+    @Test
     fun hour_12Hours_1_Based_MinDigits() {
         val result = underTest.parse("h")
 
@@ -349,6 +386,12 @@ class DateTimeFormatPatternParserTest {
 
     private fun assertDayOfWeekComponent(result: DateTimeFormatPattern, style: DayOfWeekStyle) {
         assertComponent<DayOfWeekComponent>(result) { component ->
+            assertThat(component.style).isEqualByComparingTo(style)
+        }
+    }
+
+    private fun assertQuarterComponent(result: DateTimeFormatPattern, style: QuarterStyle) {
+        assertComponent<QuarterComponent>(result) { component ->
             assertThat(component.style).isEqualByComparingTo(style)
         }
     }

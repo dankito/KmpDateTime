@@ -22,6 +22,8 @@ open class DateTimeComponentFormatter(
                 is DayOfMonthComponent -> append(ensureMinLength(date.day, component))
                 is DayOfYearComponent -> append(ensureMinLength(date.dayOfYear, component))
                 is DayOfWeekComponent -> append(formatDayOfWeek(date.dayOfWeek, component))
+                is QuarterComponent -> append(formatQuarter(date.quarter, component))
+
                 is LiteralComponent -> append(component.literal)
                 else -> throw IllegalArgumentException("${component::class} is not a component of LocalDate")
             }
@@ -56,6 +58,7 @@ open class DateTimeComponentFormatter(
                 is DayOfMonthComponent -> append(ensureMinLength(dateTime.day, component))
                 is DayOfYearComponent -> append(ensureMinLength(dateTime.dayOfYear, component))
                 is DayOfWeekComponent -> append(formatDayOfWeek(dateTime.dayOfWeek, component))
+                is QuarterComponent -> append(formatQuarter(dateTime.quarter, component))
 
                 // time
                 is HourComponent -> append(formatHour(dateTime.hour, component))
@@ -101,6 +104,21 @@ open class DateTimeComponentFormatter(
             DayOfWeekStyle.Narrow -> englishName.take(1)
             DayOfWeekStyle.Short -> englishName.take(2)
         }
+    }
+
+    protected open fun formatQuarter(quarter: Quarter, component: QuarterComponent): String = when (component.style) {
+        QuarterStyle.NumericMinDigits -> quarter.number.toString()
+        QuarterStyle.Numeric2Digits -> ensureMinLength(quarter.number, 2)
+        QuarterStyle.Abbreviated -> quarter.name // TODO: localize
+        QuarterStyle.Wide -> wideQuarterName(quarter) // TODO: localize
+        QuarterStyle.Narrow -> quarter.number.toString()
+    }
+
+    protected open fun wideQuarterName(quarter: Quarter): String = when (quarter) {
+        Quarter.Q1 -> "1st quarter"
+        Quarter.Q2 -> "2nd quarter"
+        Quarter.Q3 -> "3rd quarter"
+        Quarter.Q4 -> "4th quarter"
     }
 
     protected open fun formatHour(hour: Int, component: HourComponent): String = when (component.style) {
