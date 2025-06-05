@@ -20,6 +20,7 @@ open class DateTimeComponentFormatter(
                 is YearComponent -> append(formatYear(date.year, component))
                 is MonthComponent -> append(formatMonth(date.month, component))
                 is DayOfMonthComponent -> append(ensureMinLength(date.day, component))
+                is DayOfYearComponent -> append(ensureMinLength(date.dayOfYear, component))
                 is DayOfWeekComponent -> append(formatDayOfWeek(date.dayOfWeek, component))
                 is LiteralComponent -> append(component.literal)
                 else -> throw IllegalArgumentException("${component::class} is not a component of LocalDate")
@@ -53,6 +54,7 @@ open class DateTimeComponentFormatter(
                 is YearComponent -> append(formatYear(dateTime.year, component))
                 is MonthComponent -> append(formatMonth(dateTime.month, component))
                 is DayOfMonthComponent -> append(ensureMinLength(dateTime.day, component))
+                is DayOfYearComponent -> append(ensureMinLength(dateTime.dayOfYear, component))
                 is DayOfWeekComponent -> append(formatDayOfWeek(dateTime.dayOfWeek, component))
 
                 // time
@@ -109,11 +111,12 @@ open class DateTimeComponentFormatter(
     }
 
 
-    protected open fun ensureMinLength(value: Int, component: DateTimeFormatPatternComponentWithMinLength): String =
+    protected open fun ensureMinLength(value: Int?, component: DateTimeFormatPatternComponentWithMinLength): String =
         ensureMinLength(value, component.minLength)
 
-    protected open fun ensureMinLength(value: Int, minLength: Int): String =
-        value.toString().padStart(minLength, '0')
+    protected open fun ensureMinLength(value: Int?, minLength: Int): String =
+        value?.toString()?.padStart(minLength, '0')
+            ?: ""
 
     protected open fun ensureLength(value: Int, component: DateTimeFormatPatternComponentWithFixedLength): String =
         ensureLength(value, component.length)

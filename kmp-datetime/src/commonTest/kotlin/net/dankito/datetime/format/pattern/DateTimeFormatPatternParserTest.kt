@@ -78,6 +78,28 @@ class DateTimeFormatPatternParserTest {
 
 
     @Test
+    fun dayOfYear_MinDigits() {
+        val result = underTest.parse("D")
+
+        assertComponentWithMinLength<DayOfYearComponent>(result, 1)
+    }
+
+    @Test
+    fun dayOfYear_2Digits() {
+        val result = underTest.parse("DD")
+
+        assertComponentWithMinLength<DayOfYearComponent>(result, 2)
+    }
+
+    @Test
+    fun dayOfYear_3Digits() {
+        val result = underTest.parse("DDD")
+
+        assertComponentWithMinLength<DayOfYearComponent>(result, 3)
+    }
+
+
+    @Test
     fun dayOfWeek_Abbreviated_1_Digit() {
         val result = underTest.parse("E")
 

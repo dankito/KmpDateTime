@@ -68,6 +68,29 @@ class DateTimeComponentFormatterTest {
     }
 
     @Test
+    fun localDate_DayOfYear_D() {
+        val result = underTest.format(date, "D")
+
+        assertThat(result).isEqualTo("294")
+    }
+
+    @Test
+    fun localDate_DayOfYear_DD() {
+        val date = LocalDate(0, 1, 8)
+        val result = underTest.format(date, "DD")
+
+        assertThat(result).isEqualTo("08")
+    }
+
+    @Test
+    fun localDate_DayOfYear_DDD() {
+        val date = LocalDate(0, 1, 2)
+        val result = underTest.format(date, "DDD")
+
+        assertThat(result).isEqualTo("002")
+    }
+
+    @Test
     fun localDate_DayOfWeek_E() {
         val result = underTest.format(date, "EE")
 

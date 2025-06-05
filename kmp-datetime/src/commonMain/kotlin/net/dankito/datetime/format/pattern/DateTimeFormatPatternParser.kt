@@ -56,7 +56,8 @@ open class DateTimeFormatPatternParser {
         // date components
         'y' -> YearComponent(length) // TODO: also handle Y, u, U and r
         'M' -> MonthComponent(mapMonthStyle(length)) // TODO: also handle L
-        'd' -> DayOfMonthComponent(length) // TODO: also handle D, F and g
+        'd' -> DayOfMonthComponent(length) // TODO: also handle F and g
+        'D' -> DayOfYearComponent(length)
         'E' -> DayOfWeekComponent(mapDayOfWeekStyle(length)) // TODO: also handle e and c
 
         // TODO: also handle day period b, a and B
