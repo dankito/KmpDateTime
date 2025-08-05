@@ -92,6 +92,22 @@ data class Instant(
     private fun plus(secondsToAdd: Long, nanosToAdd: Long) = DateTimeCalculator.addToInstant(this, secondsToAdd, nanosToAdd)
 
 
+    fun minusDays(daysToAdd: Long) = plusDays(-daysToAdd)
+
+    fun minusHours(hoursToAdd: Long) = plusHours(-hoursToAdd)
+
+    fun minusMinutes(minutesToAdd: Long) = plusMinutes(-minutesToAdd)
+
+    fun minusSeconds(secondsToAdd: Long) = plusSeconds(-secondsToAdd)
+
+    fun minusMilliseconds(millisecondsToAdd: Long) = plusMilliseconds(-millisecondsToAdd)
+
+    fun minusMicroseconds(microsecondsToAdd: Long) = plusMicroseconds(-microsecondsToAdd)
+
+    fun minusNanoseconds(nanosecondsToAdd: Int) = plusNanoseconds(-nanosecondsToAdd)
+    fun minusNanoseconds(nanosecondsToAdd: Long) = plusNanoseconds(-nanosecondsToAdd)
+
+
     override fun compareTo(other: Instant): Int {
         val secondsCompare = epochSeconds.compareTo(other.epochSeconds)
         if (secondsCompare != 0) {
