@@ -5,6 +5,7 @@ import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import net.dankito.datetime.platform.DateTimePlatform
 import net.dankito.datetime.calculation.DateTimeCalculator
+import net.dankito.datetime.calculation.Math
 import net.dankito.datetime.serialization.InstantDelegatingSerializer
 
 @Serializable(with = InstantDelegatingSerializer::class)
@@ -51,6 +52,10 @@ data class Instant(
     fun toEpochSecondsAsDouble(): Double = epochSeconds + nanosecondsOfSecond / 1_000_000_000.0
 
     fun toEpochMilliseconds(): Long = DateTimeCalculator.toEpochMilliseconds(this)
+
+    fun toEpochMicroseconds(): Long = Math.addExact(Math.multiplyExact(epochSeconds, 1_000_000L), nanosecondsOfSecond / 1_000L)
+
+    fun toEpochMicrosecondsString(): String = "$epochSeconds${(nanosecondsOfSecond / 1000).toString().padStart(6, '0')}"
 
     fun toEpochNanoseconds(): Long = Math.addExact(Math.multiplyExact(epochSeconds, 1_000_000_000L), nanosecondsOfSecond.toLong())
 

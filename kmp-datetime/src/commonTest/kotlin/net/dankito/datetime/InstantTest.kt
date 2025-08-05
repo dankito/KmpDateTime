@@ -25,6 +25,24 @@ class InstantTest {
     }
 
     @Test
+    fun toEpochMicroseconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.toEpochMicroseconds()
+
+        assertThat(result).isEqualTo(1_739_783_287_654_321)
+    }
+
+    @Test
+    fun toEpochMicrosecondsString() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.toEpochMicrosecondsString()
+
+        assertThat(result).isEqualTo(instant.toEpochMicroseconds().toString())
+    }
+
+    @Test
     fun toEpochNanoseconds() {
         val instant = Instant(1_739_783_287, 654_321_098)
 
