@@ -24,6 +24,24 @@ class InstantTest {
         assertThat(result).isEqualTo(1_739_783_287_654)
     }
 
+    @Test
+    fun toEpochNanoseconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.toEpochNanoseconds()
+
+        assertThat(result).isEqualTo(1_739_783_287_654_321_098)
+    }
+
+    @Test
+    fun toEpochNanosecondsString() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.toEpochNanosecondsString()
+
+        assertThat(result).isEqualTo(instant.toEpochNanoseconds().toString())
+    }
+
 
     @Test
     fun toLocalDateTimeAtUtc_WithoutDaylightSavingTime() {

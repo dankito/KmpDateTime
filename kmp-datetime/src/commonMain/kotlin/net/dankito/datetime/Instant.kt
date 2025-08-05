@@ -27,6 +27,8 @@ data class Instant(
 
         fun ofEpochMilli(epochMilli: Long): Instant = DateTimeCalculator.instantFromEpochMilli(epochMilli)
 
+        fun ofEpochNanoseconds(epochNanoseconds: Long): Instant = DateTimeCalculator.instantFromEpochNanoseconds(epochNanoseconds)
+
         fun ofEpochSeconds(secondsSinceEpoch: Double): Instant = DateTimeCalculator.instantFromEpochSeconds(secondsSinceEpoch)
 
         fun parse(isoInstant: String): Instant = DateTimeParser.parseIsoInstantString(isoInstant)
@@ -49,6 +51,12 @@ data class Instant(
     fun toEpochSecondsAsDouble(): Double = epochSeconds + nanosecondsOfSecond / 1_000_000_000.0
 
     fun toEpochMilliseconds(): Long = DateTimeCalculator.toEpochMilliseconds(this)
+
+    fun toEpochNanoseconds(): Long = Math.addExact(Math.multiplyExact(epochSeconds, 1_000_000_000L), nanosecondsOfSecond.toLong())
+
+    fun toEpochNanosecondsString(): String = "$epochSeconds${nanosecondsOfSecond.toString().padStart(9, '0')}"
+
+    // TODO: add conversion to Double <seconds since epoch>.<nanosecondsOfSecond>`
 
     fun toLocalDateTimeAtUtc(): LocalDateTime = DateTimePlatform.toLocalDateTimeAtUtc(this)
 

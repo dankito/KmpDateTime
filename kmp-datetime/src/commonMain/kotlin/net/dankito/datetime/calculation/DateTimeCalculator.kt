@@ -23,8 +23,13 @@ object DateTimeCalculator {
 
     fun instantFromEpochMilli(epochMilli: Long): Instant = Instant(
         // code copied from java.time.Instant.ofEpochMilli()
-        Math.floorDiv(epochMilli, 1000),
-        (Math.floorMod(epochMilli, 1000) * 1000_000).toInt()
+        Math.floorDiv(epochMilli, 1_000),
+        (Math.floorMod(epochMilli, 1_000) * 1_000_000).toInt()
+    )
+
+    fun instantFromEpochNanoseconds(epochNanoseconds: Long): Instant = Instant(
+        Math.floorDiv(epochNanoseconds, 1_000_000_000),
+        Math.floorMod(epochNanoseconds, 1_000_000_000).toInt()
     )
 
     fun instantFromEpochSeconds(secondsSinceEpoch: Double): Instant {

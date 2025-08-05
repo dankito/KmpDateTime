@@ -5,6 +5,8 @@ enum class InstantSerializationFormat {
 
     EpochMilliseconds,
 
+    EpochNanoseconds,
+
     EpochSecondsAsDouble,
 
     Components,
