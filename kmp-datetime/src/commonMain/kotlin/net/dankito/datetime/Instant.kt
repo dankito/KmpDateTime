@@ -35,6 +35,12 @@ data class Instant(
     }
 
 
+    /**
+     * Converts this Instant to a Double where the integer part is seconds since the Unix epoch and the fractional
+     * part is sub-second precision in nanoseconds.
+     */
+    fun toEpochSecondsAsDouble(): Double = epochSeconds + nanosecondsOfSecond / 1_000_000_000.0
+
     fun toEpochMilliseconds(): Long = DateTimeCalculator.toEpochMilliseconds(this)
 
     fun toLocalDateTimeAtUtc(): LocalDateTime = DateTimePlatform.toLocalDateTimeAtUtc(this)
