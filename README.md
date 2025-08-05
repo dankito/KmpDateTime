@@ -26,7 +26,7 @@ It features:
 ### Gradle (Kotlin DSL)
 
 ```kotlin
-implementation("net.dankito.datetime:kmp-datetime:2.1.0")
+implementation("net.dankito.datetime:kmp-datetime:2.2.0")
 ```
 
 ### Maven
@@ -35,7 +35,7 @@ implementation("net.dankito.datetime:kmp-datetime:2.1.0")
 <dependency>
    <groupId>net.dankito.datetime</groupId>
    <artifactId>kmp-datetime-jvm</artifactId>
-   <version>2.1.0</version>
+   <version>2.2.0</version>
 </dependency>
 ```
 
