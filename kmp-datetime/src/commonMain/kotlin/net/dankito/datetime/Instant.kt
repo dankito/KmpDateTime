@@ -1,11 +1,11 @@
 package net.dankito.datetime
 
 import kotlinx.serialization.Serializable
+import net.dankito.datetime.calculation.DateTimeCalculator
+import net.dankito.datetime.calculation.Math
 import net.dankito.datetime.format.DateTimeFormatter
 import net.dankito.datetime.format.DateTimeParser
 import net.dankito.datetime.platform.DateTimePlatform
-import net.dankito.datetime.calculation.DateTimeCalculator
-import net.dankito.datetime.calculation.Math
 import net.dankito.datetime.serialization.InstantDelegatingSerializer
 
 @Serializable(with = InstantDelegatingSerializer::class)
@@ -72,6 +72,24 @@ data class Instant(
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
     val isoStringAtSystemTimeZone: String by lazy { DateTimeFormatter.Default.toIsoStringAtSystemTimeZone(this) }
+
+
+    fun plusDays(daysToAdd: Long) = plusSeconds(Math.multiplyExact(daysToAdd, DateTimeCalculator.SecondsPerDay.toLong()))
+
+    fun plusHours(hoursToAdd: Long) = plusSeconds(Math.multiplyExact(hoursToAdd, DateTimeCalculator.SecondsPerHour.toLong()))
+
+    fun plusMinutes(minutesToAdd: Long) = plusSeconds(Math.multiplyExact(minutesToAdd, DateTimeCalculator.SecondsPerMinute.toLong()))
+
+    fun plusSeconds(secondsToAdd: Long) = plus(secondsToAdd, 0)
+
+    fun plusMilliseconds(millisecondsToAdd: Long) = plus(millisecondsToAdd / 1_000L, (millisecondsToAdd % 1_000L) * 1_000_000L)
+
+    fun plusMicroseconds(microsecondsToAdd: Long) = plus(microsecondsToAdd / 1_000_000L, (microsecondsToAdd % 1_000_000L) * 1_000L)
+
+    fun plusNanoseconds(nanosecondsToAdd: Int) = plusNanoseconds(nanosecondsToAdd.toLong())
+    fun plusNanoseconds(nanosecondsToAdd: Long) = plus(0, nanosecondsToAdd)
+
+    private fun plus(secondsToAdd: Long, nanosToAdd: Long) = DateTimeCalculator.addToInstant(this, secondsToAdd, nanosToAdd)
 
 
     override fun compareTo(other: Instant): Int {

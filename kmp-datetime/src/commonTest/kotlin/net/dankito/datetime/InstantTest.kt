@@ -62,6 +62,70 @@ class InstantTest {
 
 
     @Test
+    fun plusNanoseconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.plusNanoseconds(300)
+
+        assertThat(result).isEqualTo(Instant(1_739_783_287, 654_321_398))
+    }
+
+    @Test
+    fun plusMicroseconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.plusMicroseconds(700)
+
+        assertThat(result).isEqualTo(Instant(1_739_783_287, 655_021_098))
+    }
+
+    @Test
+    fun plusMilliseconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.plusMilliseconds(450)
+
+        assertThat(result).isEqualTo(Instant(1_739_783_288, 104_321_098))
+    }
+
+    @Test
+    fun plusSeconds() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.plusSeconds(824)
+
+        assertThat(result).isEqualTo(Instant(1_739_784_111, 654_321_098))
+    }
+
+    @Test
+    fun plusMinutes() {
+        val instant = Instant(1_739_783_287, 654_321_098)
+
+        val result = instant.plusMinutes(6188800)
+
+        assertThat(result).isEqualTo(Instant(2_111_111_287, 654_321_098))
+    }
+
+    @Test
+    fun plusHours() {
+        val instant = LocalDateTime(2015, 10, 22, 22, 15, 47).toInstantAtUtc()
+
+        val result = instant.plusHours(4)
+
+        assertThat(result).isEqualTo(LocalDateTime(2015, 10, 23, 2, 15, 47).toInstantAtUtc())
+    }
+
+    @Test
+    fun plusDays() {
+        val instant = LocalDateTime(2015, 10, 22, 22, 15, 47).toInstantAtUtc()
+
+        val result = instant.plusDays(21)
+
+        assertThat(result).isEqualTo(LocalDateTime(2015, 11, 12, 22, 15, 47).toInstantAtUtc())
+    }
+
+
+    @Test
     fun toLocalDateTimeAtUtc_WithoutDaylightSavingTime() {
         val instant = Instant(1_739_783_287, 654_000_000)
 

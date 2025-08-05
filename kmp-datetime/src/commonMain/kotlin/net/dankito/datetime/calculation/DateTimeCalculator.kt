@@ -20,6 +20,8 @@ object DateTimeCalculator {
 
     const val MillisecondsPerDay = SecondsPerDay * MillisecondsPerSecond
 
+    const val NanosecondsPerSecond = 1_000_000_000L
+
 
     fun instantFromEpochMilli(epochMilli: Long): Instant = Instant(
         // code copied from java.time.Instant.ofEpochMilli()
@@ -73,6 +75,22 @@ object DateTimeCalculator {
             else Long.MIN_VALUE
         }
     }
+
+    fun addToInstant(instant: Instant, secondsToAdd: Long, nanosToAdd: Long): Instant {
+        // code copied from java.time.Instant.plus(long secondsToAdd, long nanosToAdd)
+        if ((secondsToAdd or nanosToAdd) == 0L) { // micro-optimization to check if both, secondsToAdd and nanosToAdd are 0
+            return instant
+        }
+
+        var epochSec = Math.addExact(instant.epochSeconds, secondsToAdd)
+        var nanoAdjustment = instant.nanosecondsOfSecond + nanosToAdd
+
+        epochSec = Math.addExact(epochSec, nanoAdjustment / NanosecondsPerSecond)
+        nanoAdjustment %= NanosecondsPerSecond // safe int+NANOS_PER_SECOND
+
+        return Instant(epochSec, nanoAdjustment.toInt())
+    }
+
 
     fun totalSeconds(hours: Int = 0, minutes: Int = 0, seconds: Int = 0): Int =
         if (hours < 0) {
