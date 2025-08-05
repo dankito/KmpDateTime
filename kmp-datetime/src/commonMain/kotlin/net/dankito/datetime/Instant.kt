@@ -35,6 +35,13 @@ data class Instant(
     }
 
 
+    init {
+        require(nanosecondsOfSecond in 0..999_999_999) {
+            "nanosecondsOfSecond must be between 0 and 999,999,999"
+        }
+    }
+
+
     /**
      * Converts this Instant to a Double where the integer part is seconds since the Unix epoch and the fractional
      * part is sub-second precision in nanoseconds.
