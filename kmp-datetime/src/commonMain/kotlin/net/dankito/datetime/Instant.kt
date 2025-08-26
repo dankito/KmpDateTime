@@ -40,7 +40,7 @@ data class Instant(
 
     init {
         require(nanosecondsOfSecond in 0..999_999_999) {
-            "nanosecondsOfSecond must be between 0 and 999,999,999"
+            "nanosecondsOfSecond must be between 0 and 999,999,999 but got $nanosecondsOfSecond"
         }
     }
 
