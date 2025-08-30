@@ -78,6 +78,25 @@ class OffsetDateTimeTest {
     }
 
 
+    @Test
+    fun toInstant_PositiveOffset() {
+        val dateTime = OffsetDateTime(2025, 10, 21, 13, 0, 0, 0, UtcOffset(5, 30))
+
+        val result = dateTime.toInstant()
+
+        assertThat(result).isEqualTo(LocalDateTime(2025, 10, 21, 7, 30).toInstantAtUtc())
+    }
+
+    @Test
+    fun toInstant_NegativeOffset() {
+        val dateTime = OffsetDateTime(2025, 10, 21, 13, 0, 0, 0, UtcOffset(-7, 30))
+
+        val result = dateTime.toInstant()
+
+        assertThat(result).isEqualTo(LocalDateTime(2025, 10, 21, 20, 30).toInstantAtUtc())
+    }
+
+
     private fun assertOffsetDateTime(dateTime: OffsetDateTime, expectedLocalDateTime: LocalDateTime, expectedUtcOffset: UtcOffset) {
         assertThat(dateTime.dateTime).isEqualTo(expectedLocalDateTime)
         assertThat(dateTime.offset).isEqualTo(expectedUtcOffset)

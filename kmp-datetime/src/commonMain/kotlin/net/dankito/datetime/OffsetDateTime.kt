@@ -48,6 +48,12 @@ data class OffsetDateTime(
 
     val isoString: String by lazy { DateTimeFormatter.Default.toIsoString(this) }
 
+    /**
+     * The Instant at UTC that this OffsetDateTime represents.
+     */
+    fun toInstant(): Instant = dateTime.toInstantAtUtc()
+        .minusHours(offset.hours.toLong()).minusMinutes(offset.minutes.toLong() * (if (offset.hours < 0) -1 else 1))
+
 
     override fun toString() = isoString
 
