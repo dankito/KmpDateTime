@@ -1,7 +1,7 @@
 
 allprojects {
     group = "net.dankito.datetime"
-    version = "2.2.1"
+    version = "2.2.2-SNAPSHOT"
 
 
     ext["sourceCodeRepositoryBaseUrl"] = "github.com/dankito/KmpDateTime"
