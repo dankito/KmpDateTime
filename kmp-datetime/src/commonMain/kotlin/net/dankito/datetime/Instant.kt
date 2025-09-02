@@ -92,20 +92,20 @@ data class Instant(
     private fun plus(secondsToAdd: Long, nanosToAdd: Long) = DateTimeCalculator.addToInstant(this, secondsToAdd, nanosToAdd)
 
 
-    fun minusDays(daysToAdd: Long) = plusDays(-daysToAdd)
+    fun minusDays(daysToSubtract: Long) = plusDays(-daysToSubtract)
 
-    fun minusHours(hoursToAdd: Long) = plusHours(-hoursToAdd)
+    fun minusHours(hoursToSubtract: Long) = plusHours(-hoursToSubtract)
 
-    fun minusMinutes(minutesToAdd: Long) = plusMinutes(-minutesToAdd)
+    fun minusMinutes(minutesToSubtract: Long) = plusMinutes(-minutesToSubtract)
 
-    fun minusSeconds(secondsToAdd: Long) = plusSeconds(-secondsToAdd)
+    fun minusSeconds(secondsToSubtract: Long) = plusSeconds(-secondsToSubtract)
 
-    fun minusMilliseconds(millisecondsToAdd: Long) = plusMilliseconds(-millisecondsToAdd)
+    fun minusMilliseconds(millisecondsToSubtract: Long) = plusMilliseconds(-millisecondsToSubtract)
 
-    fun minusMicroseconds(microsecondsToAdd: Long) = plusMicroseconds(-microsecondsToAdd)
+    fun minusMicroseconds(microsecondsToSubtract: Long) = plusMicroseconds(-microsecondsToSubtract)
 
-    fun minusNanoseconds(nanosecondsToAdd: Int) = plusNanoseconds(-nanosecondsToAdd)
-    fun minusNanoseconds(nanosecondsToAdd: Long) = plusNanoseconds(-nanosecondsToAdd)
+    fun minusNanoseconds(nanosecondsToSubtract: Int) = plusNanoseconds(-nanosecondsToSubtract)
+    fun minusNanoseconds(nanosecondsToSubtract: Long) = plusNanoseconds(-nanosecondsToSubtract)
 
 
     override fun compareTo(other: Instant): Int {
