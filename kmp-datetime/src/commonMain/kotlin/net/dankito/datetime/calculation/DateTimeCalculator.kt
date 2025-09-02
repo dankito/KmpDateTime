@@ -90,10 +90,14 @@ object DateTimeCalculator {
         val nanosecondsOfSecond = instant.nanosecondsOfSecond + nanosecondsOfSecondOnly  // safe int+NANOS_PER_SECOND
 
         // e.g. after subtracting 1 from 0, nanosecondsOfSecond may now again exceed its range -> again cut the seconds part from nanosecondsOfSecond
-        val secs = Math.addExact(epochSeconds, Math.floorDiv(nanosecondsOfSecond, NanosecondsPerSecond))
-        val nos = Math.floorMod(nanosecondsOfSecond, NanosecondsPerSecond).toInt()
+        if (nanosecondsOfSecond !in 0..999_999_999) {
+            val secs = Math.addExact(epochSeconds, Math.floorDiv(nanosecondsOfSecond, NanosecondsPerSecond))
+            val nos = Math.floorMod(nanosecondsOfSecond, NanosecondsPerSecond).toInt()
 
-        return Instant(secs, nos)
+            return Instant(secs, nos)
+        } else {
+            return Instant(epochSeconds, nanosecondsOfSecond.toInt())
+        }
     }
 
 
