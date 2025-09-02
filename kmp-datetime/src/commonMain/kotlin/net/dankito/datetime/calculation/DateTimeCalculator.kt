@@ -82,13 +82,18 @@ object DateTimeCalculator {
             return instant
         }
 
-        var epochSec = Math.addExact(instant.epochSeconds, secondsToAdd)
-        var nanoAdjustment = instant.nanosecondsOfSecond + nanosToAdd
+        // add secondsToAdd and the seconds from nanosToAdd that exceed the pure nanosecondsOfSecond part, to epochSeconds
+        var epochSeconds = Math.addExact(instant.epochSeconds, secondsToAdd)
+        epochSeconds = Math.addExact(epochSeconds, nanosToAdd / NanosecondsPerSecond)
 
-        epochSec = Math.addExact(epochSec, nanoAdjustment / NanosecondsPerSecond)
-        nanoAdjustment %= NanosecondsPerSecond // safe int+NANOS_PER_SECOND
+        val nanosecondsOfSecondOnly = nanosToAdd % NanosecondsPerSecond // pure nanosecondsOfSecond part of nanosToAdd
+        val nanosecondsOfSecond = instant.nanosecondsOfSecond + nanosecondsOfSecondOnly  // safe int+NANOS_PER_SECOND
 
-        return Instant(epochSec, nanoAdjustment.toInt())
+        // e.g. after subtracting 1 from 0, nanosecondsOfSecond may now again exceed its range -> again cut the seconds part from nanosecondsOfSecond
+        val secs = Math.addExact(epochSeconds, Math.floorDiv(nanosecondsOfSecond, NanosecondsPerSecond))
+        val nos = Math.floorMod(nanosecondsOfSecond, NanosecondsPerSecond).toInt()
+
+        return Instant(secs, nos)
     }
 
 

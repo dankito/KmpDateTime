@@ -135,6 +135,15 @@ class InstantTest {
     }
 
     @Test
+    fun minusNanoseconds_DecreasesSeconds() {
+        val instant = Instant.parse("2025-08-23T20:16:00Z")
+
+        val result = instant.minusNanoseconds(1)
+
+        assertThat(result).isEqualTo(Instant.parse("2025-08-23T20:15:59.999999999Z"))
+    }
+
+    @Test
     fun minusMicroseconds() {
         val instant = Instant(1_739_783_287, 654_321_098)
 
